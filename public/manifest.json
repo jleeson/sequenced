@@ -1,0 +1,17 @@
+{
+    "name": "ADD Tracker",
+    "short_name": "ADD Tracker",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable any"
+        }
+    ],
+    "splash_pages": null
+}
