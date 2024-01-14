@@ -1,0 +1,8 @@
+{
+  "appId": "com.danieldwedding.add_tracker",
+  "appName": "add-tracker",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
