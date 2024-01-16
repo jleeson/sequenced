@@ -1,6 +1,6 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import NavBar from "../components/navigation/nav-bar";
-import NavBox from "../components/navigation/nav-box";
+import NavItem from "../components/navigation/nav-item";
 
 const Layout = () => {
     return (
@@ -8,10 +8,8 @@ const Layout = () => {
             <div className="flex flex-row justify-center items-center pt-4">
                 <Outlet />
             </div>
-            <div className="flex flex-row justify-center items-center w-full h-[5%]">
-                <NavBar>
-                    <NavBox>Test</NavBox>
-                </NavBar>
+            <div className="flex flex-row justify-center items-center w-full h-16 shadow-inner shadow-sm shadow-gray-200">
+                <NavBar></NavBar>
             </div>
         </div>
     )
