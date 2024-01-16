@@ -3,6 +3,8 @@
   "appName": "add-tracker",
   "webDir": "dist",
   "server": {
+    "url": "http://10.0.0.210:5173/",
+    "cleartext": true,
     "androidScheme": "https"
   }
 }
