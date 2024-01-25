@@ -4,7 +4,7 @@ import NavBar from "../components/navigation/NavBar";
 
 const Layout = () => {
     return (
-        <div className="w-full h-full flex flex-col justify-between">
+        <div className="w-full h-full flex flex-col justify-between items-center">
             <div className="flex flex-col justify-center items-center bg-white w-full h-full min-h-screen">
                 <Outlet />
             </div>
