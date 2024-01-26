@@ -49,7 +49,7 @@ const ToDo = () => {
   return (
     <div className="flex flex-col justify-center items-center text-center w-full h-full">
       <h1 className="mx-2 my-4 text-2xl">To-Do List</h1>
-      <ul className="flex flex-col justify-start items-center">
+      <ul className="h-[35em] flex flex-col justify-start items-center overflow-y-scroll">
         {items.map((item, key) => (
           <li key={key}>
             <ToDoItem item={item} deleteItem={deleteItem} />
