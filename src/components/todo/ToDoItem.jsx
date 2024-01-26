@@ -4,7 +4,7 @@ export function ToDoItem({ key, item, deleteItem }) {
   let trueInstance = {
     title: item.title || "",
     description: item.description || "Sample",
-    date: item.date || new Date(),
+    date: new Date(item.date) || new Date(),
     done: item.done || false,
   };
 
