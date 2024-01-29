@@ -12,6 +12,14 @@ export default function ToDoAddMenu({
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(null);
 
+  function resetBox(){
+    setTitle(null);
+    setDescription(null);
+    setDate(null);
+
+    setMenuInactive(true);
+  }
+
   async function addTo(e) {
     e.preventDefault();
 
@@ -24,23 +32,13 @@ export default function ToDoAddMenu({
       },
     });
 
-    setTitle("");
-    setDescription("");
-    setDate(null);
-
-    setMenuInactive(true);
+    resetBox();
   }
 
   function cancelForm(e) {
     e.preventDefault();
 
-    setTitle("");
-    setDescription("");
-    setDate(null);
-
-    console.log("SETTING");
-
-    setMenuInactive(true);
+    resetBox();
   }
 
   console.log(menuInactive);
@@ -62,7 +60,7 @@ export default function ToDoAddMenu({
                 id="tdam-title"
                 name="tdam-title"
                 className="p-2 border border-black"
-                defaultValue={title}
+                value={title || ""}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -76,7 +74,7 @@ export default function ToDoAddMenu({
                 id="tdam-description"
                 name="tdam-description"
                 className="p-2 border border-black"
-                defaultValue={description}
+                value={description || ""}
                 onChange={(e) => {
                   setDescription(e.target.value);
                 }}
@@ -91,7 +89,7 @@ export default function ToDoAddMenu({
                 type="datetime-local"
                 name="tdam-date"
                 className="p-2 border border-black"
-                defaultValue={date}
+                value={date || ""}
                 onChange={(e) => {
                   setDate(e.target.value);
                 }}
