@@ -29,7 +29,7 @@ const ToDo = () => {
       case "add": {
         let tempArr = [...items, action.info];
         setObject(tempArr);
-        return [tempArr];
+        return tempArr;
       }
 
       case "update": {
