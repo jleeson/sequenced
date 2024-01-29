@@ -21,7 +21,6 @@ async function getObject() {
 
 const ToDo = () => {
   const [items, dispatch] = useReducer(itemsReducer, []);
-  const [addActive, setAddActive] = useState(false);
   const [menuInactive, setMenuInactive] = useState(true);
 
   function itemsReducer(items, action) {
@@ -83,17 +82,21 @@ const ToDo = () => {
       <div className="flex flex-col justify-center items-center text-center w-full h-full">
         <h1 className="mx-2 my-4 text-2xl">To-Do List</h1>
         <ul className="h-[35em] flex flex-col justify-start items-center overflow-y-scroll">
-          {items.map((item, key) => (
+          {items.length > 0 && items.map((item, key) => (
             <li key={key}>
               <ToDoItem item={item} index={key} dispatch={dispatch} />
             </li>
           ))}
+          {
+            items.length == 0 && (
+              <div className="w-full text-blue-500">
+                <h1 className="text-lg">To-Do List is Empty! Add Something!</h1>
+              </div>
+            )
+          }
         </ul>
         <button
           onClick={async () => {
-            // let todoMenu = document.querySelector("#todo-addmenu");
-            // todoMenu.classList.toggle("hidden");
-
             setMenuInactive(false);
           }}
           className="w-40 h-8 my-2 bg-blue-600 rounded-2xl px-2 text-white"
