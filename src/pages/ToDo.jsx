@@ -20,14 +20,14 @@ async function getObject() {
 }
 
 const ToDo = () => {
-  let [items, dispatch] = useReducer(itemsReducer, []);
-  let [addActive, setAddActive] = useState(false);
-  let [menuInactive, setMenuInactive] = useState(true);
+  const [items, dispatch] = useReducer(itemsReducer, []);
+  const [addActive, setAddActive] = useState(false);
+  const [menuInactive, setMenuInactive] = useState(true);
 
   function itemsReducer(items, action) {
     switch (action.type) {
       case "add": {
-        let tempArr = [...items, action.info];
+        const tempArr = [...items, action.info];
         setObject(tempArr);
         return tempArr;
       }
@@ -53,8 +53,8 @@ const ToDo = () => {
       }
 
       case "delete": {
-        let tempArr = [...items];
-        let deleted = tempArr.splice(action.info, 1);
+        const tempArr = [...items];
+        const deleted = tempArr.splice(action.info, 1);
 
         setObject(tempArr);
 
@@ -65,7 +65,7 @@ const ToDo = () => {
 
   useEffect(() => {
     (async () => {
-      let ites = await getObject();
+      const ites = await getObject();
       dispatch({
         type: "overwrite",
         info: ites ? ites.items : null,

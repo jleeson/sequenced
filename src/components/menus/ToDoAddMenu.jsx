@@ -45,8 +45,8 @@ export default function ToDoAddMenu({
 
   console.log(menuInactive);
 
-  return !menuInactive ? (
-    <div id="todo-addmenu">
+  return (
+    <div id="todo-addmenu" className={menuInactive ? "hidden" : "flex"}>
       <PopupMenu id={id} className={className}>
         <form
           id="tdam-form"
@@ -118,7 +118,5 @@ export default function ToDoAddMenu({
         </form>
       </PopupMenu>
     </div>
-  ) : (
-    <></>
   );
 }
