@@ -1,43 +1,55 @@
-export function ToDoItem({ key, item, deleteItem }) {
-  if (typeof item == "string") item = { title: item };
+import { useState } from "react";
 
-  let trueInstance = {
-    title: item.title || "",
-    description: item.description || "Sample",
-    date: new Date(item.date) || new Date(),
-    done: item.done || false,
-  };
+export function ToDoItem({ item, index, dispatch }) {
+  const [trueItem, setTrueItem] = useState(item);
 
-  console.log(trueInstance.date == "Invalid Date");
+  function handleMarkComplete(e) {
+    let newItem = trueItem;
+
+    newItem.done = !newItem.done;
+
+    dispatch({
+      type: "update",
+      info: {
+        index,
+        item: newItem
+      },
+    });
+  }
 
   return (
     <div className="flex flex-row w-96 h-12 justify-between items-center bg-blue-400 text-white rounded-md px-4 py-2 m-2 w-80 box-border">
       <div className="w-8 h-8 flex justify-center items-center bg-red-50 rounded-full">
         <input
           type="checkbox"
-          checked={item.done}
+          defaultChecked={trueItem.done}
           className="appearance-none w-7 h-7 rounded-full bg-red-500 checked:bg-green-500"
+          onChange={(e) => handleMarkComplete(e)}
         />
       </div>
       <div className="flex flex-col justify-start text-left mx-4">
         <h1 className="text-left w-32 truncate text-lg">
-          {trueInstance.title}
+          {trueItem && trueItem.title}
         </h1>
       </div>
       <div className="w-10 mx-2 text-lg">
         <h1>
-          {trueInstance.date &&
-            trueInstance.date instanceof Date &&
-            trueInstance.date != "Invalid Date" &&
-            `${
-              trueInstance.date.getMonth() + 1
-            }/${trueInstance.date.getDate()}`}
+          {trueItem &&
+            trueItem.date &&
+            trueItem.date instanceof Date &&
+            trueItem.date != "Invalid Date" &&
+            `${trueItem.date.getMonth() + 1}/${trueItem.date.getDate()}`}
         </h1>
       </div>
       <div className="mx-2 text-md">
         <button
           onClick={() => {
-            deleteItem(item);
+            dispatch({
+              type: "delete",
+              info: {
+                index,
+              },
+            });
           }}
           className="text-blue-600 bg-gray-300 border px-2 py-1 rounded-md"
         >

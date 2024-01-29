@@ -1,5 +1,5 @@
 import { Preferences } from "@capacitor/preferences";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { ToDoItem } from "../components/todo/ToDoItem";
 import PopupMenu from "../components/menus/Popup";
 import ToDoAddMenu from "../components/menus/ToDoAddMenu";
@@ -20,54 +20,81 @@ async function getObject() {
 }
 
 const ToDo = () => {
-  let [items, setItems] = useState(["Test"]);
+  let [items, dispatch] = useReducer(itemsReducer, []);
   let [addActive, setAddActive] = useState(false);
+  let [menuInactive, setMenuInactive] = useState(true);
 
-  async function deleteItem(item) {
-    let tempArr = [...items];
-    let index = tempArr.indexOf(item);
-    tempArr.splice(index, 1);
-    updateAll(tempArr);
-  }
+  function itemsReducer(items, action) {
+    switch (action.type) {
+      case "add": {
+        let tempArr = [...items, action.info];
+        setObject(tempArr);
+        return [tempArr];
+      }
 
-  async function updateTodo(item) {
-    console.log(item);
+      case "update": {
+        let tempArr = [...items];
 
-    let tempArr = [...items];
-    tempArr.push(item);
-    updateAll(tempArr);
-  }
+        tempArr = tempArr.map((item, ind) => {
+          let newItem = item;
 
-  async function updateAll(arr) {
-    if (arr) await setObject(arr);
-    setItems(arr);
+          if (ind == action.info.index) newItem = action.info.item;
+
+          return newItem;
+        });
+
+        setObject(tempArr);
+
+        return tempArr;
+      }
+
+      case "overwrite": {
+        return action.info;
+      }
+
+      case "delete": {
+        let tempArr = [...items];
+        let deleted = tempArr.splice(action.info, 1);
+
+        setObject(tempArr);
+
+        return tempArr;
+      }
+    }
   }
 
   useEffect(() => {
     (async () => {
       let ites = await getObject();
-      console.log(ites);
-      if (ites && ites.items) setItems(ites.items);
+      dispatch({
+        type: "overwrite",
+        info: ites ? ites.items : null,
+      });
     })();
   }, []);
 
   return (
     <div className="relative">
-      <ToDoAddMenu active={addActive} updateTodo={updateTodo} />
+      <ToDoAddMenu
+        menuInactive={menuInactive}
+        setMenuInactive={setMenuInactive}
+        dispatch={dispatch}
+      />
       <div className="flex flex-col justify-center items-center text-center w-full h-full">
         <h1 className="mx-2 my-4 text-2xl">To-Do List</h1>
         <ul className="h-[35em] flex flex-col justify-start items-center overflow-y-scroll">
           {items.map((item, key) => (
             <li key={key}>
-              <ToDoItem item={item} deleteItem={deleteItem} />
+              <ToDoItem item={item} index={key} dispatch={dispatch} />
             </li>
           ))}
         </ul>
         <button
           onClick={async () => {
-            // await updateTodo("Test");
-            let todoMenu = document.querySelector("#todo-addmenu");
-            todoMenu.classList.toggle("hidden");
+            // let todoMenu = document.querySelector("#todo-addmenu");
+            // todoMenu.classList.toggle("hidden");
+
+            setMenuInactive(false);
           }}
           className="w-40 h-8 my-2 bg-blue-600 rounded-2xl px-2 text-white"
         >

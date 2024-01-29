@@ -1,49 +1,58 @@
+import { useState } from "react";
 import PopupMenu from "./Popup";
 
-export default function ToDoAddMenu({ id, className, updateTodo }) {
-  function closeMenu() {
-    let todoMenu = document.querySelector("#todo-addmenu");
-    todoMenu.classList.toggle("hidden");
-  }
+export default function ToDoAddMenu({
+  menuInactive,
+  setMenuInactive,
+  id,
+  className,
+  dispatch,
+}) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState(null);
 
   async function addTo(e) {
     e.preventDefault();
 
-    let title = document.querySelector("#tdam-title");
-    let description = document.querySelector("#tdam-description");
-    let date = document.querySelector("#tdam-date");
-
-    await updateTodo({
-      title: title.value,
-      description: description.value,
-      date: date.value,
+    await dispatch({
+      type: "add",
+      info: {
+        title,
+        description,
+        date,
+      },
     });
 
-    title.value = null;
-    description.value = null;
-    date.value = null;
+    setTitle("");
+    setDescription("");
+    setDate(null);
 
-    closeMenu();
+    setMenuInactive(true);
   }
 
   function cancelForm(e) {
     e.preventDefault();
 
-    let title = document.querySelector("#tdam-title");
-    let description = document.querySelector("#tdam-description");
-    let date = document.querySelector("#tdam-date");
+    setTitle("");
+    setDescription("");
+    setDate(null);
 
-    title.value = null;
-    description.value = null;
-    date.value = null;
+    console.log("SETTING");
 
-    closeMenu();
+    setMenuInactive(true);
   }
 
-  return (
-    <div id="todo-addmenu" className="hidden">
+  console.log(menuInactive);
+
+  return !menuInactive ? (
+    <div id="todo-addmenu">
       <PopupMenu id={id} className={className}>
-        <form id="tdam-form" onReset={cancelForm} onSubmit={addTo}>
+        <form
+          id="tdam-form"
+          onReset={(e) => cancelForm(e)}
+          onSubmit={(e) => addTo(e)}
+        >
           <div className="flex flex-col text-center">
             <div className="flex flex-col">
               <label htmlFor="tdam-title" className="text-xl my-2">
@@ -53,6 +62,10 @@ export default function ToDoAddMenu({ id, className, updateTodo }) {
                 id="tdam-title"
                 name="tdam-title"
                 className="p-2 border border-black"
+                defaultValue={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
             </div>
             <div className="flex flex-col">
@@ -63,6 +76,10 @@ export default function ToDoAddMenu({ id, className, updateTodo }) {
                 id="tdam-description"
                 name="tdam-description"
                 className="p-2 border border-black"
+                defaultValue={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
               />
             </div>
             <div className="flex flex-col">
@@ -74,6 +91,10 @@ export default function ToDoAddMenu({ id, className, updateTodo }) {
                 type="datetime-local"
                 name="tdam-date"
                 className="p-2 border border-black"
+                defaultValue={date}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
               />
             </div>
             <div className="flex flex-row justify-evenly my-4">
@@ -81,6 +102,7 @@ export default function ToDoAddMenu({ id, className, updateTodo }) {
                 id="tdam-reset"
                 type="reset"
                 className="text-lg w-20 h-8 bg-red-500 text-white rounded-lg"
+                onClick={(e) => cancelForm(e)}
               >
                 Cancel
               </button>
@@ -96,5 +118,7 @@ export default function ToDoAddMenu({ id, className, updateTodo }) {
         </form>
       </PopupMenu>
     </div>
+  ) : (
+    <></>
   );
 }
