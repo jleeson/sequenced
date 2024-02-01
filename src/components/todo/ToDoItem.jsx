@@ -5,7 +5,7 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
   const [isChecked, setIsChecked] = useState(trueItem.done || false);
 
   function handleMarkComplete(e) {
-    let newItem = trueItem;
+    let newItem = {...trueItem};
 
     newItem.done = !newItem.done;
 
@@ -15,7 +15,7 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
       type: "update",
       info: {
         index,
-        item: newItem,
+        item: newItem
       },
     });
   }
@@ -29,7 +29,7 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
   return (
     <div
       className={`flex flex-row w-96 h-12 justify-between items-center ${
-        item.done ? "bg-blue-900 opacity-50" : "bg-blue-400"
+        isChecked ? "bg-blue-900 opacity-50" : "bg-blue-400"
       } text-white rounded-md px-4 py-2 m-2 w-80 box-border`}
       onClick={(e) => handleInteractive(e)}
     >
@@ -65,7 +65,7 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
               type: "delete",
               info: {
                 item: trueItem,
-                index
+                index,
               },
             });
           }}

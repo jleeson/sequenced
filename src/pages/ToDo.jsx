@@ -39,6 +39,7 @@ const ToDo = () => {
         let tempArr;
 
         if (items) {
+          console.log(action.info);
           tempArr = [...items];
 
           tempArr = tempArr.map((item, ind) => {
