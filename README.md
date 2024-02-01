@@ -1,8 +1,14 @@
-# React + Vite
+# ADHD Tracker
+Welcome to my ADHD Tracker. This project is built by [Daniel Wedding (@DoctorNovus)](https://github.com/DoctorNovus). It's biggest intention is to help me take one of my biggest struggles, ADHD, and give me ways to manage it. If you like what you see, please give it a star, and use it if you think you can. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Project Map:
+- [ ] HomePage (Incomplete)
+- [ ] To-Do Tracker (In-Progress)
+- [ ] Medicine Tracker (Incomplete)
+- [ ] Budgeting (Incomplete)
+- [ ] Money Management (Incomplete)
+- [ ] Plugin System (Incomplete)
+- [ ] App Themes (Incomplete)
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Extras
+If you have any questions, comments, or concerns, refer to my email, daniel@ottegi.com.
