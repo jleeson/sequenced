@@ -7,6 +7,7 @@ export default function ToDoAddMenu({
   id,
   className,
   dispatch,
+  count
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -40,8 +41,6 @@ export default function ToDoAddMenu({
 
     resetBox();
   }
-
-  console.log(menuInactive);
 
   return (
     <div id="todo-addmenu" className={menuInactive ? "hidden" : "flex"}>
