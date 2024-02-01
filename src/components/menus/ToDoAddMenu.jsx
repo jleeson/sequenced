@@ -106,7 +106,7 @@ export default function ToDoAddMenu({
               <button
                 id="tdam-submit"
                 type="submit"
-                className="text-lg w-20 h-8 bg-blue-500 text-white rounded-lg"
+                className="text-lg w-20 h-8 bg-accent-blue text-white rounded-lg"
               >
                 Add
               </button>

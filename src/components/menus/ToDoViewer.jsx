@@ -38,7 +38,7 @@ export default function ToDoViewer({ item, setItemFull }) {
       </div>
       <div className="my-4">
         <button
-          className="bg-blue-500 rounded-lg text-xl px-4 py-1 text-white my-2"
+          className="bg-accent-blue rounded-lg text-xl px-4 py-1 text-accent-white my-2"
           onClick={() => closeMenu()}
         >
           Go Back

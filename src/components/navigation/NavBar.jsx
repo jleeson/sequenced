@@ -5,7 +5,7 @@ export function NavSelector({ active, selectNav }) {
   return (
     <div
       onClick={() => selectNav(!active)}
-      className={`flex ${active ? "bg-blue-700" : "bg-green-700"} w-10 h-10 justify-center items-center text-center rounded-full`}
+      className={`flex ${active ? "bg-accent-blue" : "bg-green-700"} w-10 h-10 justify-center items-center text-center rounded-full`}
     >
       <div className={`flex text-2xl text-gray-200`}>
         <svg
@@ -24,7 +24,7 @@ export function NavSelector({ active, selectNav }) {
 
 export function NavItem({ children, href }) {
   return (
-    <li className="flex justify-center border border-blue-600 px-4 py-2 bg-blue-400 rounded-lg">
+    <li className="flex justify-center border border-accent-blue px-4 py-2 bg-blue-400 rounded-lg">
       <Link to={href} onClick={() => setActive(false)}>
         <div className="flex text-white">{children}</div>
       </Link>
