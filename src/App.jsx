@@ -20,10 +20,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route element={<Home />} />
+            <Route index element={<ToDo />} />
             {/* <Route path="/meds" element={<Meds />} /> */}
             {/* <Route path="/mood" element={<Mood />} /> */}
-            <Route index path="/todo" element={<ToDo />} />
+            <Route path="/todo" element={<ToDo />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
