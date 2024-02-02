@@ -18,6 +18,8 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
         item: newItem,
       },
     });
+
+    setTrueItem(newItem);
   }
 
   function handleInteractive(e) {
@@ -28,7 +30,9 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
 
   return (
     <div
-      className={`flex flex-row w-full h-14 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border ${isChecked && "line-through"}`}
+      className={`flex flex-row w-full h-14 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border ${
+        isChecked ? "line-through" : "no-underline"
+      }`}
       onClick={(e) => handleInteractive(e)}
     >
       <div className="w-6 h-6 flex justify-center items-center bg-red-50 rounded-full bg-transparent border border-white">

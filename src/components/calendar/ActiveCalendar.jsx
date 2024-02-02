@@ -47,7 +47,6 @@ export default function ActiveCalendar() {
   }
 
   function convertDay(num) {
-    console.log(num);
     switch (num) {
       case 0:
         return "Sunday";

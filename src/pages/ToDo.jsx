@@ -40,7 +40,6 @@ const ToDo = () => {
         let tempArr;
 
         if (items) {
-          console.log(action.info);
           tempArr = [...items];
 
           tempArr = tempArr.map((item, ind) => {
@@ -66,13 +65,10 @@ const ToDo = () => {
 
         if (items) {
           tempArr = [...items];
-          console.log("TA 1", tempArr);
           const deleted = tempArr.splice(
             tempArr.indexOf(action.info) || action.info.index,
             1
           );
-
-          console.log("TA 2", tempArr);
 
           setObject(tempArr);
 
