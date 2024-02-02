@@ -28,14 +28,14 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
 
   return (
     <div
-      className={`flex flex-row w-full h-14 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border`}
+      className={`flex flex-row w-full h-14 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border ${isChecked && "line-through"}`}
       onClick={(e) => handleInteractive(e)}
     >
       <div className="w-6 h-6 flex justify-center items-center bg-red-50 rounded-full bg-transparent border border-white">
         <input
           type="checkbox"
           defaultChecked={isChecked}
-          className="appearance-none w-full h-full rounded-full bg-transparent"
+          className="appearance-none w-full h-full rounded-full bg-transparent checked:bg-accent-blue-900"
           onChange={(e) => handleMarkComplete(e)}
           onClick={(e) => e.stopPropagation()}
         />
