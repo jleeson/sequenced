@@ -3,6 +3,7 @@ import { useEffect, useReducer, useState } from "react";
 import { ToDoItem } from "../components/todo/ToDoItem";
 import ToDoAddMenu from "../components/menus/ToDoAddMenu";
 import ToDoViewer from "../components/menus/ToDoViewer";
+import ActiveCalendar from "../components/calendar/ActiveCalendar";
 
 async function setObject(obj) {
   await Preferences.set({
@@ -97,7 +98,7 @@ const ToDo = () => {
     return <ToDoViewer item={itemFullDetails} setItemFull={setItemFull} />;
 
   return (
-    <div className="relative">
+    <div className="w-full h-full bg-accent-black text-accent-white relative">
       <ToDoAddMenu
         menuInactive={menuInactive}
         setMenuInactive={setMenuInactive}
@@ -105,7 +106,7 @@ const ToDo = () => {
         count={items.length}
       />
       <div className="flex flex-col justify-center items-center text-center w-full h-full">
-        <h1 className="mx-2 my-4 text-2xl">To-Do List</h1>
+        <ActiveCalendar />
         <ul className="h-[35em] flex flex-col justify-start items-center overflow-y-scroll">
           {items &&
             items.length > 0 &&
