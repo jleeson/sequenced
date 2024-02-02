@@ -40,19 +40,19 @@ export default function NavBar() {
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-center relative">
+    <div className="w-full h-16 flex flex-col items-center bg-accent-black">
       <ul
         className={`${
           !active ? "hidden" : "flex"
-        } flex-col-reverse absolute bottom-[125%] gap-2`}
+        } flex-col-reverse gap-2`}
       >
-        <NavItem href="/">Home</NavItem>
+        {/* <NavItem href="/">Home</NavItem> */}
         {/* <NavItem href="/meds">Meds</NavItem> */}
         {/* <NavItem href="/mood">Mood</NavItem> */}
-        <NavItem href="/todo">To-Do</NavItem>
+        {/* <NavItem href="/todo">To-Do</NavItem> */}
       </ul>
       <div className="w-full h-full flex flex-row justify-center items-center">
-        <NavSelector active={active} selectNav={selectNav} />
+        {/* <NavSelector active={active} selectNav={selectNav} /> */}
       </div>
     </div>
   );

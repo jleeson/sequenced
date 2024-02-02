@@ -5,7 +5,7 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
   const [isChecked, setIsChecked] = useState(trueItem.done || false);
 
   function handleMarkComplete(e) {
-    let newItem = {...trueItem};
+    let newItem = { ...trueItem };
 
     newItem.done = !newItem.done;
 
@@ -15,7 +15,7 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
       type: "update",
       info: {
         index,
-        item: newItem
+        item: newItem,
       },
     });
   }
@@ -28,24 +28,25 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
 
   return (
     <div
-      className={`flex flex-row w-96 h-12 justify-between items-center ${
-        isChecked ? "bg-blue-900 opacity-50" : "bg-blue-400"
-      } text-white rounded-md px-4 py-2 m-2 w-80 box-border`}
+      className={`flex flex-row w-full h-14 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border`}
       onClick={(e) => handleInteractive(e)}
     >
-      <div className="w-8 h-8 flex justify-center items-center bg-red-50 rounded-full">
+      <div className="w-6 h-6 flex justify-center items-center bg-red-50 rounded-full bg-transparent border border-white">
         <input
           type="checkbox"
           defaultChecked={isChecked}
-          className="appearance-none w-7 h-7 rounded-full bg-red-500 checked:bg-green-500"
+          className="appearance-none w-full h-full rounded-full bg-transparent"
           onChange={(e) => handleMarkComplete(e)}
           onClick={(e) => e.stopPropagation()}
         />
       </div>
       <div className="flex flex-col justify-start text-left mx-4">
-        <h1 className="text-left w-32 truncate text-lg">
+        <h1 className="text-left w-32 truncate text-md">
           {trueItem && trueItem.title}
         </h1>
+        {/* <h1 className="text-left w-32 truncate text-sm">
+          {trueItem && trueItem.description}
+        </h1> */}
       </div>
       <div className="w-10 mx-2 text-lg">
         <h1>
@@ -56,7 +57,7 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
             `${trueItem.date.getMonth() + 1}/${trueItem.date.getDate()}`}
         </h1>
       </div>
-      <div className="mx-2 text-md">
+      <div className="mx-2 text-sm">
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -69,7 +70,7 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
               },
             });
           }}
-          className="text-blue-600 bg-gray-300 border px-2 py-1 rounded-md"
+          className="text-red-400 bg-accent-black-900 border px-3 py-1.5 rounded-xl"
         >
           Delete
         </button>

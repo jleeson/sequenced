@@ -98,44 +98,48 @@ const ToDo = () => {
     return <ToDoViewer item={itemFullDetails} setItemFull={setItemFull} />;
 
   return (
-    <div className="w-full h-full bg-accent-black text-accent-white relative">
+    <div className="w-full h-full bg-accent-black text-accent-white">
       <ToDoAddMenu
         menuInactive={menuInactive}
         setMenuInactive={setMenuInactive}
         dispatch={dispatch}
         count={items.length}
       />
-      <div className="flex flex-col justify-center items-center text-center w-full h-full">
-        <ActiveCalendar />
-        <ul className="h-[35em] flex flex-col justify-start items-center overflow-y-scroll">
-          {items &&
-            items.length > 0 &&
-            items
-              .sort((a, b) => a.date < b.date)
-              .map((item, key) => (
-                <li key={key}>
-                  <ToDoItem
-                    item={item}
-                    index={key}
-                    dispatch={dispatch}
-                    setItemFull={setItemFull}
-                  />
-                </li>
-              ))}
-          {(!items || items.length == 0) && (
-            <div className="w-full text-blue-500">
-              <h1 className="text-lg">To-Do List is Empty! Add Something!</h1>
-            </div>
-          )}
-        </ul>
-        <button
-          onClick={async () => {
-            setMenuInactive(false);
-          }}
-          className="w-40 h-8 my-2 bg-blue-600 rounded-2xl px-2 text-white"
-        >
-          Add to List
-        </button>
+      <div className="flex flex-col justify-between w-full h-full">
+        <div className="flex flex-col items-center w-full h-full">
+          <ActiveCalendar />
+          <ul className="w-full h-[35em] gap-3 flex flex-col justify-start items-center overflow-y-scroll py-4">
+            {items &&
+              items.length > 0 &&
+              items
+                .sort((a, b) => a.date < b.date)
+                .map((item, key) => (
+                  <li key={key} className="w-[95%]">
+                    <ToDoItem
+                      item={item}
+                      index={key}
+                      dispatch={dispatch}
+                      setItemFull={setItemFull}
+                    />
+                  </li>
+                ))}
+            {(!items || items.length == 0) && (
+              <div className="w-full text-blue-500">
+                <h1 className="text-lg">To-Do List is Empty! Add Something!</h1>
+              </div>
+            )}
+          </ul>
+        </div>
+        <div className="w-full h-16 flex justify-center items-center">
+          <button
+            onClick={async () => {
+              setMenuInactive(false);
+            }}
+            className="flex text-center justify-center items-center w-10 h-10 text-3xl bg-blue-600 rounded-full text-white"
+          >
+            +
+          </button>
+        </div>
       </div>
     </div>
   );

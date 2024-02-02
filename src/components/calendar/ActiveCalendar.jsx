@@ -82,9 +82,9 @@ export default function ActiveCalendar() {
                 : "bg-transparent"
             } rounded-lg px-2 py-2`}
           >
-            <div>
-              <h1>{convertDay(date.getDay()).slice(0, 3)}</h1>
-              <h1>{date.getDate()}</h1>
+            <div className="flex flex-col justify-center items-center">
+              <h1 className="text-center">{convertDay(date.getDay()).slice(0, 3)}</h1>
+              <h1 className="text-center">{date.getDate()}</h1>
             </div>
           </div>
         );

@@ -43,22 +43,22 @@ export default function ToDoAddMenu({
   }
 
   return (
-    <div id="todo-addmenu" className={menuInactive ? "hidden" : "flex"}>
+    <div id="todo-addmenu" className={`${menuInactive ? "hidden" : "flex"} bg-accent-black`}>
       <PopupMenu id={id} className={className}>
         <form
           id="tdam-form"
           onReset={(e) => cancelForm(e)}
           onSubmit={(e) => addTo(e)}
         >
-          <div className="flex flex-col text-center">
+          <div className="flex flex-col text-left">
             <div className="flex flex-col">
-              <label htmlFor="tdam-title" className="text-xl my-2">
+              <label htmlFor="tdam-title" className="text-xl my-2 text-accent-white">
                 Title
               </label>
               <input
                 id="tdam-title"
                 name="tdam-title"
-                className="p-2 border border-black"
+                className="p-2 bg-accent-black-700 rounded-lg text-accent-white"
                 value={title || ""}
                 onChange={(e) => {
                   setTitle(e.target.value);
@@ -66,13 +66,13 @@ export default function ToDoAddMenu({
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="tdam-description" className="text-xl my-2">
+              <label htmlFor="tdam-description" className="text-xl my-2 text-accent-white">
                 Description
               </label>
               <input
                 id="tdam-description"
                 name="tdam-description"
-                className="p-2 border border-black"
+                className="p-2 bg-accent-black-700 rounded-lg text-accent-white"
                 value={description || ""}
                 onChange={(e) => {
                   setDescription(e.target.value);
@@ -80,14 +80,14 @@ export default function ToDoAddMenu({
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="tdam-date" className="text-xl my-2">
+              <label htmlFor="tdam-date" className="text-accent-white text-xl my-2">
                 Date
               </label>
               <input
                 id="tdam-date"
                 type="datetime-local"
                 name="tdam-date"
-                className="p-2 border border-black"
+                className="p-2 bg-accent-black-700 rounded-lg text-accent-white"
                 value={date || ""}
                 onChange={(e) => {
                   setDate(e.target.value);
