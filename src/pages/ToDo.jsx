@@ -32,62 +32,27 @@ const ToDo = () => {
     setItems(newArr);
   };
 
-  const updateList = (item) => {};
+  const updateList = ({ from, to }) => {
+    let newArr = [...items];
 
-  const deleteFromList = (item) => {};
+    newArr = newArr.map((ite) => {
+      if (ite == from) return to;
 
-  function itemsReducer(utilItems, action) {
-    switch (action.type) {
-      case "add": {
-        let newArr = Array.from(utilItems);
-        newArr.push(action.info);
-        setObject(newArr);
-        return newArr;
-      }
+      return ite;
+    });
 
-      case "update": {
-        let tempArr;
+    setObject(newArr);
+    setItems(newArr);
+  };
 
-        if (utilItems) {
-          tempArr = [...utilItems];
+  const deleteFromList = (item) => {
+    let newArr = [...items];
 
-          tempArr = tempArr.map((item, ind) => {
-            let newItem = item;
+    newArr.splice(newArr.indexOf(item), 1);
 
-            if (ind == action.info.index) newItem = action.info.item;
-
-            return newItem;
-          });
-
-          setObject(tempArr);
-        }
-
-        return tempArr;
-      }
-
-      case "overwrite": {
-        return action.info;
-      }
-
-      case "delete": {
-        let tempArr;
-
-        if (utilItems) {
-          tempArr = [...utilItems];
-          const deleted = tempArr.splice(
-            tempArr.indexOf(action.info) || action.info.index,
-            1
-          );
-
-          setObject(tempArr);
-
-          return tempArr;
-        }
-
-        return tempArr;
-      }
-    }
-  }
+    setObject(newArr);
+    setItems(newArr);
+  };
 
   useEffect(() => {
     (async () => {

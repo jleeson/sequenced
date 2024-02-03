@@ -18,8 +18,8 @@ export function ToDoItem({
     setIsChecked(newItem.done);
 
     updateList({
-      index,
-      item: newItem,
+      from: trueItem,
+      to: newItem,
     });
 
     setTrueItem(newItem);
