@@ -6,9 +6,9 @@ export default function ToDoAddMenu({
   setMenuInactive,
   id,
   className,
-  dispatch,
-  count
+  addToList,
 }) {
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(null);
@@ -24,15 +24,12 @@ export default function ToDoAddMenu({
   async function addTo(e) {
     e.preventDefault();
 
-    await dispatch({
-      type: "add",
-      info: {
-        title,
-        description,
-        date,
-      },
+    addToList({
+      title,
+      description,
+      date
     });
-
+    
     resetBox();
   }
 

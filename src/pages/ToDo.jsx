@@ -21,26 +21,35 @@ async function getObject() {
 }
 
 const ToDo = () => {
-  const [items, dispatch] = useReducer(itemsReducer, []);
+  const [items, setItems] = useState([]);
   const [menuInactive, setMenuInactive] = useState(true);
   const [itemFullDetails, setItemFull] = useState(null);
 
-  function itemsReducer(items, action) {
+  const addToList = (item) => {
+    let newArr = [...items];
+    newArr.push(item);
+    setObject(newArr);
+    setItems(newArr);
+  };
+
+  const updateList = (item) => {};
+
+  const deleteFromList = (item) => {};
+
+  function itemsReducer(utilItems, action) {
     switch (action.type) {
       case "add": {
-        let tempArr;
-        if (items) tempArr = [...items, action.info];
-        else tempArr = [action.info];
-
-        setObject(tempArr);
-        return tempArr;
+        let newArr = Array.from(utilItems);
+        newArr.push(action.info);
+        setObject(newArr);
+        return newArr;
       }
 
       case "update": {
         let tempArr;
 
-        if (items) {
-          tempArr = [...items];
+        if (utilItems) {
+          tempArr = [...utilItems];
 
           tempArr = tempArr.map((item, ind) => {
             let newItem = item;
@@ -63,8 +72,8 @@ const ToDo = () => {
       case "delete": {
         let tempArr;
 
-        if (items) {
-          tempArr = [...items];
+        if (utilItems) {
+          tempArr = [...utilItems];
           const deleted = tempArr.splice(
             tempArr.indexOf(action.info) || action.info.index,
             1
@@ -83,10 +92,7 @@ const ToDo = () => {
   useEffect(() => {
     (async () => {
       const ites = await getObject();
-      dispatch({
-        type: "overwrite",
-        info: ites ? ites.items : null,
-      });
+      setItems(ites.items);
     })();
   }, []);
 
@@ -98,7 +104,7 @@ const ToDo = () => {
       <ToDoAddMenu
         menuInactive={menuInactive}
         setMenuInactive={setMenuInactive}
-        dispatch={dispatch}
+        addToList={addToList}
         count={items.length}
       />
       <div className="flex flex-col justify-between w-full h-full">
@@ -114,13 +120,14 @@ const ToDo = () => {
                     <ToDoItem
                       item={item}
                       index={key}
-                      dispatch={dispatch}
+                      updateList={updateList}
+                      deleteFromList={deleteFromList}
                       setItemFull={setItemFull}
                     />
                   </li>
                 ))}
             {(!items || items.length == 0) && (
-              <div className="w-full text-blue-500">
+              <div className="w-full text-blue-500 text-center">
                 <h1 className="text-lg">To-Do List is Empty! Add Something!</h1>
               </div>
             )}

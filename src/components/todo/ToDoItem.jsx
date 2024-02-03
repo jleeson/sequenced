@@ -1,30 +1,33 @@
 import { useState } from "react";
 
-export function ToDoItem({ item, index, dispatch, setItemFull }) {
+export function ToDoItem({
+  item,
+  index,
+  updateList,
+  deleteFromList,
+  setItemFull,
+}) {
   const [trueItem, setTrueItem] = useState(item);
   const [isChecked, setIsChecked] = useState(trueItem.done || false);
 
-  function handleMarkComplete(e) {
+  let handleMarkComplete = (e) => {
     let newItem = { ...trueItem };
 
     newItem.done = !newItem.done;
 
     setIsChecked(newItem.done);
 
-    dispatch({
-      type: "update",
-      info: {
-        index,
-        item: newItem,
-      },
+    updateList({
+      index,
+      item: newItem,
     });
 
     setTrueItem(newItem);
-  }
+  };
 
-  function handleInteractive(e) {
+  let handleInteractive = (e) => {
     setItemFull(trueItem);
-  }
+  };
 
   if (typeof trueItem.date == "string") trueItem.date = new Date(trueItem.date);
 
@@ -33,14 +36,14 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
       className={`flex flex-row w-full h-14 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border ${
         isChecked ? "line-through" : "no-underline"
       }`}
-      onClick={(e) => handleInteractive(e)}
+      onClick={handleInteractive}
     >
       <div className="w-6 h-6 flex justify-center items-center bg-red-50 rounded-full bg-transparent border border-white">
         <input
           type="checkbox"
           defaultChecked={isChecked}
           className="appearance-none w-full h-full rounded-full bg-transparent checked:bg-accent-blue-900"
-          onChange={(e) => handleMarkComplete(e)}
+          onChange={handleMarkComplete}
           onClick={(e) => e.stopPropagation()}
         />
       </div>
@@ -66,12 +69,9 @@ export function ToDoItem({ item, index, dispatch, setItemFull }) {
           onClick={(e) => {
             e.stopPropagation();
 
-            dispatch({
-              type: "delete",
-              info: {
-                item: trueItem,
-                index,
-              },
+            deleteFromList({
+              item: trueItem,
+              index,
             });
           }}
           className="text-red-400 bg-accent-black-900 border px-3 py-1.5 rounded-xl"
