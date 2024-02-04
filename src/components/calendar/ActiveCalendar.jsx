@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ActiveCalendar() {
+export default function ActiveCalendar({ activeDate, setActiveDate }) {
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(null);
 
@@ -65,9 +65,13 @@ export default function ActiveCalendar() {
     }
   }
 
+  const changeDate = (date) => {
+    setActiveDate(date);
+  };
+
   const dates = generateDates();
 
-  let activeDate = new Date().getDate();
+  let currentDate = new Date().getDate();
 
   return (
     <div className="w-full flex flex-row justify-between px-4">
@@ -76,13 +80,16 @@ export default function ActiveCalendar() {
           <div
             key={key}
             className={`${
-              activeDate == date.getDate()
+              activeDate.getDate() == date.getDate()
                 ? "bg-accent-blue-700"
                 : "bg-transparent"
             } rounded-lg px-2 py-2`}
+            onClick={(e) => changeDate(date, e)}
           >
             <div className="flex flex-col justify-center items-center">
-              <h1 className="text-center">{convertDay(date.getDay()).slice(0, 3)}</h1>
+              <h1 className="text-center">
+                {convertDay(date.getDay()).slice(0, 3)}
+              </h1>
               <h1 className="text-center">{date.getDate()}</h1>
             </div>
           </div>

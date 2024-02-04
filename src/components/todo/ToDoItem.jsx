@@ -1,67 +1,49 @@
+import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export function ToDoItem({
-  item,
-  index,
-  updateList,
-  deleteFromList,
-  setItemFull,
-}) {
-  const [trueItem, setTrueItem] = useState(item);
-  const [isChecked, setIsChecked] = useState(trueItem.done || false);
+export function ToDoItem({ item }) {
+  const navigate = useNavigate();
 
-  let handleMarkComplete = (e) => {
-    let newItem = { ...trueItem };
+  const { mutate: deleteTask } = useDeleteTask();
+  const { mutate: updateTask } = useUpdateTask();
 
-    newItem.done = !newItem.done;
-
-    setIsChecked(newItem.done);
-
-    updateList({
-      from: trueItem,
-      to: newItem,
-    });
-
-    setTrueItem(newItem);
+  const handleMarkComplete = (e) => {
+    e.stopPropagation();
+    updateTask({ id: item.id, data: { ...item, done: !item.done } });
   };
 
-  let handleInteractive = (e) => {
-    setItemFull(trueItem);
+  const handleInteractive = () => {
+    navigate(`/todo/view/${item.id}`);
   };
 
-  if (typeof trueItem.date == "string") trueItem.date = new Date(trueItem.date);
+
+  // need to remove this, its changing data in the render lifecycle
+  if (typeof item.date == "string") item.date = new Date(item.date);
 
   return (
     <div
       className={`flex flex-row w-full h-14 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border ${
-        isChecked ? "line-through" : "no-underline"
+        item.done ? "line-through" : "no-underline"
       }`}
       onClick={handleInteractive}
     >
       <div className="w-6 h-6 flex justify-center items-center bg-red-50 rounded-full bg-transparent border border-white">
         <input
           type="checkbox"
-          defaultChecked={isChecked}
-          className="appearance-none w-full h-full rounded-full bg-transparent checked:bg-accent-blue-900"
-          onChange={handleMarkComplete}
-          onClick={(e) => e.stopPropagation()}
+          defaultChecked={item.done}
+          className="appearance-none w-6 h-6 rounded-full bg-transparent checked:bg-accent-blue-900"
+          onClick={handleMarkComplete}
         />
       </div>
       <div className="flex flex-col justify-start text-left mx-4">
         <h1 className="text-left w-32 truncate text-md">
-          {trueItem && trueItem.title}
+          {item.title}
         </h1>
-        {/* <h1 className="text-left w-32 truncate text-sm">
-          {trueItem && trueItem.description}
-        </h1> */}
       </div>
       <div className="w-10 mx-2 text-lg">
         <h1>
-          {trueItem &&
-            trueItem.date &&
-            typeof trueItem.date == "object" &&
-            trueItem.date != "Invalid Date" &&
-            `${trueItem.date.getMonth() + 1}/${trueItem.date.getDate()}`}
+          {item?.date && typeof item.date == "object" && `${new Date(item.date).getMonth() + 1}/${new Date(item.date).getDate()}`}
         </h1>
       </div>
       <div className="mx-2 text-sm">
@@ -69,10 +51,7 @@ export function ToDoItem({
           onClick={(e) => {
             e.stopPropagation();
 
-            deleteFromList({
-              item: trueItem,
-              index,
-            });
+            deleteTask(item);
           }}
           className="text-red-400 bg-accent-black-900 border px-3 py-1.5 rounded-xl"
         >
