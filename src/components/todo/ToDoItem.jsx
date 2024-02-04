@@ -18,9 +18,6 @@ export function ToDoItem({ item }) {
   };
 
 
-  // need to remove this, its changing data in the render lifecycle
-  if (typeof item.date == "string") item.date = new Date(item.date);
-
   return (
     <div
       className={`flex flex-row w-full h-14 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border ${
@@ -31,9 +28,10 @@ export function ToDoItem({ item }) {
       <div className="w-6 h-6 flex justify-center items-center bg-red-50 rounded-full bg-transparent border border-white">
         <input
           type="checkbox"
-          defaultChecked={item.done}
+          checked={item.done}
           className="appearance-none w-6 h-6 rounded-full bg-transparent checked:bg-accent-blue-900"
-          onClick={handleMarkComplete}
+          onClick={(e) => e.stopPropagation()}
+          onChange={handleMarkComplete}
         />
       </div>
       <div className="flex flex-col justify-start text-left mx-4">
