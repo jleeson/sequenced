@@ -50,7 +50,7 @@ export default function ToDoAddMenu() {
             <FormItem
               title="Date"
               type="datetime-local"
-              value={formatDateTime(task.date)}
+              value={formatDateTime(new Date(task.date))}
               onChange={(e) => setTask({ date: e.target.value })}
             />
           </div>

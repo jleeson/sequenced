@@ -44,6 +44,8 @@ export function formatDateTime(date) {
 export function formatDateClean(date) {
   if (!date) return "No Date Set";
 
+  console.log(date);
+
   let month = getMonthProper(date);
   let day = getDateProper(date);
   let year = getYearProper(date);

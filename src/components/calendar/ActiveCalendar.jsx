@@ -1,15 +1,16 @@
 import { useState } from "react";
+import CalendarArrow from "./CalendarArrow";
 
 export default function ActiveCalendar({ activeDate, setActiveDate }) {
   const [calendarSize, setCalendarSize] = useState(7);
-  const [activeWeek, setActiveWeek] = useState(null);
+  const [activeWeek, setActiveWeek] = useState(0);
 
   function generateDates() {
     let week = [];
 
     for (let i = 0; i < calendarSize; i++) {
       let newDate = new Date();
-      newDate.setDate(newDate.getDate() + i);
+      newDate.setDate(newDate.getDate() + i + activeWeek);
 
       week.push(newDate);
     }
@@ -74,27 +75,39 @@ export default function ActiveCalendar({ activeDate, setActiveDate }) {
   let currentDate = new Date().getDate();
 
   return (
-    <div className="w-full flex flex-row justify-between px-4">
-      {dates.map((date, key) => {
-        return (
-          <div
-            key={key}
-            className={`${
-              activeDate.getDate() == date.getDate()
-                ? "bg-accent-blue-700"
-                : "bg-transparent"
-            } rounded-lg px-2 py-2`}
-            onClick={(e) => changeDate(date, e)}
-          >
-            <div className="flex flex-col justify-center items-center">
-              <h1 className="text-center">
-                {convertDay(date.getDay()).slice(0, 3)}
-              </h1>
-              <h1 className="text-center">{date.getDate()}</h1>
+    <div className="w-full h-full flex flex-row items-center">
+      <CalendarArrow
+        direction="left"
+        activeWeek={activeWeek}
+        setActiveWeek={setActiveWeek}
+      />
+      <div className="w-full flex flex-row justify-between px-4">
+        {dates.map((date, key) => {
+          return (
+            <div
+              key={key}
+              className={`${
+                activeDate.getDate() == date.getDate()
+                  ? "bg-accent-blue-700"
+                  : "bg-transparent"
+              } rounded-lg px-2 py-2`}
+              onClick={(e) => changeDate(date, e)}
+            >
+              <div className="flex flex-col justify-center items-center">
+                <h1 className="text-center">
+                  {convertDay(date.getDay()).slice(0, 3)}
+                </h1>
+                <h1 className="text-center">{date.getDate()}</h1>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+      <CalendarArrow
+        direction="right"
+        activeWeek={activeWeek}
+        setActiveWeek={setActiveWeek}
+      />
     </div>
   );
 }

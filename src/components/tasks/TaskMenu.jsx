@@ -1,8 +1,6 @@
 import { ToDoItem } from "../todo/ToDoItem";
 
 export default function TaskMenu({ tasks }) {
-  console.log(tasks);
-  
   return (
     <div className="flex flex-col items-center">
       <ul className="w-full max-h-[30em] gap-3 flex flex-col justify-start items-center overflow-y-scroll py-4">
