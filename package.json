@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "host": "vite --host",
     "open:ios": "npx cap open ios",
+    "open:ios:full": "npm run build:full && npm run open:ios",
     "open:android": "npx cap open android",
     "run:ios": "npx cap run ios",
     "run:android": "npx cap run android",

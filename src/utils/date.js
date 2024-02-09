@@ -35,6 +35,12 @@ export function formatDate(date) {
   )}`;
 }
 
+export function formatShortDate(date){
+  return `${getMonthProper(date)}-${getDateProper(
+    date
+  )}`;
+}
+
 export function formatDateTime(date) {
   return `${getYearProper(date)}-${getMonthProper(date)}-${getDateProper(
     date

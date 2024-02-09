@@ -27,7 +27,7 @@ export default function Todo() {
               setActiveDate={setActiveDate}
             />
             <DayTasks day={activeDate} tasks={tasks.data} />
-            <div>
+            <div className="flex flex-col items-center">
               <h1 className="text-xl mt-2 mb-1">General Tasks</h1>
               <TaskMenu tasks={tasks.data} />
             </div>

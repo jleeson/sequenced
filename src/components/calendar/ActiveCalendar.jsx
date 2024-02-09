@@ -97,7 +97,7 @@ export default function ActiveCalendar({ activeDate, setActiveDate }) {
                 <h1 className="text-center">
                   {convertDay(date.getDay()).slice(0, 3)}
                 </h1>
-                <h1 className="text-center">{date.getDate()}</h1>
+                <h1 className={`${currentDate == date.getDate() ? "text-accent-blue-400" : "text-accent-white"} text-center`}>{date.getDate()}</h1>
               </div>
             </div>
           );

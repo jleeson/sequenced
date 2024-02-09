@@ -31,7 +31,6 @@ export default function ToDoViewer() {
         <div className="w-full flex flex-col items-center text-accent-white">
           <div className="w-3/5 flex flex-col items-center">
             <ToDoItemSpec text="Title" value={task.data.title} />
-            <ToDoItemSpec text="ID" value={task.data.id} />
             <ToDoItemSpec
               text="Description"
               value={task.data.description || "No Set Description"}

@@ -1,4 +1,5 @@
 import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
+import { formatShortDate } from "@/utils/date";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +17,6 @@ export function ToDoItem({ item }) {
   const handleInteractive = () => {
     navigate(`/todo/view/${item.id}`);
   };
-
 
   return (
     <div
@@ -39,9 +39,9 @@ export function ToDoItem({ item }) {
           {item.title}
         </h1>
       </div>
-      <div className="w-10 mx-2 text-lg">
-        <h1>
-          {item?.date && typeof item.date == "object" && `${new Date(item.date).getMonth() + 1}/${new Date(item.date).getDate()}`}
+      <div className="w-16 mx-2 text-lg">
+        <h1 className="text-sm">
+          {item.date && formatShortDate(new Date(item.date))}
         </h1>
       </div>
       <div className="mx-2 text-sm">
