@@ -1,17 +1,7 @@
 import { useTaskById } from "@/hooks/tasks";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDateClean } from "@/utils/date";
-
-function ToDoItemSpec({ text, value }) {
-  return (
-    <div className="w-full h-full flex flex-col items-center gap-1">
-      <h1 className="text-xl text-accent-white mt-4">{text}</h1>
-      <div className="w-full h-full bg-accent-black-800 text-center px-2 rounded-lg">
-        <span className="text-lg text-accent-white">{value}</span>
-      </div>
-    </div>
-  );
-}
+import ToDoItemSpec from "./ToDoItemSpec";
 
 export default function ToDoViewer() {
   const { id } = useParams();
@@ -30,15 +20,24 @@ export default function ToDoViewer() {
       {task.isSuccess && (
         <div className="w-full flex flex-col items-center text-accent-white">
           <div className="w-3/5 flex flex-col items-center">
-            <ToDoItemSpec text="Title" value={task.data.title} />
+            <ToDoItemSpec task={task} text="Title" value="title" />
             <ToDoItemSpec
+              task={task}
               text="Description"
-              value={task.data.description || "No Set Description"}
+              value="description"
+              backup="No Description Provided"
             />
-            <ToDoItemSpec text="Date" value={formatDateClean(new Date(task.data.date))} />
             <ToDoItemSpec
+              task={task}
+              text="Date"
+              type="date"
+              value="date"
+            />
+            <ToDoItemSpec
+              task={task}
               text="Is Complete?"
-              value={task.data.done ? "Yes" : "No"}
+              type="bool"
+              value="done"
             />
           </div>
           <div className="my-4">
