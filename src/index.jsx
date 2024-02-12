@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -11,6 +11,7 @@ import NoPage from "./pages/NoPage";
 import "./index.css";
 import ToDoAddMenu from "./components/menus/ToDoAdd/ToDoAddMenu";
 import ToDoViewer from "./components/menus/ToDoViewer";
+import { ToDoContext } from "./hooks/contexts";
 
 /* define the query client for react-query */
 const queryClient = new QueryClient({
@@ -22,22 +23,33 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+  const [context, setContext] = useState({
+    todo: {
+      active: {
+        date: new Date(),
+        month: new Date().getMonth(),
+        year: new Date().getFullYear()
+      }
+    }
+  });
+
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<ToDo />} />
-            <Route path="/todo/add" element={<ToDoAddMenu />} />
-            <Route path="/todo/view/:id" element={<ToDoViewer />} />
-
-            {/* <Route path="/meds" element={<Meds />} /> */}
-            {/* <Route path="/mood" element={<Mood />} /> */}
-            <Route path="/todo" element={<ToDo />} />
-            <Route path="*" element={<NoPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <ToDoContext.Provider value={[context, setContext]}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<ToDo />} />
+              <Route path="/todo/add" element={<ToDoAddMenu />} />
+              <Route path="/todo/view/:id" element={<ToDoViewer />} />
+              {/* <Route path="/meds" element={<Meds />} /> */}
+              {/* <Route path="/mood" element={<Mood />} /> */}
+              <Route path="/todo" element={<ToDo />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ToDoContext.Provider>
     </QueryClientProvider>
   );
 }

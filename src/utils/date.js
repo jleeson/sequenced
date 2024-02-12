@@ -29,6 +29,12 @@ export function getMinutesProper(date) {
     .toLocaleString("en-US", { minimumIntegerDigits: 2, useGrouping: false });
 }
 
+export function getSecondsProper(date) {
+  return date
+    .getSeconds()
+    .toLocaleString("en-US", { minimumIntegerDigits: 2, useGrouping: false });
+}
+
 export function formatDate(date) {
   return `${getYearProper(date)}-${getMonthProper(date)}-${getDateProper(
     date
@@ -46,7 +52,13 @@ export function formatMonthYear(date) {
 export function formatDateTime(date) {
   return `${getYearProper(date)}-${getMonthProper(date)}-${getDateProper(
     date
-  )}T${getHoursProper(date)}:${getMinutesProper(date)}`;
+  )}T${getHoursProper(date)}:${getMinutesProper(date)}:${getSecondsProper(date)}`;
+}
+
+export function formatDateTimeClean(date){
+  return `${getYearProper(date)}-${getMonthProper(date)}-${getDateProper(
+    date
+  )}T00:00:00`;
 }
 
 export function formatDateClean(date) {

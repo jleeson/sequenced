@@ -1,15 +1,15 @@
 import arrow_left from "@/assets/arrow_left.svg";
 import arrow_right from "@/assets/arrow_right.svg";
 
-export default function CalendarArrow({ direction, activeWeek, setActiveWeek }) {
+export default function CalendarArrow({ direction, activeWeek, changeActiveWeek }) {
   let source = arrow_left;
   if (direction == "right") source = arrow_right;
 
   const handleClick = () => {
     if(direction == "left")
-        setActiveWeek(activeWeek - 7);
+        changeActiveWeek(activeWeek - 7);
     else
-        setActiveWeek(activeWeek + 7);
+        changeActiveWeek(activeWeek + 7);
   }
 
   return (

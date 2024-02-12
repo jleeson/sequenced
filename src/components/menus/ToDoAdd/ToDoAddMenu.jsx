@@ -1,18 +1,26 @@
-import { useReducer } from "react";
+import { useContext, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAddTask } from "@/hooks/tasks";
 
 import FormItem from "./FormItem";
-import { formatDateTime } from "@/utils/date";
+import { formatDateTimeClean } from "@/utils/date";
 import { createID } from "@/utils/id";
+import { ToDoContext } from "@/hooks/contexts";
 
 const reducer = (data, payload) => ({ ...data, ...payload });
-const initialData = { title: "", description: "", date: new Date(), id: createID(24) };
+const initialData = {
+  title: "",
+  description: "",
+  date: new Date(),
+  id: createID(24),
+};
 
 export default function ToDoAddMenu() {
   const navigate = useNavigate();
   const [task, setTask] = useReducer(reducer, initialData);
   const { mutate: addTask } = useAddTask();
+
+  const [context, setContext] = useContext(ToDoContext);
 
   const resetBox = () => {
     setTask(initialData);
@@ -50,7 +58,7 @@ export default function ToDoAddMenu() {
             <FormItem
               title="Date"
               type="datetime-local"
-              value={formatDateTime(new Date(task.date))}
+              value={formatDateTimeClean(new Date(context.todo.active.date))}
               onChange={(e) => setTask({ date: e.target.value })}
             />
           </div>

@@ -3,14 +3,12 @@ import CalendarArrow from "./CalendarArrow";
 import { formatMonthYear } from "@/utils/date";
 import CalendarItem from "./CalendarItem";
 
-export default function ActiveCalendar({
-  activeDate,
-  setActiveDate,
-  activeMonth,
-  setActiveMonth,
-}) {
+export default function ActiveCalendar({ context, setContext }) {
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(0);
+
+  const activeDate = context.todo.active.date;
+  const activeMonth = context.todo.active.month;
 
   function generateDates() {
     let week = [];
@@ -75,7 +73,19 @@ export default function ActiveCalendar({
   }
 
   const changeDate = (date) => {
-    setActiveDate(date);
+    let tempContext = {
+      ...context,
+    };
+
+    tempContext.todo.active = {
+      date: date,
+      month: date.getMonth(),
+      year: date.getFullYear(),
+    };
+
+    setContext(tempContext);
+
+    // setActiveDate(date);
   };
 
   const dates = generateDates();
@@ -84,9 +94,19 @@ export default function ActiveCalendar({
   // if (currentMonth.getMonth() != activeMonth)
   //   currentMonth.setMonth(activeMonth);
 
+  function changeActiveWeek(e) {
+    setActiveWeek(e);
+  }
+
   function changeActiveMonth(e) {
     let activeData = e.target.value.split("-");
-    setActiveMonth(activeData[1] - 1);
+
+    let tempContext = {
+      ...context,
+    };
+
+    tempContext.todo.active.month = activeData[1] - 1;
+    setContext(tempContext);
   }
 
   return (
@@ -105,7 +125,7 @@ export default function ActiveCalendar({
         <CalendarArrow
           direction="left"
           activeWeek={activeWeek}
-          setActiveWeek={setActiveWeek}
+          changeActiveWeek={changeActiveWeek}
         />
         <div className="w-full flex flex-row justify-between px-4">
           {dates.map((date, key) => (
@@ -120,7 +140,7 @@ export default function ActiveCalendar({
         <CalendarArrow
           direction="right"
           activeWeek={activeWeek}
-          setActiveWeek={setActiveWeek}
+          changeActiveWeek={changeActiveWeek}
         />
       </div>
     </div>

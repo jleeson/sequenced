@@ -19,31 +19,34 @@ export function ToDoItem({ item }) {
 
   return (
     <div
-      className={`grid grid-cols-5 w-full h-12 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border ${
+      className={`grid grid-cols-7 w-full h-12 justify-between items-center bg-accent-black-900 text-white rounded-xl px-1 py-2 box-border ${
         item.done ? "line-through" : "no-underline"
       }`}
       onClick={handleInteractive}
     >
-      <div className="w-6 h-6 flex justify-center items-center bg-red-50 rounded-full bg-transparent border border-white">
-        <div className="w-4 h-4 flex justify-center items-center">
-          <input
-            type="checkbox"
-            checked={item.done}
-            className="appearance-none w-full h-full rounded-full bg-transparent checked:bg-accent-blue-500"
-            onClick={(e) => e.stopPropagation()}
-            onChange={handleMarkComplete}
-          />
+      <div className="col-span-1 flex flex-row justify-center">
+        <div className="w-6 h-6 flex justify-evenly items-center bg-red-50 rounded-full bg-transparent border border-white">
+          <div className="w-4 h-4 flex justify-center items-center">
+            <input
+              type="checkbox"
+              checked={item.done}
+              className="appearance-none w-full h-full rounded-full bg-transparent checked:bg-accent-blue-500"
+              onClick={(e) => e.stopPropagation()}
+              onChange={handleMarkComplete}
+            />
+          </div>
         </div>
       </div>
-      <div className="col-span-2 flex flex-col justify-start text-left mx-4">
+
+      <div className="col-span-3 flex flex-col justify-start text-left">
         <h1 className="text-left grow truncate text-md">{item.title}</h1>
       </div>
-      <div className="w-16 mx-2 text-lg">
+      <div className="col-span-1 w-16 mx-2 text-lg">
         <h1 className="text-sm">
           {item.date && formatShortDate(new Date(item.date))}
         </h1>
       </div>
-      <div className="mx-2 text-sm">
+      <div className="flex justify-end col-span-2 mx-2 text-sm">
         <button
           onClick={(e) => {
             e.stopPropagation();
