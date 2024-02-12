@@ -1,11 +1,7 @@
 import { useState } from "react";
-import { useTasks, useAddTask } from "@/hooks/tasks";
-import { ToDoItem } from "../components/todo/ToDoItem";
-import ToDoAddMenu from "../components/menus/ToDoAdd/ToDoAddMenu";
-import ToDoViewer from "../components/menus/ToDoViewer";
+import { useTasks } from "@/hooks/tasks";
 import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import DayTasks from "../components/calendar/DayTasks";
-import Layout from "./Layout";
 import TaskMenu from "@/components/tasks/TaskMenu";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +10,7 @@ export default function Todo() {
   const navigate = useNavigate();
 
   const [activeDate, setActiveDate] = useState(new Date());
+  const [activeMonth, setActiveMonth] = useState(new Date().getMonth());
 
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">
@@ -25,6 +22,8 @@ export default function Todo() {
             <ActiveCalendar
               activeDate={activeDate}
               setActiveDate={setActiveDate}
+              activeMonth={activeMonth}
+              setActiveMonth={setActiveMonth}
             />
             <DayTasks day={activeDate} tasks={tasks.data} />
             <div className="flex flex-col items-center">
@@ -46,4 +45,4 @@ export default function Todo() {
       )}
     </div>
   );
-};
+}

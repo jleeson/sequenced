@@ -35,10 +35,12 @@ export function formatDate(date) {
   )}`;
 }
 
-export function formatShortDate(date){
-  return `${getMonthProper(date)}-${getDateProper(
-    date
-  )}`;
+export function formatShortDate(date) {
+  return `${getMonthProper(date)}-${getDateProper(date)}`;
+}
+
+export function formatMonthYear(date) {
+  return `${getYearProper(date)}-${getMonthProper(date)}`;
 }
 
 export function formatDateTime(date) {

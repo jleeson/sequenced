@@ -1,7 +1,14 @@
 import { useState } from "react";
 import CalendarArrow from "./CalendarArrow";
+import { formatMonthYear } from "@/utils/date";
+import CalendarItem from "./CalendarItem";
 
-export default function ActiveCalendar({ activeDate, setActiveDate }) {
+export default function ActiveCalendar({
+  activeDate,
+  setActiveDate,
+  activeMonth,
+  setActiveMonth,
+}) {
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(0);
 
@@ -10,6 +17,7 @@ export default function ActiveCalendar({ activeDate, setActiveDate }) {
 
     for (let i = 0; i < calendarSize; i++) {
       let newDate = new Date();
+      if (newDate.getMonth() != activeMonth) newDate.setMonth(activeMonth);
       newDate.setDate(newDate.getDate() + i + activeWeek);
 
       week.push(newDate);
@@ -72,42 +80,49 @@ export default function ActiveCalendar({ activeDate, setActiveDate }) {
 
   const dates = generateDates();
 
-  let currentDate = new Date().getDate();
+  // let currentMonth = new Date();
+  // if (currentMonth.getMonth() != activeMonth)
+  //   currentMonth.setMonth(activeMonth);
+
+  function changeActiveMonth(e) {
+    let activeData = e.target.value.split("-");
+    setActiveMonth(activeData[1] - 1);
+  }
 
   return (
-    <div className="w-full h-full flex flex-row items-center">
-      <CalendarArrow
-        direction="left"
-        activeWeek={activeWeek}
-        setActiveWeek={setActiveWeek}
-      />
-      <div className="w-full flex flex-row justify-between px-4">
-        {dates.map((date, key) => {
-          return (
-            <div
-              key={key}
-              className={`${
-                activeDate.getDate() == date.getDate()
-                  ? "bg-accent-blue-700"
-                  : "bg-transparent"
-              } rounded-lg px-2 py-2`}
-              onClick={(e) => changeDate(date, e)}
-            >
-              <div className="flex flex-col justify-center items-center">
-                <h1 className="text-center">
-                  {convertDay(date.getDay()).slice(0, 3)}
-                </h1>
-                <h1 className={`${currentDate == date.getDate() ? "text-accent-blue-400" : "text-accent-white"} text-center`}>{date.getDate()}</h1>
-              </div>
-            </div>
-          );
-        })}
+    <div className="w-full h-full">
+      <div className="w-full flex justify-center my-3">
+        <div className="w-2/3 py-1 flex justify-center border border-accent-white rounded-lg">
+          <input
+            type="month"
+            value={formatMonthYear(new Date(new Date().setMonth(activeMonth)))}
+            onChange={changeActiveMonth}
+            className="bg-transparent text-accent-black invert px-1 m-0 text-center text-xl "
+          />
+        </div>
       </div>
-      <CalendarArrow
-        direction="right"
-        activeWeek={activeWeek}
-        setActiveWeek={setActiveWeek}
-      />
+      <div className="w-full h-full flex flex-row items-center">
+        <CalendarArrow
+          direction="left"
+          activeWeek={activeWeek}
+          setActiveWeek={setActiveWeek}
+        />
+        <div className="w-full flex flex-row justify-between px-4">
+          {dates.map((date, key) => (
+            <CalendarItem
+              key={key}
+              date={date}
+              activeDate={activeDate}
+              changeDate={changeDate}
+            />
+          ))}
+        </div>
+        <CalendarArrow
+          direction="right"
+          activeWeek={activeWeek}
+          setActiveWeek={setActiveWeek}
+        />
+      </div>
     </div>
   );
 }

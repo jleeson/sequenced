@@ -39,10 +39,12 @@ export default function ToDoItemSpec({
   if (type == "bool") faceValue = faceValue ? "Yes" : "No";
 
   return (
-    <div className="flex flex-col w-full h-full  items-center gap-1">
-      <h1 className="text-xl text-accent-white mt-4">{text}</h1>
+    <div className="flex flex-col w-full h-full items-center gap-1">
+      <div className="w-full flex justify-start">
+        <h1 className="text-xl text-accent-white mt-4">{text}</h1>
+      </div>
       <div className="w-full h-full flex flex-row items-center">
-        <div className="flex justify-center items-center w-full h-8 bg-accent-black-800 text-center px-2 rounded-lg">
+        <div className="flex  items-center w-full h-8 bg-accent-black-800 text-center px-2 rounded-lg">
           {editMode && (
             <input
               value={
@@ -51,12 +53,12 @@ export default function ToDoItemSpec({
                   : faceValue
               }
               type={type == "date" ? "datetime-local" : "text"}
-              className="text-center w-40 bg-transparent border border-white px-2"
+              className="text-center w-full h-8 bg-transparent border border-white px-2"
               onChange={handleEdit}
             ></input>
           )}
           {!editMode && (
-            <span className="text-lg text-accent-white">
+            <span className="text-left text-lg text-accent-white">
               {faceValue || backup}
             </span>
           )}
