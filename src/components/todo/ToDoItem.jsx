@@ -1,6 +1,5 @@
 import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
 import { formatShortDate } from "@/utils/date";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function ToDoItem({ item }) {
@@ -20,24 +19,24 @@ export function ToDoItem({ item }) {
 
   return (
     <div
-      className={`flex flex-row w-full h-14 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border ${
+      className={`grid grid-cols-5 w-full h-12 justify-between items-center bg-accent-black-900 text-white rounded-xl px-4 py-2 box-border ${
         item.done ? "line-through" : "no-underline"
       }`}
       onClick={handleInteractive}
     >
       <div className="w-6 h-6 flex justify-center items-center bg-red-50 rounded-full bg-transparent border border-white">
-        <input
-          type="checkbox"
-          checked={item.done}
-          className="appearance-none w-6 h-6 rounded-full bg-transparent checked:bg-accent-blue-900"
-          onClick={(e) => e.stopPropagation()}
-          onChange={handleMarkComplete}
-        />
+        <div className="w-4 h-4 flex justify-center items-center">
+          <input
+            type="checkbox"
+            checked={item.done}
+            className="appearance-none w-full h-full rounded-full bg-transparent checked:bg-accent-blue-500"
+            onClick={(e) => e.stopPropagation()}
+            onChange={handleMarkComplete}
+          />
+        </div>
       </div>
-      <div className="flex flex-col justify-start text-left mx-4">
-        <h1 className="text-left w-32 truncate text-md">
-          {item.title}
-        </h1>
+      <div className="col-span-2 flex flex-col justify-start text-left mx-4">
+        <h1 className="text-left grow truncate text-md">{item.title}</h1>
       </div>
       <div className="w-16 mx-2 text-lg">
         <h1 className="text-sm">
@@ -51,7 +50,7 @@ export function ToDoItem({ item }) {
 
             deleteTask(item);
           }}
-          className="text-red-400 bg-accent-black-900 border px-3 py-1.5 rounded-xl"
+          className="bg-red-400 text-accent-white border px-3 py-1.5 rounded-xl"
         >
           Delete
         </button>

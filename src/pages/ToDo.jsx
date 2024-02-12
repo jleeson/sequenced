@@ -4,6 +4,7 @@ import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import DayTasks from "../components/calendar/DayTasks";
 import TaskMenu from "@/components/tasks/TaskMenu";
 import { useNavigate } from "react-router-dom";
+import TaskContainer from "@/components/menus/TaskContainer";
 
 export default function Todo() {
   const tasks = useTasks();
@@ -26,10 +27,7 @@ export default function Todo() {
               setActiveMonth={setActiveMonth}
             />
             <DayTasks day={activeDate} tasks={tasks.data} />
-            <div className="flex flex-col items-center">
-              <h1 className="text-xl mt-2 mb-1">General Tasks</h1>
-              <TaskMenu tasks={tasks.data} />
-            </div>
+            <TaskContainer title="All Tasks" tasks={tasks.data} />
           </div>
           <div>
             <div className="w-full h-16 flex justify-center items-center fixed bottom-3">

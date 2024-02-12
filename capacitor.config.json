@@ -1,6 +1,6 @@
 {
-  "appId": "com.danieldwedding.add_tracker",
-  "appName": "add-tracker",
+  "appId": "com.danieldwedding.adhd_tracker",
+  "appName": "ADHD Support",
   "webDir": "dist",
   "plugins": {
     "CapacitorSQLite": {
