@@ -1,4 +1,4 @@
-export default function CalendarItem({ key, activeDate, date, changeDate }) {
+export default function CalendarItem({ activeDate, date, changeDate }) {
   function convertDay(num) {
     switch (num) {
       case 0:
@@ -22,7 +22,6 @@ export default function CalendarItem({ key, activeDate, date, changeDate }) {
 
   return (
     <div
-      key={key}
       className={`w-11 h-16 ${
         activeDate.getDate() == date.getDate()
           ? "bg-accent-blue-700"
