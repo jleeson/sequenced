@@ -27,11 +27,11 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
   };
 
   return (
-    <div
-      className="flex flex-col items-center w-[90%] my-2"
-      onClick={handleClick}
-    >
-      <div className="flex flex-row justify-evenly items-center">
+    <div className="flex flex-col items-center w-[90%] my-2">
+      <div
+        className="flex flex-row justify-evenly items-center"
+        onClick={handleClick}
+      >
         <img src={imgSrc} className="mt-1 w-8 h-8 invert" />
         <h1 className="text-xl mt-2 mb-1">{title}</h1>
         <img src={imgSrc} className="mt-1 w-8 h-8 invert" />

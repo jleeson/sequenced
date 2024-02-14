@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function ToDoItem({ item }) {
+  if (!item) item = {};
+
   const navigate = useNavigate();
 
   const { mutate: deleteTask } = useDeleteTask();
@@ -17,7 +19,7 @@ export function ToDoItem({ item }) {
   };
 
   const handleInteractive = () => {
-    navigate(`/todo/view/${item.id}`);
+    // navigate(`/todo/view/${item.id}`);
   };
 
   return (
