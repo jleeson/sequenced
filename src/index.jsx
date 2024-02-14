@@ -30,8 +30,12 @@ export default function App() {
         month: new Date().getMonth(),
         year: new Date().getFullYear(),
         menus: []
+      },
+      menus: {
+        dailyTasks: false,
+        generalTasks: false
       }
-    }
+    },
   });
 
   return (

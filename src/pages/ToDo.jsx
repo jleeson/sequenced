@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { useTasks } from "@/hooks/tasks";
 import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import DayTasks from "../components/calendar/DayTasks";
-import TaskMenu from "@/components/tasks/TaskMenu";
 import { useNavigate } from "react-router-dom";
 import TaskContainer from "@/components/menus/TaskContainer";
 import { ToDoContext } from "@/hooks/contexts";
@@ -11,9 +10,6 @@ export default function Todo() {
   const tasks = useTasks();
   const navigate = useNavigate();
   const [context, setContext] = useContext(ToDoContext);
-
-  // const [activeDate, setActiveDate] = useState(new Date());
-  // const [activeMonth, setActiveMonth] = useState(new Date().getMonth());
 
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">
@@ -27,7 +23,7 @@ export default function Todo() {
               setContext={setContext}
             />
             <DayTasks day={context.todo.active.date} tasks={tasks.data} />
-            <TaskContainer title="All Tasks" tasks={tasks.data} />
+            <TaskContainer title="All Tasks" tasks={tasks.data} activeFilter="dailyTasks" />
           </div>
           <div>
             <div className="w-full h-16 flex justify-center items-center fixed bottom-3">
