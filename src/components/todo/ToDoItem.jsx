@@ -49,7 +49,7 @@ export function ToDoItem({ item }) {
           {item.date && formatShortDate(new Date(item.date))}
         </h1>
       </div>
-      <div className="flex justify-end col-span-2 mx-2 text-sm">
+      <div className="w-full flex justify-center col-span-2 text-sm">
         {!isDeleting && (
           <button
             onClick={(e) => {
@@ -63,17 +63,22 @@ export function ToDoItem({ item }) {
           </button>
         )}
         {isDeleting && (
-          <div className="w-full flex flex-row justify-evenly">
+          <div className="w-full flex flex-row justify-center items-center gap-4">
             <div
-              className="bg-red-600 p-1.5 rounded-md"
-              onClick={() => setIsDeleting(false)}
+              className="flex justify-center items-center bg-red-600 p-1.5 rounded-md"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsDeleting(false);
+              }}
             >
               <span>N</span>
             </div>
             <div
-              className="bg-green-600 p-1.5 rounded-md"
-              onClick={() => {
-                deleteTask(task);
+              className="flex justify-center items-center bg-green-600 p-1.5 rounded-md"
+              onClick={(e) => {
+                e.stopPropagation();
+
+                deleteTask(item);
               }}
             >
               Y
