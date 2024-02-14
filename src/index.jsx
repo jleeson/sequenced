@@ -28,7 +28,8 @@ export default function App() {
       active: {
         date: new Date(),
         month: new Date().getMonth(),
-        year: new Date().getFullYear()
+        year: new Date().getFullYear(),
+        menus: []
       }
     }
   });

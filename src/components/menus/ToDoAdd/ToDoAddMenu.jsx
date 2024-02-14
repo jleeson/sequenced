@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAddTask } from "@/hooks/tasks";
 
 import FormItem from "./FormItem";
-import { formatDateTimeClean } from "@/utils/date";
+import { formatDateTime } from "@/utils/date";
 import { createID } from "@/utils/id";
 import { ToDoContext } from "@/hooks/contexts";
 
@@ -17,6 +17,7 @@ const initialData = {
 
 export default function ToDoAddMenu() {
   const navigate = useNavigate();
+  initialData.date.setHours(0, 0, 0, 0);
   const [task, setTask] = useReducer(reducer, initialData);
   const { mutate: addTask } = useAddTask();
 
@@ -58,7 +59,7 @@ export default function ToDoAddMenu() {
             <FormItem
               title="Date"
               type="datetime-local"
-              value={formatDateTimeClean(new Date(context.todo.active.date))}
+              value={formatDateTime(new Date(task.date))}
               onChange={(e) => setTask({ date: e.target.value })}
             />
           </div>
