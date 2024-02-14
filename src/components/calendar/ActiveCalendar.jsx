@@ -84,15 +84,9 @@ export default function ActiveCalendar({ context, setContext }) {
     };
 
     setContext(tempContext);
-
-    // setActiveDate(date);
   };
 
   const dates = generateDates();
-
-  // let currentMonth = new Date();
-  // if (currentMonth.getMonth() != activeMonth)
-  //   currentMonth.setMonth(activeMonth);
 
   function changeActiveWeek(e) {
     setActiveWeek(e);

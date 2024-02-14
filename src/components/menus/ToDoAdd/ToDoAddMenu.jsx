@@ -1,4 +1,4 @@
-import { useContext, useReducer } from "react";
+import { useContext, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAddTask } from "@/hooks/tasks";
 
@@ -41,6 +41,25 @@ export default function ToDoAddMenu() {
     resetBox();
   };
 
+  const handleDateChange = (e) => {
+    const newDate = new Date(e.target.value);
+
+    let tempContext = { ...context };
+    tempContext.todo.active.date = newDate;
+
+    Object.assign(tempContext.todo.active, {
+      date: newDate,
+      month: newDate.getMonth(),
+      year: newDate.getFullYear(),
+    });
+
+    setContext(tempContext);
+
+    const tempTask = { ...task };
+    tempTask.date = newDate;
+    setTask(tempTask);
+  };
+
   return (
     <div id="todo-addmenu" className="flex bg-accent-black">
       <form id="tdam-form" onReset={cancelForm} onSubmit={addTo}>
@@ -57,10 +76,10 @@ export default function ToDoAddMenu() {
               onChange={(e) => setTask({ description: e.target.value })}
             />
             <FormItem
-              title="Date"
+              title="Due Date"
               type="datetime-local"
-              value={formatDateTime(new Date(task.date))}
-              onChange={(e) => setTask({ date: e.target.value })}
+              value={formatDateTime(context.todo.active.date)}
+              onChange={handleDateChange}
             />
           </div>
           <div className="flex flex-row justify-evenly my-4">

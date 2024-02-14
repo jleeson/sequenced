@@ -52,7 +52,7 @@ export function formatMonthYear(date) {
 export function formatDateTime(date) {
   return `${getYearProper(date)}-${getMonthProper(date)}-${getDateProper(
     date
-  )}T${getHoursProper(date)}:${getMinutesProper(date)}:${getSecondsProper(date)}`;
+  )}T${getHoursProper(date)}:${getMinutesProper(date)}`;
 }
 
 export function formatDateTimeClean(date){
