@@ -71,7 +71,9 @@ export function useDeleteTask() {
 
   const mutationFn = async (task) => {
     const tasks = await loadTasks();
-    tasks.splice(tasks.indexOf(task), 1);
+    const realTask = tasks.find((t) => t.id == task.id);
+    const realIndex = tasks.indexOf(realTask);
+    tasks.splice(realIndex, 1);
 
     await Preferences.set({ key: "tasks", value: JSON.stringify(tasks) });
   };

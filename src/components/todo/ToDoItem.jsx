@@ -1,5 +1,6 @@
 import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
 import { formatShortDate } from "@/utils/date";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function ToDoItem({ item }) {
@@ -7,6 +8,8 @@ export function ToDoItem({ item }) {
 
   const { mutate: deleteTask } = useDeleteTask();
   const { mutate: updateTask } = useUpdateTask();
+
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleMarkComplete = (e) => {
     e.stopPropagation();
@@ -47,16 +50,36 @@ export function ToDoItem({ item }) {
         </h1>
       </div>
       <div className="flex justify-end col-span-2 mx-2 text-sm">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
+        {!isDeleting && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
 
-            deleteTask(item);
-          }}
-          className="bg-red-400 text-accent-white border px-3 py-1.5 rounded-xl"
-        >
-          Delete
-        </button>
+              setIsDeleting(true);
+            }}
+            className="bg-red-400 text-accent-white border px-3 py-1.5 rounded-xl"
+          >
+            Delete
+          </button>
+        )}
+        {isDeleting && (
+          <div className="w-full flex flex-row justify-evenly">
+            <div
+              className="bg-red-600 p-1.5 rounded-md"
+              onClick={() => setIsDeleting(false)}
+            >
+              <span>N</span>
+            </div>
+            <div
+              className="bg-green-600 p-1.5 rounded-md"
+              onClick={() => {
+                deleteTask(task);
+              }}
+            >
+              Y
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
