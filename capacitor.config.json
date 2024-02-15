@@ -1,6 +1,6 @@
 {
-  "appId": "com.danieldwedding.adhd_tracker",
-  "appName": "ADHD Support",
+  "appId": "com.ottegi.sequenced",
+  "appName": "Sequenced",
   "webDir": "dist",
   "plugins": {
     "CapacitorSQLite": {

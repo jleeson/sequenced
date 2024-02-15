@@ -1,5 +1,5 @@
-# ADHD Tracker
-Welcome to my ADHD Tracker. This project is built by [Daniel Wedding (@DoctorNovus)](https://github.com/DoctorNovus). It's biggest intention is to help me take one of my biggest struggles, ADHD, and give me ways to manage it. If you like what you see, please give it a star, and use it if you think you can. 
+# Sequenced
+Welcome to Sequenced, my ADHD Tracker. This project is built by [Daniel Wedding (@DoctorNovus)](https://github.com/DoctorNovus). It's biggest intention is to help me take one of my biggest struggles, ADHD, and give me ways to manage it. If you like what you see, please give it a star, and use it if you think you can. 
 
 # Project Map:
 - [ ] HomePage (Incomplete)
@@ -9,6 +9,13 @@ Welcome to my ADHD Tracker. This project is built by [Daniel Wedding (@DoctorNov
 - [ ] Money Management (Incomplete)
 - [ ] Plugin System (Incomplete)
 - [ ] App Themes (Incomplete)
+
+# Build Instructions (IOS)
+1. `npm i` - Installs needed packages
+2. `npx cap add ios` - Add your builds
+3. `npm run resources` - Compiles images for mobile build
+4. `npm run open:ios:full` - Runs `npm run build:full` and `npm run open:ios` to open the project in XCode.
+5. Compile in Xcode
 
 # Extras
 If you have any questions, comments, or concerns, refer to my email, daniel@ottegi.com.
