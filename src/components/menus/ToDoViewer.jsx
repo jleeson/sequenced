@@ -27,12 +27,7 @@ export default function ToDoViewer() {
               value="description"
               backup="No Description Provided"
             />
-            <ToDoItemSpec
-              task={task}
-              text="Date"
-              type="date"
-              value="date"
-            />
+            <ToDoItemSpec task={task} text="Date" type="date" value="date" />
             <ToDoItemSpec
               task={task}
               text="Is Complete?"

@@ -4,15 +4,15 @@ import { useAddTask } from "@/hooks/tasks";
 
 import FormItem from "./FormItem";
 import { formatDateTime } from "@/utils/date";
-import { createID } from "@/utils/id";
 import { ToDoContext } from "@/hooks/contexts";
+import { createID } from "@/utils/id";
 
 const reducer = (data, payload) => ({ ...data, ...payload });
 const initialData = {
   title: "",
   description: "",
   date: new Date(),
-  id: createID(24),
+  id: 0,
 };
 
 export default function ToDoAddMenu() {
@@ -23,6 +23,14 @@ export default function ToDoAddMenu() {
 
   const [context, setContext] = useContext(ToDoContext);
 
+  const getTaskID = () => {
+    let tempTask = { ...task };
+    let id = createID(24);
+    tempTask.id = id;
+    setTask(tempTask);
+    return id;
+  };
+
   const resetBox = () => {
     setTask(initialData);
     navigate(-1);
@@ -30,6 +38,14 @@ export default function ToDoAddMenu() {
 
   const addTo = async (e) => {
     e.preventDefault();
+    if (!task.id || task.id == 0 || task.id == "0") {
+      task.id = getTaskID();
+    }
+
+    if (task.date != context.todo.active.date)
+      task.date = context.todo.active.date;
+
+    console.log(task);
 
     addTask(task);
     resetBox();
@@ -57,6 +73,7 @@ export default function ToDoAddMenu() {
 
     const tempTask = { ...task };
     tempTask.date = newDate;
+    initialData.date = newDate;
     setTask(tempTask);
   };
 

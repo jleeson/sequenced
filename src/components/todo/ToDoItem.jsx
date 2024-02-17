@@ -18,6 +18,8 @@ export function ToDoItem({ item }) {
   const handleMarkComplete = (e) => {
     e.stopPropagation();
     updateTask({ id: item.id, data: { ...item, done: !item.done } });
+
+    setIsManaging(false);
   };
 
   const handleInteractive = () => {
@@ -26,6 +28,8 @@ export function ToDoItem({ item }) {
 
   const handleDelete = () => {
     deleteTask(item);
+
+    setIsDeleting(false);
   };
 
   return (
@@ -68,7 +72,7 @@ export function ToDoItem({ item }) {
                   className="w-32 h-6 text-md text-accent-white bg-accent-blue text-center rounded-md"
                   onClick={handleInteractive}
                 >
-                  View
+                  View/Edit
                 </a>
                 <a
                   className="w-32 h-6 text-md text-accent-white bg-accent-red-500 text-center rounded-md"
@@ -76,8 +80,11 @@ export function ToDoItem({ item }) {
                 >
                   Delete
                 </a>
-                <a className="w-32 h-6 text-md text-accent-white bg-purple-500 text-center rounded-md text-wrap">
-                  Mark Complete
+                <a
+                  onClick={handleMarkComplete}
+                  className="w-32 h-6 text-md text-accent-white bg-purple-500 text-center rounded-md text-wrap"
+                >
+                  Mark {item.done ? "Incomplete" : "Complete"}
                 </a>
               </div>
             </Dialog.Panel>
@@ -113,7 +120,7 @@ export function ToDoItem({ item }) {
         >
           <div className="fixed inset-0 flex w-screen items-center justify-center">
             <Dialog.Panel className="flex flex-col gap-2 p-4 bg-accent-white rounded-lg">
-              <Dialog.Title className="text-xl">Delete Task</Dialog.Title>
+              <Dialog.Title className="text-xl">Delete Task - {item.title}</Dialog.Title>
               <Dialog.Description className="text-lg">
                 This will delete the tapped task.
               </Dialog.Description>
