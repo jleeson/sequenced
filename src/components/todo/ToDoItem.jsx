@@ -1,5 +1,6 @@
 import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
 import { formatShortDate } from "@/utils/date";
+import { Dialog, Popover } from "@headlessui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +13,7 @@ export function ToDoItem({ item }) {
   const { mutate: updateTask } = useUpdateTask();
 
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isManaging, setIsManaging] = useState(false);
 
   const handleMarkComplete = (e) => {
     e.stopPropagation();
@@ -19,7 +21,11 @@ export function ToDoItem({ item }) {
   };
 
   const handleInteractive = () => {
-    // navigate(`/todo/view/${item.id}`);
+    navigate(`/todo/view/${item.id}`);
+  };
+
+  const handleDelete = () => {
+    deleteTask(item);
   };
 
   return (
@@ -27,7 +33,6 @@ export function ToDoItem({ item }) {
       className={`grid grid-cols-7 w-full h-12 justify-between items-center bg-accent-black-900 text-white rounded-xl px-1 py-2 box-border ${
         item.done ? "line-through" : "no-underline"
       }`}
-      onClick={handleInteractive}
     >
       <div className="col-span-1 flex flex-row justify-center">
         <div className="w-6 h-6 flex justify-evenly items-center bg-red-50 rounded-full bg-transparent border border-white">
@@ -52,41 +57,89 @@ export function ToDoItem({ item }) {
         </h1>
       </div>
       <div className="w-full flex justify-center col-span-2 text-sm">
-        {!isDeleting && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-
-              setIsDeleting(true);
-            }}
-            className="bg-red-400 text-accent-white border px-3 py-1.5 rounded-xl"
-          >
-            Delete
-          </button>
-        )}
-        {isDeleting && (
-          <div className="w-full flex flex-row justify-center items-center gap-4">
-            <div
-              className="flex justify-center items-center bg-red-600 p-1.5 rounded-md"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsDeleting(false);
-              }}
-            >
-              <span>N</span>
-            </div>
-            <div
-              className="flex justify-center items-center bg-green-600 p-1.5 rounded-md"
-              onClick={(e) => {
-                e.stopPropagation();
-
-                deleteTask(item);
-              }}
-            >
-              Y
-            </div>
+        <Dialog open={isManaging} onClose={() => setIsManaging(false)}>
+          <div className="fixed inset-0 flex w-screen items-center justify-center">
+            <Dialog.Panel className="bg-accent-white p-4 rounded-lg">
+              <Dialog.Title className="text-lg text-accent-black my-1">
+                Manage Task
+              </Dialog.Title>
+              <div className="w-32 flex flex-col bg-accent-white gap-2">
+                <a
+                  className="w-32 h-6 text-md text-accent-white bg-accent-blue text-center rounded-md"
+                  onClick={handleInteractive}
+                >
+                  View
+                </a>
+                <a
+                  className="w-32 h-6 text-md text-accent-white bg-accent-red-500 text-center rounded-md"
+                  onClick={() => setIsDeleting(true)}
+                >
+                  Delete
+                </a>
+                <a className="w-32 h-6 text-md text-accent-white bg-purple-500 text-center rounded-md text-wrap">
+                  Mark Complete
+                </a>
+              </div>
+            </Dialog.Panel>
           </div>
-        )}
+        </Dialog>
+        {/* <Popover className="relative">
+          <Popover.Button className="bg-accent-purple-400 text-accent-white border w-14 h-7 rounded-xl flex justify-center items-center">
+            More
+          </Popover.Button>
+
+          <Popover.Panel className="absolute z-10">
+            <div className="w-32 flex flex-col bg-accent-white">
+              <a className="text-md text-accent-black">View</a>
+              <a className="text-md text-accent-black">Delete</a>
+              <a className="text-md text-accent-black">Mark Complete</a>
+            </div>
+          </Popover.Panel>
+        </Popover> */}
+        <button
+          onClick={(e) => {
+            // e.stopPropagation();
+
+            setIsManaging(true);
+          }}
+          className="bg-accent-purple-400 text-accent-white border w-14 h-7 rounded-xl flex justify-center items-center"
+        >
+          More
+        </button>
+        <Dialog
+          open={isDeleting}
+          onClose={() => setIsDeleting(false)}
+          className="relative z-50"
+        >
+          <div className="fixed inset-0 flex w-screen items-center justify-center">
+            <Dialog.Panel className="flex flex-col gap-2 p-4 bg-accent-white rounded-lg">
+              <Dialog.Title className="text-xl">Delete Task</Dialog.Title>
+              <Dialog.Description className="text-lg">
+                This will delete the tapped task.
+              </Dialog.Description>
+
+              <div className="my-2">
+                <p className="text-lg mb-4">
+                  Are you sure you want to delete this task?
+                </p>
+                <div className="flex flex-row gap-8 justify-center">
+                  <button
+                    onClick={handleDelete}
+                    className="bg-accent-red-400 px-4 py-2 rounded-lg text-accent-white"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={() => setIsDeleting(false)}
+                    className="bg-accent-blue-400 px-4 py-2 rounded-lg text-accent-white"
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </Dialog.Panel>
+          </div>
+        </Dialog>
       </div>
     </div>
   );
