@@ -39,7 +39,7 @@ export default function ToDoViewer() {
             />
             <ToDoItemSpec
               task={task}
-              text="Date"
+              text="Due Date"
               type="date"
               value="date"
               immediateSave={isSaving}
