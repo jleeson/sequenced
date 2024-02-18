@@ -9,15 +9,22 @@ export default function ToDoItemSpec({
   text,
   value,
   backup,
+  immediateSave,
+  disabled,
 }) {
   const [editMode, setEditMode] = useState(false);
   const [task, setTask] = useState(baseTask);
   const { mutate: editTask } = useUpdateTask();
+  const [saved, setSaved] = useState(false);
+
+  const save = () => {
+    editTask({ id: task.data.id, data: task.data });
+
+    setSaved(true);
+  };
 
   const flipEdit = () => {
-    if (editMode) {
-      editTask({ id: task.data.id, data: task.data });
-    }
+    if (editMode) save();
 
     setEditMode(!editMode);
   };
@@ -31,6 +38,8 @@ export default function ToDoItemSpec({
 
     setTask(partialTask);
   };
+
+  if (immediateSave && !saved) save();
 
   let faceValue = task.data[value];
 
@@ -64,7 +73,7 @@ export default function ToDoItemSpec({
           )}
         </div>
         <div
-          className={`${type == "bool" ? "hidden" : ""} absolute right-14`}
+          className={`${disabled ? "hidden" : ""} absolute right-14`}
           onClick={flipEdit}
         >
           <img src={edit_icon} className="w-6 h-6 invert" />
