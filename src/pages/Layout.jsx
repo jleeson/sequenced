@@ -4,7 +4,7 @@ import NavBar from "../components/navigation/NavBar";
 
 const Layout = () => {
   return (
-    <div className="w-full h-full flex flex-col justify-between items-center">
+    <div className="w-full h-full flex flex-col justify-between items-center mt-10">
       <div className="flex flex-row justify-center items-center w-full">
         {/* <NavBar></NavBar> */}
         <div className="my-1"></div>

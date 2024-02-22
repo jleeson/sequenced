@@ -13,6 +13,8 @@ import ToDoAddMenu from "./components/menus/ToDoAdd/ToDoAddMenu";
 import ToDoViewer from "./components/menus/ToDoViewer";
 import { ToDoContext } from "./hooks/contexts";
 
+import { initialize as admobInit, banner as createBanner } from "./utils/ads";
+
 /* define the query client for react-query */
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,14 +31,17 @@ export default function App() {
         date: new Date(),
         month: new Date().getMonth(),
         year: new Date().getFullYear(),
-        menus: []
+        menus: [],
       },
       menus: {
         dailyTasks: false,
-        generalTasks: false
-      }
+        generalTasks: false,
+      },
     },
   });
+
+  const admob_initiator = admobInit();
+  const banner = createBanner();
 
   return (
     <QueryClientProvider client={queryClient}>
