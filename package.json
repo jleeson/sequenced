@@ -14,6 +14,7 @@
     "open:ios": "npx cap open ios",
     "open:ios:full": "npm run build:full && npm run open:ios",
     "open:android": "npx cap open android",
+    "open:android:full": "npm run build:full && npm run open:android",
     "run:ios": "npx cap run ios",
     "run:android": "npx cap run android",
     "build:ios": "npm run build:full && npm run run:ios",

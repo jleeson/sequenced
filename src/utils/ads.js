@@ -7,12 +7,13 @@ import {
   AdmobConsentDebugGeography,
 } from "@capacitor-community/admob";
 
-import { Device } from '@capacitor/device';
+import { Capacitor } from "@capacitor/core";
 
 const adID = {
-  ios: "ca-app-pub-8077676966001385~4941709566",
-  android: "ca-app-pub-8077676966001385~9775233844"
-}
+  ios: "ca-app-pub-8077676966001385/4881999812",
+  android: "ca-app-pub-8077676966001385/3426637289",
+};
+
 export const initialize = async () => {
   await AdMob.initialize();
 
@@ -47,32 +48,39 @@ export const initialize = async () => {
 };
 
 export const banner = async () => {
-  const info = await Device.getInfo();
-
-  AdMob.addListener(BannerAdPluginEvents.Loaded, () => {
+  AdMob.addListener(BannerAdPluginEvents.Loaded, (...args) => {
     // Subscribe Banner Event Listener
   });
 
-  AdMob.addListener(BannerAdPluginEvents.SizeChanged, (size) => {
-    // Subscribe Change Banner Size
-  });
+  AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info) => {
+    const shell = document.querySelector("#root");
+    const margin = parseInt(info.height, 10);
 
-  console.log("Platform: " + info.platform);
-  console.log("Know: " + info.platform == "ios" ? adID.ios : adID.android);
-  
+    if (margin == 0) shell.style.marginTop = "0px";
+
+    if (margin > 0) {
+        const safeAreaBottom = getComputedStyle(shell).getPropertyValue("--safe-area-inset-bottom");
+        shell.style.marginTop = `calc(${margin}px - ${safeAreaBottom})`;
+        shell.style.setProperty("--banner-ad-height", shell.style.marginTop);
+    }
+});
+
+  const platform = Capacitor.getPlatform();
+
   const options = {
-    adId: info.platform == "ios" ? adID.ios : adID.android,
-    adSize: BannerAdSize.BANNER,
+    adId: platform == "ios" ? adID.ios : adID.android,
+    adSize: BannerAdSize.ADAPTIVE_BANNER,
     position: BannerAdPosition.TOP_CENTER,
     margin: 0,
-    // isTesting: true,
-    // npa: true
+    isTesting: false,
   };
 
-  AdMob.showBanner(options);
+  await AdMob.showBanner(options);
 };
 
 export const showConsent = async () => {
+  await AdMob.resetConsentInfo();
+
   const consentInfo = await AdMob.requestConsentInfo();
 
   if (
@@ -80,5 +88,6 @@ export const showConsent = async () => {
     consentInfo.status === AdmobConsentStatus.REQUIRED
   ) {
     const { status } = await AdMob.showConsentForm();
+    return status;
   }
 };

@@ -1,5 +1,5 @@
 {
-  "appId": "com.ottegi.sequenced-app",
+  "appId": "com.ottegi.sequenced",
   "appName": "Sequenced",
   "webDir": "dist",
   "plugins": {

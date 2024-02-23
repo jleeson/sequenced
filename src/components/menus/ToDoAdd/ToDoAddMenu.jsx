@@ -45,8 +45,6 @@ export default function ToDoAddMenu() {
     if (task.date != context.todo.active.date)
       task.date = context.todo.active.date;
 
-    console.log(task);
-
     addTask(task);
     resetBox();
   };

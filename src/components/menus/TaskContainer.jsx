@@ -19,8 +19,6 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
       ...context,
     };
 
-    console.log(tempContext);
-
     tempContext.todo.menus[activeFilter] = !active;
 
     setContext(tempContext);

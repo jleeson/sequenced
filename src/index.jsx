@@ -13,7 +13,11 @@ import ToDoAddMenu from "./components/menus/ToDoAdd/ToDoAddMenu";
 import ToDoViewer from "./components/menus/ToDoViewer";
 import { ToDoContext } from "./hooks/contexts";
 
-import { initialize as admobInit, banner as createBanner } from "./utils/ads";
+import {
+  showConsent,
+  initialize as admobInit,
+  banner as createBanner,
+} from "@/utils/ads";
 
 /* define the query client for react-query */
 const queryClient = new QueryClient({
@@ -40,9 +44,6 @@ export default function App() {
     },
   });
 
-  const admob_initiator = admobInit();
-  const banner = createBanner();
-
   return (
     <QueryClientProvider client={queryClient}>
       <ToDoContext.Provider value={[context, setContext]}>
@@ -64,8 +65,16 @@ export default function App() {
   );
 }
 
+export async function Initialize() {
+  await showConsent();
+  await admobInit();
+  await createBanner();
+}
+
 createRoot(document.querySelector("#root")).render(
   <StrictMode>
     <App />
   </StrictMode>
 );
+
+Initialize().catch((error) => console.error(error));
