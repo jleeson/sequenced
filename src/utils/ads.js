@@ -4,7 +4,7 @@ import {
   BannerAdPosition,
   BannerAdPluginEvents,
   AdmobConsentStatus,
-  AdmobConsentDebugGeography,
+  MaxAdContentRating
 } from "@capacitor-community/admob";
 
 import { Capacitor } from "@capacitor/core";
@@ -14,43 +14,18 @@ const adID = {
   android: "ca-app-pub-8077676966001385/3426637289",
 };
 
-export const initialize = async () => {
-  await AdMob.initialize();
+export async function initializeAdMob() {
+  const isIOS = Capacitor.getPlatform() == "ios";
 
-  const [trackingInfo, consentInfo] = await Promise.all([
-    AdMob.trackingAuthorizationStatus(),
-    AdMob.requestConsentInfo(),
-  ]);
+  await AdMob.initialize({
+    tagForChildDirectedTreatment: true,
+    maxAdContentRating: MaxAdContentRating.General
+  });
 
-  if (trackingInfo.status === "notDetermined") {
-    /**
-     * If you want to explain TrackingAuthorization before showing the iOS dialog,
-     * you can show the modal here.
-     * ex)
-     * const modal = await this.modalCtrl.create({
-     *   component: RequestTrackingPage,
-     * });
-     * await modal.present();
-     * await modal.onDidDismiss();  // Wait for close modal
-     **/
-
-    await AdMob.requestTrackingAuthorization();
-  }
-
-  const authorizationStatus = await AdMob.trackingAuthorizationStatus();
-  if (
-    authorizationStatus.status === "authorized" &&
-    consentInfo.isConsentFormAvailable &&
-    consentInfo.status === AdmobConsentStatus.REQUIRED
-  ) {
+  const consentInfo = await AdMob.requestConsentInfo();
+  if (consentInfo.isConsentFormAvailable && consentInfo.status == AdmobConsentStatus.REQUIRED) {
     await AdMob.showConsentForm();
   }
-};
-
-export const banner = async () => {
-  AdMob.addListener(BannerAdPluginEvents.Loaded, (...args) => {
-    // Subscribe Banner Event Listener
-  });
 
   AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info) => {
     const shell = document.querySelector("#root");
@@ -63,31 +38,13 @@ export const banner = async () => {
         shell.style.marginTop = `calc(${margin}px - ${safeAreaBottom})`;
         shell.style.setProperty("--banner-ad-height", shell.style.marginTop);
     }
-});
+  });
 
-  const platform = Capacitor.getPlatform();
-
-  const options = {
-    adId: platform == "ios" ? adID.ios : adID.android,
+  await AdMob.showBanner({
+    adId: isIOS ? adID.ios : adID.android,
     adSize: BannerAdSize.ADAPTIVE_BANNER,
     position: BannerAdPosition.TOP_CENTER,
     margin: 0,
     isTesting: false,
-  };
-
-  await AdMob.showBanner(options);
-};
-
-export const showConsent = async () => {
-  await AdMob.resetConsentInfo();
-
-  const consentInfo = await AdMob.requestConsentInfo();
-
-  if (
-    consentInfo.isConsentFormAvailable &&
-    consentInfo.status === AdmobConsentStatus.REQUIRED
-  ) {
-    const { status } = await AdMob.showConsentForm();
-    return status;
-  }
-};
+  });
+}
