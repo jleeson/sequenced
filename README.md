@@ -20,7 +20,7 @@ Welcome to Sequenced, my ADHD Tracker. This project is built by [Daniel Wedding 
 # Download
 | IOS | Android |
 | :-: | :-: |
-| [<img src="resources/app-store-badge.png" height="50">](https://apps.apple.com/us/app/sequenced-adhd-manager/id6478198104) | [<img src="resources/google-play-badge.png" height="75">](https://play.google.com/store/apps/details?id=com.ottegi.sequenced) |
+| [<img src="resources/app-store-badge.png" height="50">](https://apps.apple.com/us/app/sequenced-adhd-manager/id6478198104) | [<img src="resources/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.ottegi.sequenced) |
 
 # Extras
 If you have any questions, comments, or concerns, refer to my email, daniel@ottegi.com.
