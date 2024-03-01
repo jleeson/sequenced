@@ -1,6 +1,6 @@
 import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
 import { formatShortDate } from "@/utils/date";
-import { Dialog, Popover } from "@headlessui/react";
+import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -90,19 +90,6 @@ export function ToDoItem({ item }) {
             </Dialog.Panel>
           </div>
         </Dialog>
-        {/* <Popover className="relative">
-          <Popover.Button className="bg-accent-purple-400 text-accent-white border w-14 h-7 rounded-xl flex justify-center items-center">
-            More
-          </Popover.Button>
-
-          <Popover.Panel className="absolute z-10">
-            <div className="w-32 flex flex-col bg-accent-white">
-              <a className="text-md text-accent-black">View</a>
-              <a className="text-md text-accent-black">Delete</a>
-              <a className="text-md text-accent-black">Mark Complete</a>
-            </div>
-          </Popover.Panel>
-        </Popover> */}
         <button
           onClick={(e) => {
             // e.stopPropagation();
@@ -120,7 +107,9 @@ export function ToDoItem({ item }) {
         >
           <div className="fixed inset-0 flex w-screen items-center justify-center">
             <Dialog.Panel className="flex flex-col gap-2 p-4 bg-accent-white rounded-lg">
-              <Dialog.Title className="text-xl">Delete Task - {item.title}</Dialog.Title>
+              <Dialog.Title className="text-xl">
+                Delete Task - {item.title}
+              </Dialog.Title>
               <Dialog.Description className="text-lg">
                 This will delete the tapped task.
               </Dialog.Description>
