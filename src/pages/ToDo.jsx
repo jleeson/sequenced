@@ -3,7 +3,7 @@ import { useTasks } from "@/hooks/tasks";
 import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import DayTasks from "../components/calendar/DayTasks";
 import { useNavigate } from "react-router-dom";
-import TaskContainer from "@/components/menus/TaskContainer";
+import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import { ToDoContext } from "@/hooks/contexts";
 
 export default function Todo() {
@@ -17,7 +17,7 @@ export default function Todo() {
       {tasks.isError && <span>{tasks.error.message}</span>}
       {tasks.isSuccess && (
         <div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center gap-2">
             <ActiveCalendar
               context={context}
               setContext={setContext}
