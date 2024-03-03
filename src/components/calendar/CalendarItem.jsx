@@ -38,7 +38,7 @@ export default function CalendarItem({ activeDate, date, changeDate }) {
               : "text-accent-white"
           } text-center`}
         >
-          {date.getDate()}
+          {date.getMonth() + 1}/{date.getDate()}
         </h1>
       </div>
     </div>

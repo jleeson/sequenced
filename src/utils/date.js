@@ -73,3 +73,22 @@ export function formatDateClean(date) {
 
   return `${month}/${day}/${year} ${hours}:${minutes}`;
 }
+
+export function generateWeek(startingDate, dayStart){
+  let week = [];
+
+  let dateSet = new Date(startingDate);
+
+  if(startingDate.getDay() != dayStart){
+    dateSet.setDate(startingDate.getDate() - ((startingDate.getDay()) - (dayStart)));
+  }
+
+  for(let i = 0; i < 7; i++){
+    let tempDate = new Date(dateSet);
+    tempDate.setDate(tempDate.getDate() + i);
+
+    week.push(tempDate);
+  }
+
+  return week;
+}
