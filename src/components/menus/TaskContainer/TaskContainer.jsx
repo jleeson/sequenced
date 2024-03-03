@@ -11,21 +11,14 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 
 import { ToDoContext } from "@/hooks/contexts";
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Menu } from "@headlessui/react";
+import TaskMenuItem from "./TaskMenuItem";
 
 export default function TaskContainer({ title, tasks, activeFilter }) {
   const [context, setContext] = useContext(ToDoContext);
-  const [hiddenVisible, setHiddenVisible] = useState(false);
+  const [taskFilter, setTaskFilter] = useState("incomplete");
 
   let active = context.todo.menus[activeFilter];
-
-  let imgSrc;
-  if (!active) imgSrc = dropdown_icon;
-  else imgSrc = dropup_icon;
-
-  let eyeIcon;
-  if (hiddenVisible) eyeIcon = visible_icon;
-  else eyeIcon = invisible_icon;
 
   const handleClick = () => {
     let tempContext = {
@@ -37,20 +30,27 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
     setContext(tempContext);
   };
 
-  const handleVis = () => {
-    setHiddenVisible(!hiddenVisible);
-  };
+  tasks = tasks.map((task) => {
+    if (typeof task.done == "undefined") task.done = false;
+
+    return task;
+  });
 
   let taskDisplay = tasks;
 
-  if (hiddenVisible) taskDisplay = tasks;
+  if (taskFilter == "all") taskDisplay = tasks;
+  else if (taskFilter == "incomplete")
+    taskDisplay = tasks.filter((task) => task.done == false);
 
   return (
     <div className="flex flex-col items-center w-[90%] my-2">
-      <Disclosure>
+      <Disclosure defaultOpen={true}>
         {({ open }) => (
           <>
-            <Disclosure.Button className="w-full flex flex-row items-center bg-transparent border border-accent-white rounded-lg px-2">
+            <Disclosure.Button
+              as="div"
+              className="w-full flex flex-row items-center bg-transparent border border-accent-white rounded-lg px-2"
+            >
               <div className="w-full flex flex-row justify-between">
                 <div className="flex flex-row items-center py-1">
                   <ChevronRightIcon
@@ -60,7 +60,21 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
                   <h1 className="text-xl">{title}</h1>
                 </div>
                 <div className="flex flex-row items-center">
-                  <AdjustmentsHorizontalIcon width="32" />
+                  <Menu>
+                    <Menu.Button>
+                      <AdjustmentsHorizontalIcon width="32" />
+                    </Menu.Button>
+                    <div className="relative">
+                      <Menu.Items className="flex flex-col absolute right-4 top-4 gap-2 bg-black border border-accent-white rounded-lg py-2 px-4">
+                        <TaskMenuItem active={taskFilter == "all"} handleClick={() => setTaskFilter("all")}>
+                          <span>All</span>
+                        </TaskMenuItem>
+                        <TaskMenuItem active={taskFilter == "incomplete"} handleClick={() => setTaskFilter("incomplete")}>
+                          <span>Incomplete</span>
+                        </TaskMenuItem>
+                      </Menu.Items>
+                    </div>
+                  </Menu>
                 </div>
               </div>
             </Disclosure.Button>
