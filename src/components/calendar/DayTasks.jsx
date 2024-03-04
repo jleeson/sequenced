@@ -1,3 +1,4 @@
+import { matchDate } from "@/utils/date";
 import TaskContainer from "../menus/TaskContainer/TaskContainer";
 
 export default function DayTasks({ day, tasks }) {
@@ -6,7 +7,7 @@ export default function DayTasks({ day, tasks }) {
       activeFilter="generalTasks"
       title={`${day.getMonth() + 1}/${day.getDate()}'s Tasks`}
       tasks={tasks.filter(
-        (task) => new Date(task.date).getDate() == day.getDate()
+        (task) => matchDate(new Date(task.date), day)
       )}
     />
   );

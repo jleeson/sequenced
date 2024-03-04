@@ -92,3 +92,7 @@ export function generateWeek(startingDate, dayStart){
 
   return week;
 }
+
+export function matchDate(dateOne, dateTwo){
+  return ((dateOne.getFullYear() == dateTwo.getFullYear()) && (dateOne.getMonth() == dateTwo.getMonth()) && (dateOne.getDate() == dateTwo.getDate()))
+}
