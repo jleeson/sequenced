@@ -55,7 +55,7 @@ export function formatDateTime(date) {
   )}T${getHoursProper(date)}:${getMinutesProper(date)}`;
 }
 
-export function formatDateTimeClean(date){
+export function formatDateTimeClean(date) {
   return `${getYearProper(date)}-${getMonthProper(date)}-${getDateProper(
     date
   )}T00:00:00`;
@@ -74,16 +74,18 @@ export function formatDateClean(date) {
   return `${month}/${day}/${year} ${hours}:${minutes}`;
 }
 
-export function generateWeek(startingDate, dayStart){
+export function generateWeek(startingDate, dayStart) {
   let week = [];
 
   let dateSet = new Date(startingDate);
 
-  if(startingDate.getDay() != dayStart){
-    dateSet.setDate(startingDate.getDate() - ((startingDate.getDay()) - (dayStart)));
+  if (startingDate.getDay() != dayStart) {
+    dateSet.setDate(
+      startingDate.getDate() - (startingDate.getDay() - dayStart)
+    );
   }
 
-  for(let i = 0; i < 7; i++){
+  for (let i = 0; i < 7; i++) {
     let tempDate = new Date(dateSet);
     tempDate.setDate(tempDate.getDate() + i);
 
@@ -93,6 +95,29 @@ export function generateWeek(startingDate, dayStart){
   return week;
 }
 
-export function matchDate(dateOne, dateTwo){
-  return ((dateOne.getFullYear() == dateTwo.getFullYear()) && (dateOne.getMonth() == dateTwo.getMonth()) && (dateOne.getDate() == dateTwo.getDate()))
+export function matchDate(dateOne, dateTwo) {
+  return (
+    dateOne.getFullYear() == dateTwo.getFullYear() &&
+    dateOne.getMonth() == dateTwo.getMonth() &&
+    dateOne.getDate() == dateTwo.getDate()
+  );
+}
+
+export function getNameByDate(date) {
+  switch (date) {
+    case 0:
+      return "Sunday";
+    case 1:
+      return "Monday";
+    case 2:
+      return "Tuesday";
+    case 3:
+      return "Wednesday";
+    case 4:
+      return "Thursday";
+    case 5:
+      return "Friday";
+    case 6:
+      return "Saturday";
+  }
 }
