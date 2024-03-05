@@ -5,7 +5,7 @@ import { useAddTask } from "@/hooks/tasks";
 import FormItem from "./FormItem";
 
 const reducer = (data, payload) => ({ ...data, ...payload });
-const initialData = { title: "", description: "", date: new Date() };
+const initialData = { title: "", description: "" };
 
 export default function ToDoAddMenu() {
   const navigate = useNavigate();

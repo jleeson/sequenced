@@ -48,12 +48,14 @@ export function ToDoItem({ item }) {
           />
           <ToDoItemTitle text={item.title} />
         </div>
-        <div className="flex flex-row">
-          <ToDoItemMenu item={item} />
+        <div className="flex flex-row gap-2">
+          <div>
+            <ToDoItemDate date={item.date} />
+          </div>
+          <div className="flex flex-row">
+            <ToDoItemMenu item={item} />
+          </div>
         </div>
-      </div>
-      <div>
-        <ToDoItemDate date={item.date} />
       </div>
     </ToDoItemShell>
   );

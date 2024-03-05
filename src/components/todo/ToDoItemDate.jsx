@@ -16,18 +16,22 @@ export default function ToDoItemDate({ date }) {
         timeHours -= 12;
       }
 
-      return `${formatDigits(timeHours, 2)}:${formatDigits(date.getMinutes(), 2)} ${timeprint}`;
+      return `${formatDigits(timeHours, 2)}:${formatDigits(
+        date.getMinutes(),
+        2
+      )} ${timeprint}`;
     };
 
     if (relative >= 0 && relative <= 1) {
       if (relative == 1) {
-        return `Tomorrow, ${getTime(checkedDate)}`;
+        return `Tomorrow`;
       } else {
-        return `Today, ${getTime(checkedDate)}`;
+        return `Today`;
       }
     } else {
-      return `${formatDigits(checkedDate.getMonth(), 2)}/${formatDigits(checkedDate.getDate(), 2)}, ${getTime(
-        checkedDate
+      return `${formatDigits(checkedDate.getMonth(), 2)}/${formatDigits(
+        checkedDate.getDate(),
+        2
       )}`;
     }
   };
