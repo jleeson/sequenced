@@ -13,7 +13,7 @@ const Layout = () => {
         {/* <NavBar></NavBar> */}
         <div className="my-1"></div>
       </div>
-      <div className="flex flex-col justify-center items-center bg-accent-black text-accent-white w-full h-full">
+      <div className="flex flex-col justify-center items-center bg-accent-black text-accent-white w-full h-full overflow-y-scroll">
         <Outlet />
       </div>
     </div>

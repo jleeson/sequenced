@@ -64,8 +64,8 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
                     <Menu.Button>
                       <AdjustmentsHorizontalIcon width="32" />
                     </Menu.Button>
-                    <div className="relative">
-                      <Menu.Items className="flex flex-col absolute right-4 top-4 gap-2 bg-black border border-accent-white rounded-lg py-2 px-4">
+                    <div className="relative inset-0 z-50">
+                      <Menu.Items className="flex flex-col absolute right-4 top-4 gap-2 bg-black border border-accent-white rounded-lg py-4 px-4">
                         <TaskMenuItem active={taskFilter == "all"} handleClick={() => setTaskFilter("all")}>
                           <span>All</span>
                         </TaskMenuItem>
@@ -78,7 +78,7 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
                 </div>
               </div>
             </Disclosure.Button>
-            <Disclosure.Panel>
+            <Disclosure.Panel className="w-full h-full">
               {!active && <TaskMenu tasks={taskDisplay} />}
             </Disclosure.Panel>
           </>

@@ -56,7 +56,7 @@ export default function ToDoAddMenu() {
             <button
               id="tdam-reset"
               type="reset"
-              className="text-lg w-20 h-8 bg-red-500 text-white rounded-lg"
+              className="text-lg w-24 h-10 bg-red-500 text-white rounded-lg"
               onClick={cancelForm}
             >
               Cancel
@@ -64,7 +64,7 @@ export default function ToDoAddMenu() {
             <button
               id="tdam-submit"
               type="submit"
-              className="text-lg w-20 h-8 bg-accent-blue text-white rounded-lg"
+              className="text-lg w-24 h-10 bg-accent-blue text-white rounded-lg"
             >
               Add
             </button>
