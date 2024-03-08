@@ -5,6 +5,7 @@ import DayTasks from "../components/calendar/DayTasks";
 import { useNavigate } from "react-router-dom";
 import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import { ToDoContext } from "@/hooks/contexts";
+import { sortByDate } from "@/utils/data";
 
 import add_icon from "@/assets/add.svg";
 
@@ -24,8 +25,8 @@ export default function Todo() {
               context={context}
               setContext={setContext}
             />
-            <DayTasks day={context.todo.active.date} tasks={tasks.data} />
-            <TaskContainer title="All Tasks" tasks={tasks.data} activeFilter="dailyTasks" />
+            <DayTasks day={context.todo.active.date} tasks={sortByDate(tasks.data)} />
+            <TaskContainer title="All Tasks" tasks={sortByDate(tasks.data)} activeFilter="dailyTasks" />
           </div>
           <div>
             <div className="w-full h-16 flex justify-center items-center fixed bottom-8">

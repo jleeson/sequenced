@@ -29,7 +29,7 @@ export default function ToDoItemDate({ date }) {
         return `Today`;
       }
     } else {
-      return `${formatDigits(checkedDate.getMonth(), 2)}/${formatDigits(
+      return `${formatDigits(checkedDate.getMonth() + 1, 2)}/${formatDigits(
         checkedDate.getDate(),
         2
       )}`;
