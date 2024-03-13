@@ -5,6 +5,11 @@
   "plugins": {
     "CapacitorSQLite": {
       "iosDatabaseLocation": "Library/CapacitorDatabase"
+    },
+    "LocalNotifications": {
+      "smallIcon": "icon",
+      "iconColor": "#307acf",
+      "sound": "beep.wav"
     }
   }
 }

@@ -14,6 +14,7 @@ import ToDoViewer from "./components/menus/ToDoViewer";
 import { ToDoContext } from "./hooks/contexts";
 
 import { initializeAdMob } from "@/utils/ads";
+import { initializeNotifications } from "./utils/notifs";
 
 /* define the query client for react-query */
 const queryClient = new QueryClient({
@@ -63,6 +64,7 @@ export default function App() {
 
 async function initialize() {
   await initializeAdMob();
+  await initializeNotifications();
 }
 
 createRoot(document.querySelector("#root")).render(
