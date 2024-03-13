@@ -8,11 +8,13 @@ import { ToDoContext } from "@/hooks/contexts";
 import { sortByDate } from "@/utils/data";
 
 import add_icon from "@/assets/add.svg";
+import ToDoAddMenu from "@/components/menus/ToDoAddMenu/ToDoAddMenu";
 
 export default function Todo() {
   const tasks = useTasks();
   const navigate = useNavigate();
   const [context, setContext] = useContext(ToDoContext);
+  const [isAdding, setIsAdding] = useState(false);
 
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">
@@ -21,24 +23,34 @@ export default function Todo() {
       {tasks.isSuccess && (
         <div>
           <div className="flex flex-col items-center gap-2">
-            <ActiveCalendar
-              context={context}
-              setContext={setContext}
+            <ActiveCalendar context={context} setContext={setContext} />
+            <DayTasks
+              day={context.todo.active.date}
+              tasks={sortByDate(tasks.data)}
             />
-            <DayTasks day={context.todo.active.date} tasks={sortByDate(tasks.data)} />
-            <TaskContainer title="All Tasks" tasks={sortByDate(tasks.data)} activeFilter="dailyTasks" />
+            <TaskContainer
+              title="All Tasks"
+              tasks={sortByDate(tasks.data)}
+              activeFilter="dailyTasks"
+            />
           </div>
-          <div>
+          <div id="adder">
             <div className="w-full h-16 flex justify-center items-center fixed bottom-8">
               <button
-                onClick={() => navigate("/todo/add")}
+                onClick={() => setIsAdding(true)}
                 className="flex text-center justify-center items-center w-12 h-12 text-3xl bg-blue-600 rounded-full text-white"
               >
                 <div className="flex justify-center items-center w-full h-full">
-                  <img src={add_icon} className="invert w-3/4 h-3/4" width="32" height="32" />
+                  <img
+                    src={add_icon}
+                    className="invert w-3/4 h-3/4"
+                    width="32"
+                    height="32"
+                  />
                 </div>
               </button>
             </div>
+            <ToDoAddMenu isOpen={isAdding} setIsOpen={setIsAdding} />
           </div>
         </div>
       )}

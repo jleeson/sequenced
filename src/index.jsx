@@ -9,7 +9,7 @@ import ToDo from "./pages/ToDo";
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
 import "./index.css";
-import ToDoAddMenu from "./components/menus/ToDoAdd/ToDoAddMenu";
+
 import ToDoViewer from "./components/menus/ToDoViewer";
 import { ToDoContext } from "./hooks/contexts";
 
@@ -48,7 +48,6 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<ToDo />} />
-              <Route path="/todo/add" element={<ToDoAddMenu />} />
               <Route path="/todo/view/:id" element={<ToDoViewer />} />
               {/* <Route path="/meds" element={<Meds />} /> */}
               {/* <Route path="/mood" element={<Mood />} /> */}
