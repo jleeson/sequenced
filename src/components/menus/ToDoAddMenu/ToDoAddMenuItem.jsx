@@ -8,6 +8,7 @@ export default function ToDoAddMenuItem({ name, type, value, onChange }) {
       placeholder={`${name}...`}
       value={value}
       onChange={onChange}
+      autoFocus={false}
     />
   );
 
@@ -20,6 +21,7 @@ export default function ToDoAddMenuItem({ name, type, value, onChange }) {
         placeholder={`${name}...`}
         value={value}
         onChange={onChange}
+        autoFocus={false}
       ></textarea>
     );
   }

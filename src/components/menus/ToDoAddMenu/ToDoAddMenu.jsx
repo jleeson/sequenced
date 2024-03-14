@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { useReducer } from "react";
+import { useReducer, useRef } from "react";
 import { formatDateTime } from "@/utils/date";
 import { useAddTask } from "@/hooks/tasks";
 
@@ -36,12 +36,16 @@ export default function ToDoAddMenu({ isOpen, setIsOpen }) {
     ResetForm();
   };
 
+  const ref = useRef(null);
+
   return (
     <Transition
       as={Dialog}
       show={isOpen}
       onClose={() => setIsOpen(false)}
       className="relative z-50 flex items-center justify-center"
+      initialFocus={ref}
+      ref={ref}
     >
       <div className="flex flex-row items-end justify-center fixed inset-0 w-full h-full">
         <Transition.Child
@@ -63,40 +67,38 @@ export default function ToDoAddMenu({ isOpen, setIsOpen }) {
               </Dialog.Description>
             </div>
 
-            <div className="flex flex-col gap-1">
-              <form id="todo-addmenu">
-                <ToDoAddMenuItem
-                  name="Name"
-                  value={task.title}
-                  onChange={(e) => setTask({ title: e.target.value })}
-                />
-                <ToDoAddMenuItem
-                  name="Description"
-                  type="textarea"
-                  value={task.description}
-                  onChange={(e) => setTask({ description: e.target.value })}
-                />
-                <ToDoAddMenuItem
-                  name="Due Date"
-                  type="datetime-local"
-                  value={formatDateTime(task.date)}
-                  onChange={(e) => setTask({ date: new Date(e.target.value) })}
-                />
-              </form>
+            <div className="flex flex-col gap-3">
+              <ToDoAddMenuItem
+                name="Name"
+                value={task.title}
+                onChange={(e) => setTask({ title: e.target.value })}
+              />
+              <ToDoAddMenuItem
+                name="Description"
+                type="textarea"
+                value={task.description}
+                onChange={(e) => setTask({ description: e.target.value })}
+              />
+              <ToDoAddMenuItem
+                name="Due Date"
+                type="datetime-local"
+                value={formatDateTime(task.date)}
+                onChange={(e) => setTask({ date: new Date(e.target.value) })}
+              />
             </div>
 
             <div className="flex flex-row justify-evenly mt-6">
-              <button
-                className="border border-accent-black w-32 h-10 rounded-lg text-lg bg-green-600 text-accent-white"
-                onClick={SubmitForm}
-              >
-                Create
-              </button>
               <button
                 className="border border-accent-black w-32 h-10 rounded-lg text-lg bg-red-600 text-accent-white"
                 onClick={CancelForm}
               >
                 Cancel
+              </button>
+              <button
+                className="border border-accent-black w-32 h-10 rounded-lg text-lg bg-green-600 text-accent-white"
+                onClick={SubmitForm}
+              >
+                Create
               </button>
             </div>
           </div>
