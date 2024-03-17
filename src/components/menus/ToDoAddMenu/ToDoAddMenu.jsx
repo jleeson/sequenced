@@ -1,13 +1,13 @@
 import { Dialog, Disclosure, Transition } from "@headlessui/react";
 import { useContext, useReducer, useRef } from "react";
 import { formatDateTime, matchDate } from "@/utils/date";
-import { useAddTask } from "@/hooks/tasks";
+import { useAddTask, useTasks } from "@/hooks/tasks";
 
 import ToDoAddMenuItem from "./ToDoAddMenuItem";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import ToDoAddMenuItemCustom from "./ToDoAddMenuItemCustom";
 import ToDoAddMenuItemSelector from "./ToDoAddMenuSelector";
-import { createID } from "@/utils/id";
+import { createID, createIDUnmatched } from "@/utils/id";
 import { ToDoContext } from "@/hooks/contexts";
 
 const reducer = (data, payload) => ({ ...data, ...payload });
@@ -19,6 +19,7 @@ export default function ToDoAddMenu({
   setActiveDate,
 }) {
   const [context] = useContext(ToDoContext);
+  const tasks = useTasks();
 
   const [task, setTask] = useReducer(reducer, {
     title: "",
@@ -42,9 +43,7 @@ export default function ToDoAddMenu({
   };
 
   const SubmitForm = () => {
-    if (!task.id) {
-      task.id = createID(20);
-    }
+    task.id = createIDUnmatched(tasks.data);
 
     addTask(task);
 

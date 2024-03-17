@@ -1,6 +1,5 @@
 import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
-import { formatShortDate, matchDate } from "@/utils/date";
-import { Dialog } from "@headlessui/react";
+import { matchDate } from "@/utils/date";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ToDoItemShell from "./ToDoItemShell";
@@ -8,7 +7,6 @@ import ToDoItemCheckBox from "./ToDoItemCheckbox";
 import ToDoItemTitle from "./ToDoItemTitle";
 import ToDoItemMenu from "./ToDoItemMenu/ToDoItemMenu";
 import ToDoItemDate from "./ToDoItemDate";
-import { createID } from "@/utils/id";
 import { ToDoContext } from "@/hooks/contexts";
 import { isTaskDone } from "@/utils/data";
 

@@ -51,6 +51,13 @@ export default function ToDoViewer() {
               value="done"
               disabled
             />
+            <ToDoItemSpec
+              task={task}
+              text="ID"
+              type="text"
+              value="id"
+              immediateSave={isSaving}
+            />
           </div>
           <div className="my-4">
             <button
