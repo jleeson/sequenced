@@ -1,6 +1,6 @@
 import { Dialog, Disclosure, Transition } from "@headlessui/react";
 import { useContext, useReducer, useRef } from "react";
-import { formatDateTime } from "@/utils/date";
+import { formatDateTime, matchDate } from "@/utils/date";
 import { useAddTask } from "@/hooks/tasks";
 
 import ToDoAddMenuItem from "./ToDoAddMenuItem";
@@ -23,7 +23,11 @@ export default function ToDoAddMenu({
   const [task, setTask] = useReducer(reducer, {
     title: "",
     description: "",
+    date: new Date(activeDate),
   });
+
+  if (!matchDate(new Date(task.date), new Date(activeDate)))
+    setTask({ date: new Date(activeDate) });
 
   const { mutate: addTask } = useAddTask();
 
@@ -31,6 +35,7 @@ export default function ToDoAddMenu({
     setTask({
       title: "",
       description: "",
+      date: new Date(activeDate),
     });
 
     setIsOpen(false);
@@ -100,6 +105,7 @@ export default function ToDoAddMenu({
                 onChange={(e) => {
                   setActiveDate(new Date(e.target.value));
                   setTask({ date: new Date(e.target.value) });
+                  console.log({ date: new Date(e.target.value) });
                 }}
               />
               <Disclosure>

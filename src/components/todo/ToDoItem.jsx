@@ -23,8 +23,6 @@ export function ToDoItem({ item }) {
   const [isManaging, setIsManaging] = useState(false);
   const [context, setContext] = useContext(ToDoContext);
 
-  if (Array.isArray(item.done)) console.log("DONE", item.done);
-
   const handleMarkComplete = (e) => {
     e.stopPropagation();
 
@@ -43,7 +41,6 @@ export function ToDoItem({ item }) {
 
       updateTask({ id: item.id, data: { ...item, done: newDone } });
     } else {
-      console.log({ ...item, done: !item.done });
       updateTask({ id: item.id, data: { ...item, done: !item.done } });
     }
 

@@ -23,12 +23,8 @@ export function isDateWithinProximity(mode, a, b) {
     case "weekly":
       tempDate = new Date(a.date);
       for (let i = 0; i < 100; i++) {
-        tempDate.setDate(tempDate.getDate() + i * 7);
-        if (
-          tempDate.getFullYear() == b.getFullYear() &&
-          tempDate.getMonth() == b.getMonth() &&
-          tempDate.getDate() == b.getDate()
-        ) {
+        tempDate.setDate(new Date(a.date).getDate() + i * 7);
+        if (matchDate(tempDate, b)) {
           return true;
         }
       }
@@ -38,12 +34,8 @@ export function isDateWithinProximity(mode, a, b) {
     case "two-weekly":
       tempDate = new Date(a.date);
       for (let i = 0; i < 100; i++) {
-        tempDate.setDate(tempDate.getDate() + i * 14);
-        if (
-          tempDate.getFullYear() == b.getFullYear() &&
-          tempDate.getMonth() == b.getMonth() &&
-          tempDate.getDate() == b.getDate()
-        ) {
+        tempDate.setDate(new Date(a.date).getDate() + i * 14);
+        if (matchDate(tempDate, b)) {
           return true;
         }
       }
