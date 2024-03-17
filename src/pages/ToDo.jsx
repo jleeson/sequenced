@@ -15,6 +15,7 @@ export default function Todo() {
   const navigate = useNavigate();
   const [context, setContext] = useContext(ToDoContext);
   const [isAdding, setIsAdding] = useState(false);
+  const [activeDate, setActiveDate] = useState(context.todo.active.date);
 
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">
@@ -23,7 +24,7 @@ export default function Todo() {
       {tasks.isSuccess && (
         <div>
           <div className="flex flex-col items-center gap-2">
-            <ActiveCalendar context={context} setContext={setContext} />
+            <ActiveCalendar context={context} setContext={setContext} setActiveDate={setActiveDate} />
             <DayTasks
               day={context.todo.active.date}
               tasks={sortByDate(tasks.data)}
@@ -50,7 +51,12 @@ export default function Todo() {
                 </div>
               </button>
             </div>
-            <ToDoAddMenu isOpen={isAdding} setIsOpen={setIsAdding} />
+            <ToDoAddMenu
+              isOpen={isAdding}
+              setIsOpen={setIsAdding}
+              activeDate={activeDate}
+              setActiveDate={setActiveDate}
+            />
           </div>
         </div>
       )}

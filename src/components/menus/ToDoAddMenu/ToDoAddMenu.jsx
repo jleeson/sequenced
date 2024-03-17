@@ -1,17 +1,28 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { useReducer, useRef } from "react";
+import { Dialog, Disclosure, Transition } from "@headlessui/react";
+import { useContext, useReducer, useRef } from "react";
 import { formatDateTime } from "@/utils/date";
 import { useAddTask } from "@/hooks/tasks";
 
 import ToDoAddMenuItem from "./ToDoAddMenuItem";
+import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import ToDoAddMenuItemCustom from "./ToDoAddMenuItemCustom";
+import ToDoAddMenuItemSelector from "./ToDoAddMenuSelector";
+import { createID } from "@/utils/id";
+import { ToDoContext } from "@/hooks/contexts";
 
 const reducer = (data, payload) => ({ ...data, ...payload });
 
-export default function ToDoAddMenu({ isOpen, setIsOpen }) {
+export default function ToDoAddMenu({
+  isOpen,
+  setIsOpen,
+  activeDate,
+  setActiveDate,
+}) {
+  const [context] = useContext(ToDoContext);
+
   const [task, setTask] = useReducer(reducer, {
     title: "",
     description: "",
-    date: new Date(Date.now()),
   });
 
   const { mutate: addTask } = useAddTask();
@@ -20,13 +31,16 @@ export default function ToDoAddMenu({ isOpen, setIsOpen }) {
     setTask({
       title: "",
       description: "",
-      date: new Date(Date.now()),
     });
 
     setIsOpen(false);
   };
 
   const SubmitForm = () => {
+    if (!task.id) {
+      task.id = createID(20);
+    }
+
     addTask(task);
 
     ResetForm();
@@ -50,12 +64,12 @@ export default function ToDoAddMenu({ isOpen, setIsOpen }) {
       <div className="flex flex-row items-end justify-center fixed inset-0 w-full h-full">
         <Transition.Child
           as={Dialog.Panel}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
+          enter="transition duration-500"
+          enterFrom="translate-y-96"
+          enterTo="translate-y-0"
           leave="ease-in duration-200"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
+          leaveFrom="translate-y-0"
+          leaveTo="translate-y-96"
           className="flex flex-col w-full bg-accent-white px-2 py-1 rounded-t-xl pb-8 items-center"
         >
           <div className="flex flex-col w-3/4">
@@ -82,9 +96,42 @@ export default function ToDoAddMenu({ isOpen, setIsOpen }) {
               <ToDoAddMenuItem
                 name="Due Date"
                 type="datetime-local"
-                value={formatDateTime(task.date)}
-                onChange={(e) => setTask({ date: new Date(e.target.value) })}
+                value={formatDateTime(activeDate)}
+                onChange={(e) => {
+                  setActiveDate(new Date(e.target.value));
+                  setTask({ date: new Date(e.target.value) });
+                }}
               />
+              <Disclosure>
+                {({ open }) => (
+                  <div>
+                    <div className="flex flex-row gap-1">
+                      <ChevronRightIcon
+                        className={open ? "rotate-90 transform" : ""}
+                        width="32"
+                      />
+                      <Disclosure.Button>Advanced Options</Disclosure.Button>
+                    </div>
+                    <Disclosure.Panel>
+                      <ToDoAddMenuItemCustom name="Repeating">
+                        <select
+                          className="border border-accent-black px-2 py-1"
+                          value={task.repeater}
+                          onChange={(e) => {
+                            setTask({ repeater: e.target.value });
+                          }}
+                        >
+                          <option value="">Do Not Repeat</option>
+                          <option value="daily">Every Day</option>
+                          <option value="weekly">Every Week</option>
+                          <option value="two-weekly">Every 2 Weeks</option>
+                          <option value="monthly">Every Month</option>
+                        </select>
+                      </ToDoAddMenuItemCustom>
+                    </Disclosure.Panel>
+                  </div>
+                )}
+              </Disclosure>
             </div>
 
             <div className="flex flex-row justify-evenly mt-6">

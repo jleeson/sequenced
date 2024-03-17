@@ -13,6 +13,8 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { ToDoContext } from "@/hooks/contexts";
 import { Disclosure, Menu } from "@headlessui/react";
 import TaskMenuItem from "./TaskMenuItem";
+import { matchDate } from "@/utils/date";
+import { isTaskDone } from "@/utils/data";
 
 export default function TaskContainer({ title, tasks, activeFilter }) {
   const [context, setContext] = useContext(ToDoContext);
@@ -40,7 +42,7 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
 
   if (taskFilter == "all") taskDisplay = tasks;
   else if (taskFilter == "incomplete")
-    taskDisplay = tasks.filter((task) => task.done == false);
+    taskDisplay = tasks.filter((task) => isTaskDone(task, context.todo.active.date));
 
   return (
     <div className="flex flex-col items-center w-[90%] my-2">
@@ -66,10 +68,16 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
                     </Menu.Button>
                     <div className="relative inset-0 z-50">
                       <Menu.Items className="flex flex-col absolute right-4 top-4 gap-2 bg-black border border-accent-white rounded-lg py-4 px-4">
-                        <TaskMenuItem active={taskFilter == "all"} handleClick={() => setTaskFilter("all")}>
+                        <TaskMenuItem
+                          active={taskFilter == "all"}
+                          handleClick={() => setTaskFilter("all")}
+                        >
                           <span>All</span>
                         </TaskMenuItem>
-                        <TaskMenuItem active={taskFilter == "incomplete"} handleClick={() => setTaskFilter("incomplete")}>
+                        <TaskMenuItem
+                          active={taskFilter == "incomplete"}
+                          handleClick={() => setTaskFilter("incomplete")}
+                        >
                           <span>Incomplete</span>
                         </TaskMenuItem>
                       </Menu.Items>
