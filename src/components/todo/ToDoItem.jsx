@@ -27,17 +27,23 @@ export function ToDoItem({ item }) {
     e.stopPropagation();
 
     if (item.repeater && item.repeater.length != 0) {
-      let newDone = [];
+      let newDone = item.done || [];
       let activeDate = context.todo.active;
 
       if (!Array.isArray(item.done)) item.done = newDone;
 
+      let rawDate = new Date(activeDate.date);
+      rawDate.setHours(0, 0, 0, 0);
+
       let foundDate = [...item.done].find((ite) =>
-        matchDate(new Date(ite), new Date(activeDate.date))
+        matchDate(new Date(ite), rawDate)
       );
 
-      if (!foundDate) newDone.push(new Date(activeDate.date));
-      else newDone.splice(newDone.indexOf(activeDate), 1);
+
+      if (!foundDate) newDone.push(rawDate);
+      else newDone.splice(newDone.indexOf(rawDate), 1);
+
+      console.log(newDone);
 
       updateTask({ id: item.id, data: { ...item, done: newDone } });
     } else {
