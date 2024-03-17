@@ -10,6 +10,7 @@ import ToDoItemMenu from "./ToDoItemMenu/ToDoItemMenu";
 import ToDoItemDate from "./ToDoItemDate";
 import { createID } from "@/utils/id";
 import { ToDoContext } from "@/hooks/contexts";
+import { isTaskDone } from "@/utils/data";
 
 export function ToDoItem({ item }) {
   if (!item) item = {};
@@ -39,7 +40,6 @@ export function ToDoItem({ item }) {
         matchDate(new Date(ite), rawDate)
       );
 
-
       if (!foundDate) newDone.push(rawDate);
       else newDone.splice(newDone.indexOf(rawDate), 1);
 
@@ -68,7 +68,7 @@ export function ToDoItem({ item }) {
       <div className="flex flex-row justify-between">
         <div className="flex flex-row items-center">
           <ToDoItemCheckBox
-            checked={item.done}
+            checked={!isTaskDone(item, context.todo.active.date)}
             onChange={handleMarkComplete}
             onClick={(e) => e.stopPropagation()}
           />
