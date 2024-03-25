@@ -1,4 +1,6 @@
 import today_icon from "@/assets/today.svg";
+import { isDateGreater } from "@/utils/data";
+import { isOverdue } from "@/utils/date";
 import { formatDigits } from "@/utils/math";
 
 export default function ToDoItemDate({ date }) {
@@ -36,18 +38,11 @@ export default function ToDoItemDate({ date }) {
     }
   };
 
-  const isOverdue = (date) => {
-    const today = new Date();
-    if (new Date(date).getDate() < today.getDate()) return true;
-
-    return false;
-  };
-
   return (
     <div className="w-full h-full flex flex-row gap-1 items-center">
       <div
         className={`flex items-center h-6 ${
-          isOverdue(date) ? "text-red-400" : "text-accent-white"
+          isOverdue(date, new Date()) ? "text-red-400" : "text-accent-white"
         }`}
       >
         <h1 className="text-lg text-right">{checkRelative(date)}</h1>

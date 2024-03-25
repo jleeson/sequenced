@@ -95,6 +95,26 @@ export function generateWeek(startingDate, dayStart) {
   return week;
 }
 
+/**
+ * Checks if a date is overdue in relation to the second date
+ * @param {Date} a Date to check
+ * @param {Date} b Date to compare to
+ * @returns Overdue status as a boolean
+ */
+export function isOverdue(a, b) {
+  const dateOne = new Date(a);
+  const dateTwo = new Date(b);
+
+  // Date One: 3/25/24
+  // Date Two: 3/1/24
+  
+  return (
+    dateOne.getFullYear() <= dateTwo.getFullYear() &&
+    dateOne.getMonth() <= dateTwo.getMonth() &&
+    dateOne.getDate() < dateTwo.getDate()
+  );
+}
+
 export function matchDate(dateOne, dateTwo) {
   return (
     dateOne.getFullYear() == dateTwo.getFullYear() &&
