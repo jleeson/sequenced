@@ -6,8 +6,7 @@ import { useAddTask, useTasks } from "@/hooks/tasks";
 import ToDoAddMenuItem from "./ToDoAddMenuItem";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import ToDoAddMenuItemCustom from "./ToDoAddMenuItemCustom";
-import ToDoAddMenuItemSelector from "./ToDoAddMenuSelector";
-import { createID, createIDUnmatched } from "@/utils/id";
+import { createIDUnmatched } from "@/utils/id";
 import { ToDoContext } from "@/hooks/contexts";
 
 const reducer = (data, payload) => ({ ...data, ...payload });
@@ -74,7 +73,7 @@ export default function ToDoAddMenu({
           leave="ease-in duration-200"
           leaveFrom="translate-y-0"
           leaveTo="translate-y-96"
-          className="flex flex-col w-full bg-accent-white px-2 py-1 rounded-t-xl pb-8 items-center"
+          className="flex flex-col w-full bg-accent-black-900 text-accent-white border border-accent-white px-2 py-1 rounded-t-xl pb-8 items-center"
         >
           <div className="flex flex-col w-3/4">
             <div className="flex flex-col items-center text-xl py-1 my-1">
@@ -104,7 +103,6 @@ export default function ToDoAddMenu({
                 onChange={(e) => {
                   setActiveDate(new Date(e.target.value));
                   setTask({ date: new Date(e.target.value) });
-                  console.log({ date: new Date(e.target.value) });
                 }}
               />
               <Disclosure>
@@ -120,7 +118,7 @@ export default function ToDoAddMenu({
                     <Disclosure.Panel>
                       <ToDoAddMenuItemCustom name="Repeating">
                         <select
-                          className="border border-accent-black px-2 py-1"
+                          className="border border-accent-white bg-accent-black-500 px-2 py-1"
                           value={task.repeater}
                           onChange={(e) => {
                             setTask({ repeater: e.target.value });
