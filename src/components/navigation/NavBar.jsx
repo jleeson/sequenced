@@ -17,14 +17,14 @@ export function NavBar({ setIsAdding }) {
             height="32"
           />
         </div> */}
-          <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+          {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
             <a
               href="/"
               className="invert w-full h-full flex items-center justify-center"
             >
               <img src={tasks_icon} width="32" height="32" />
             </a>
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-center items-center">
           <div className="flex justify-center items-center w-12 h-12 bg-accent-blue-700 rounded-lg">
@@ -52,14 +52,14 @@ export function NavBar({ setIsAdding }) {
             height="32"
           />
         </div> */}
-          <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+          {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
             <a
               href="/settings"
               className="invert w-full h-full flex items-center justify-center"
             >
               <img src={settings_icon} width="32" height="32" />
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
