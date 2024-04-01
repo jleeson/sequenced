@@ -7,8 +7,8 @@ import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import { ToDoContext } from "@/hooks/contexts";
 import { sortByDate } from "@/utils/data";
 
-import add_icon from "@/assets/add.svg";
 import ToDoAddMenu from "@/components/menus/ToDoAddMenu/ToDoAddMenu";
+import { NavBar } from "@/components/navigation/NavBar";
 
 export default function Todo() {
   const tasks = useTasks();
@@ -22,7 +22,7 @@ export default function Todo() {
       {tasks.isLoading && <span>Loading...</span>}
       {tasks.isError && <span>{tasks.error.message}</span>}
       {tasks.isSuccess && (
-        <div>
+        <div className="pb-12">
           <div className="flex flex-col items-center gap-2">
             <ActiveCalendar context={context} setContext={setContext} setActiveDate={setActiveDate} />
             <DayTasks
@@ -36,21 +36,7 @@ export default function Todo() {
             />
           </div>
           <div id="adder">
-            <div className="w-full h-16 flex justify-center items-center fixed bottom-8">
-              <button
-                onClick={() => setIsAdding(true)}
-                className="flex text-center justify-center items-center w-12 h-12 text-3xl bg-blue-600 rounded-full text-white"
-              >
-                <div className="flex justify-center items-center w-full h-full">
-                  <img
-                    src={add_icon}
-                    className="invert w-3/4 h-3/4"
-                    width="32"
-                    height="32"
-                  />
-                </div>
-              </button>
-            </div>
+            <NavBar setIsAdding={setIsAdding} />
             <ToDoAddMenu
               isOpen={isAdding}
               setIsOpen={setIsAdding}

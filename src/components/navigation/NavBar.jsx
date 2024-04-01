@@ -1,58 +1,66 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import home_icon from "@/assets/home.svg";
+import tasks_icon from "@/assets/tasks.svg";
+import add_icon from "@/assets/add.svg";
+import lists_icon from "@/assets/lists.svg";
+import settings_icon from "@/assets/settings.svg";
 
-export function NavSelector({ active, selectNav }) {
+export function NavBar({ setIsAdding }) {
   return (
-    <div
-      onClick={() => selectNav(!active)}
-      className={`flex ${active ? "bg-accent-blue" : "bg-green-700"} w-10 h-10 justify-center items-center text-center rounded-full`}
-    >
-      <div className={`flex text-2xl text-gray-200`}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24"
-          viewBox="0 -960 960 960"
-          width="24"
-          fill={`#FFFFFF`}
-        >
-          <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
-        </svg>
-      </div>
-    </div>
-  );
-}
-
-export function NavItem({ children, href }) {
-  return (
-    <li className="flex justify-center border border-accent-blue px-4 py-2 bg-blue-400 rounded-lg">
-      <Link to={href} onClick={() => setActive(false)}>
-        <div className="flex text-white">{children}</div>
-      </Link>
-    </li>
-  );
-}
-
-export default function NavBar() {
-  const [active, setActive] = useState(false);
-
-  function selectNav(activeState) {
-    setActive(activeState);
-  }
-
-  return (
-    <div className="w-full h-16 flex flex-col items-center bg-accent-black">
-      <ul
-        className={`${
-          !active ? "hidden" : "flex"
-        } flex-col-reverse gap-2`}
-      >
-        {/* <NavItem href="/">Home</NavItem> */}
-        {/* <NavItem href="/meds">Meds</NavItem> */}
-        {/* <NavItem href="/mood">Mood</NavItem> */}
-        {/* <NavItem href="/todo">To-Do</NavItem> */}
-      </ul>
-      <div className="w-full h-full flex flex-row justify-center items-center">
-        {/* <NavSelector active={active} selectNav={selectNav} /> */}
+    <div className="flex justify-center items-center w-full absolute bottom-0 bg-accent-black-700 nav-pad">
+      <div className="w-full h-16 flex flex-row justify-evenly items-center rounded-t-md">
+        <div className="flex flex-row grow justify-evenly">
+          {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+          <img
+            src={home_icon}
+            className="invert w-full h-full"
+            width="32"
+            height="32"
+          />
+        </div> */}
+          <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+            <a
+              href="/"
+              className="invert w-full h-full flex items-center justify-center"
+            >
+              <img src={tasks_icon} width="32" height="32" />
+            </a>
+          </div>
+        </div>
+        <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+            <button
+              onClick={() => setIsAdding(true)}
+              className="flex text-center justify-center items-center w-12 h-12 text-3xl rounded-full text-white"
+            >
+              <div className="flex justify-center items-center w-full h-full">
+                <img
+                  src={add_icon}
+                  className="invert w-full h-full"
+                  width="32"
+                  height="32"
+                />
+              </div>
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-row grow justify-evenly">
+          {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+          <img
+            src={lists_icon}
+            className="invert w-full h-full"
+            width="32"
+            height="32"
+          />
+        </div> */}
+          <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+            <a
+              href="/settings"
+              className="invert w-full h-full flex items-center justify-center"
+            >
+              <img src={settings_icon} width="32" height="32" />
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
