@@ -28,7 +28,7 @@ export async function initializeAdMob() {
   }
 
   AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info) => {
-    const shell = document.querySelector("#root");
+    const shell = document.querySelector("#unit-container");
     const margin = parseInt(info.height, 10);
 
     if (margin == 0) shell.style.marginTop = "0px";
@@ -45,6 +45,6 @@ export async function initializeAdMob() {
     adSize: BannerAdSize.ADAPTIVE_BANNER,
     position: BannerAdPosition.TOP_CENTER,
     margin: 0,
-    isTesting: false,
+    isTesting: true,
   });
 }

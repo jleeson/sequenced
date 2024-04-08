@@ -7,14 +7,11 @@ import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import { ToDoContext } from "@/hooks/contexts";
 import { sortByDate } from "@/utils/data";
 
-import ToDoAddMenu from "@/components/menus/ToDoAddMenu/ToDoAddMenu";
-import { NavBar } from "@/components/navigation/NavBar";
 
 export default function Todo() {
   const tasks = useTasks();
   const navigate = useNavigate();
   const [context, setContext] = useContext(ToDoContext);
-  const [isAdding, setIsAdding] = useState(false);
   const [activeDate, setActiveDate] = useState(context.todo.active.date);
 
   return (
@@ -33,15 +30,6 @@ export default function Todo() {
               title="All Tasks"
               tasks={sortByDate(tasks.data)}
               activeFilter="dailyTasks"
-            />
-          </div>
-          <div id="adder">
-            <NavBar setIsAdding={setIsAdding} />
-            <ToDoAddMenu
-              isOpen={isAdding}
-              setIsOpen={setIsAdding}
-              activeDate={activeDate}
-              setActiveDate={setActiveDate}
             />
           </div>
         </div>

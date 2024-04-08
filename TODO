@@ -1,18 +1,24 @@
 Sequenced:
-  1.1.0:
-    ☐ TBD
-
   1.0.4:
-    ☐ TBD
+    Navigation:
+      ✔ Fix Issue Where Ads Make Navigation Bar Disappear @done(24-04-08 17:48)
+
+    Tasks:
+      ☐ Adjust Size Scaling to prevent text-overflow, and add a max character length
+      ☐ Give hour countdown if task is due today
+      ☐ Make a fix situation if task happens to corrupt
+
+    Settings:
+      ☐ Allow Customizing All Notifications (Such as Daily Reminders)
+      ☐ Only send notification for daily reminder if tasks exist
 
   Other Tasks:
     Navigation: 
       ☐ Add Home Icon 
       ☐ Add Tasks Icon
-      ☐ Migrate Add Button
+      ☐ Migrate Add Button Into 3-Panel System
       ☐ Add Lists Icon
       ☐ Add Settings Icon
-      ☐ Fix Issue Where Ads Make Navigation Bar Disappear
 
     Home Page:
       ☐ Make List of Only Daily Tasks
@@ -20,30 +26,25 @@ Sequenced:
       ☐ Create Task Quick Count
 
     Tasks:
-      ☐ Adjust Size Scaling to prevent text-overflow, and add a max character length
-      ☐ Make a fix situation if task happens to corrupt
       ☐ Allow adding tags
       ☐ Allow adding grouping
       ☐ Add sub-tasks
       ☐ Implement Search Query
       ☐ Clean up details UI (and prevent overflow)
       ☐ Allow full-customization of repeating task
-      ☐ Give hour countdown if task is due today
 
     List:
       ☐ Implement Lists Ability
       ☐ Implement Categories
 
     Settings:
-      ☐ Allow Customizing All Notifications (Such as Daily Reminders)
       ☐ Allow RESET Button
       ☐ Allow Import/Export
       ☐ Allow for Compact/Comfortable UI (Showing just title and date vs Showing Title & Date | Description & Tags )
 
     Notifications:
-      ☐ Only send notification for daily reminder if tasks exist
       ☐ Allow sending notification X amount of time before, up to 2 notifications sent
 
-    ☐ Branding:
+    Branding:
       ☐ Work on Color Scheme
       ☐ Work out getting a proper logo
