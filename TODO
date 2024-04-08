@@ -12,6 +12,7 @@ Sequenced:
       ☐ Migrate Add Button
       ☐ Add Lists Icon
       ☐ Add Settings Icon
+      ☐ Fix Issue Where Ads Make Navigation Bar Disappear
 
     Home Page:
       ☐ Make List of Only Daily Tasks
@@ -25,7 +26,7 @@ Sequenced:
       ☐ Allow adding grouping
       ☐ Add sub-tasks
       ☐ Implement Search Query
-      ☐ Clean up details UI
+      ☐ Clean up details UI (and prevent overflow)
       ☐ Allow full-customization of repeating task
       ☐ Give hour countdown if task is due today
 
