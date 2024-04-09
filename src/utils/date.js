@@ -104,11 +104,6 @@ export function generateWeek(startingDate, dayStart) {
 export function isOverdue(a, b) {
   const dateOne = new Date(a);
   const dateTwo = new Date(b);
-
-  return dateOne < dateTwo;
-
-  // Date One: 3/25/24
-  // Date Two: 3/1/24
   
   return (
     dateOne.getFullYear() <= dateTwo.getFullYear() &&

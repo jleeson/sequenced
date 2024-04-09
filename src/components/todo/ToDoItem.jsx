@@ -72,11 +72,11 @@ export function ToDoItem({ item }) {
           />
           <ToDoItemTitle text={item.title} />
         </div>
-        <div className="w-1/2 flex flex-row flex-end items-center justify-end">
-          <div className="w-fit h-full flex items-center justify-evenly">
+        <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
+          <div className="w-full h-full flex items-center justify-evenly">
             <ToDoItemDate date={item.date} />
           </div>
-          <div className="w-fit h-fit flex flex-row">
+          <div className="w-14 h-full flex flex-row justify-center">
             <ToDoItemMenu item={item} />
           </div>
         </div>
