@@ -39,9 +39,9 @@ export default function ToDoItemDate({ date }) {
   };
 
   return (
-    <div className="w-full h-full flex flex-row gap-1 items-center">
+    <div className="w-20 h-full flex flex-row gap-2 justify-center items-center">
       <div
-        className={`flex items-center h-6 ${
+        className={`w-12 flex justify-center items-center h-6 ${
           isOverdue(date, new Date()) ? "text-red-400" : "text-accent-white"
         }`}
       >

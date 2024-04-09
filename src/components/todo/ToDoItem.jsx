@@ -63,8 +63,8 @@ export function ToDoItem({ item }) {
 
   return (
     <ToDoItemShell task={item} activeDate={context.todo.active.date}>
-      <div className="flex flex-row justify-between">
-        <div className="flex flex-row items-center">
+      <div className="w-full h-full flex flex-row justify-between gap-1">
+        <div className="w-1/2 flex flex-row items-center">
           <ToDoItemCheckBox
             checked={!isTaskDone(item, context.todo.active.date)}
             onChange={handleMarkComplete}
@@ -72,11 +72,11 @@ export function ToDoItem({ item }) {
           />
           <ToDoItemTitle text={item.title} />
         </div>
-        <div className="flex flex-row gap-2">
-          <div>
+        <div className="w-1/2 flex flex-row flex-end items-center justify-end">
+          <div className="w-fit h-full flex items-center justify-evenly">
             <ToDoItemDate date={item.date} />
           </div>
-          <div className="flex flex-row">
+          <div className="w-fit h-fit flex flex-row">
             <ToDoItemMenu item={item} />
           </div>
         </div>

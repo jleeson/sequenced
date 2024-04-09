@@ -45,6 +45,6 @@ export async function initializeAdMob() {
     adSize: BannerAdSize.ADAPTIVE_BANNER,
     position: BannerAdPosition.TOP_CENTER,
     margin: 0,
-    isTesting: true,
+    isTesting: false,
   });
 }

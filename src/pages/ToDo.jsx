@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
-import { useTasks } from "@/hooks/tasks";
+import { useTasks, filterBroken } from "@/hooks/tasks";
 import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import DayTasks from "../components/calendar/DayTasks";
 import { useNavigate } from "react-router-dom";
 import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import { ToDoContext } from "@/hooks/contexts";
 import { sortByDate } from "@/utils/data";
-
 
 export default function Todo() {
   const tasks = useTasks();
@@ -21,14 +20,18 @@ export default function Todo() {
       {tasks.isSuccess && (
         <div className="pb-12">
           <div className="flex flex-col items-center gap-2">
-            <ActiveCalendar context={context} setContext={setContext} setActiveDate={setActiveDate} />
+            <ActiveCalendar
+              context={context}
+              setContext={setContext}
+              setActiveDate={setActiveDate}
+            />
             <DayTasks
               day={context.todo.active.date}
-              tasks={sortByDate(tasks.data)}
+              tasks={sortByDate(filterBroken(tasks.data))}
             />
             <TaskContainer
               title="All Tasks"
-              tasks={sortByDate(tasks.data)}
+              tasks={sortByDate(filterBroken(tasks.data))}
               activeFilter="dailyTasks"
             />
           </div>

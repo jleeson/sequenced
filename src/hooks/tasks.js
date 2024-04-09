@@ -1,6 +1,10 @@
 import { Preferences } from "@capacitor/preferences";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 
+export function filterBroken(tasks) {
+  return tasks?.filter((task) => task.id != undefined);
+}
+
 /* load the tasks from storage */
 export async function loadTasks() {
   const { value } = await Preferences.get({ key: "tasks" });

@@ -6,7 +6,7 @@ import settings_icon from "@/assets/settings.svg";
 
 export function NavBar({ setIsAdding }) {
   return (
-    <div className="flex static justify-center items-center w-full absolute bottom-0 bg-accent-black-700 nav-pad">
+    <div className="flex justify-center items-center w-full absolute bottom-0 bg-accent-black-700 nav-pad">
       <div className="w-full h-16 flex flex-row justify-evenly items-center rounded-t-md">
         <div className="flex flex-row grow justify-evenly">
           {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">

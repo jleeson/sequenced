@@ -8,7 +8,7 @@ export default function ToDoItemMenu({ item }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   return (
-    <div>
+    <div className="w-14 h-7 flex items-center justify-center">
       <div
         className="w-14 h-7 flex flex-row justify-center items-center border border-accent-black-400 bg-accent-blue-600 rounded-lg mx-1"
         onClick={() => setIsManaging(true)}

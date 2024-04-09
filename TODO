@@ -4,13 +4,8 @@ Sequenced:
       ✔ Fix Issue Where Ads Make Navigation Bar Disappear @done(24-04-08 17:48)
 
     Tasks:
-      ☐ Adjust Size Scaling to prevent text-overflow, and add a max character length
-      ☐ Give hour countdown if task is due today
-      ☐ Make a fix situation if task happens to corrupt
-
-    Settings:
-      ☐ Allow Customizing All Notifications (Such as Daily Reminders)
-      ☐ Only send notification for daily reminder if tasks exist
+      ✔ Adjust Size Scaling to prevent text-overflow @done(24-04-08 18:22)
+      ✔ Make a fix situation if task happens to corrupt @done(24-04-08 18:36)
 
   Other Tasks:
     Navigation: 
@@ -26,6 +21,8 @@ Sequenced:
       ☐ Create Task Quick Count
 
     Tasks:
+      ☐ Give hour countdown if task is due today
+      ☐ Add a max character length
       ☐ Allow adding tags
       ☐ Allow adding grouping
       ☐ Add sub-tasks
@@ -41,6 +38,8 @@ Sequenced:
       ☐ Allow RESET Button
       ☐ Allow Import/Export
       ☐ Allow for Compact/Comfortable UI (Showing just title and date vs Showing Title & Date | Description & Tags )
+      ☐ Allow Customizing All Notifications (Such as Daily Reminders)
+      ☐ Only send notification for daily reminder if tasks exist
 
     Notifications:
       ☐ Allow sending notification X amount of time before, up to 2 notifications sent
