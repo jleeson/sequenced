@@ -10,24 +10,24 @@ import invisible_icon from "@/assets/invisible.svg";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 
-import { ToDoContext } from "@/hooks/contexts";
+import { taskContext } from "@/hooks/contexts";
 import { Disclosure, Menu } from "@headlessui/react";
 import TaskMenuItem from "./TaskMenuItem";
 import { matchDate } from "@/utils/date";
 import { isTaskDone } from "@/utils/data";
 
 export default function TaskContainer({ title, tasks, activeFilter }) {
-  const [context, setContext] = useContext(ToDoContext);
+  const [context, setContext] = useContext(taskContext);
   const [taskFilter, setTaskFilter] = useState("incomplete");
 
-  let active = context.todo.menus[activeFilter];
+  let active = context.task.menus[activeFilter];
 
   const handleClick = () => {
     let tempContext = {
       ...context,
     };
 
-    tempContext.todo.menus[activeFilter] = !active;
+    tempContext.task.menus[activeFilter] = !active;
 
     setContext(tempContext);
   };
@@ -42,7 +42,7 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
 
   if (taskFilter == "all") taskDisplay = tasks;
   else if (taskFilter == "incomplete")
-    taskDisplay = tasks.filter((task) => isTaskDone(task, context.todo.active.date));
+    taskDisplay = tasks.filter((task) => isTaskDone(task, context.task.active.date));
 
   return (
     <div className="flex flex-col items-center w-[90%] my-2">

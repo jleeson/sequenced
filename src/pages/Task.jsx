@@ -4,14 +4,14 @@ import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import DayTasks from "../components/calendar/DayTasks";
 import { useNavigate } from "react-router-dom";
 import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
-import { ToDoContext } from "@/hooks/contexts";
+import { taskContext } from "@/hooks/contexts";
 import { sortByDate } from "@/utils/data";
 
-export default function Todo() {
+export default function Task() {
   const tasks = useTasks();
   const navigate = useNavigate();
-  const [context, setContext] = useContext(ToDoContext);
-  const [activeDate, setActiveDate] = useState(context.todo.active.date);
+  const [context, setContext] = useContext(taskContext);
+  const [activeDate, setActiveDate] = useState(context.task.active.date);
 
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">
@@ -26,7 +26,7 @@ export default function Todo() {
               setActiveDate={setActiveDate}
             />
             <DayTasks
-              day={context.todo.active.date}
+              day={context.task.active.date}
               tasks={sortByDate(filterBroken(tasks.data))}
             />
             <TaskContainer

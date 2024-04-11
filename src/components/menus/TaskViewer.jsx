@@ -1,10 +1,10 @@
 import { useTaskById } from "@/hooks/tasks";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDateClean } from "@/utils/date";
-import ToDoItemSpec from "./ToDoItemSpec";
+import TaskItemSpec from "./TaskItemSpec";
 import { useState } from "react";
 
-export default function ToDoViewer() {
+export default function TaskViewer() {
   const { id } = useParams();
 
   const task = useTaskById(id);
@@ -24,34 +24,34 @@ export default function ToDoViewer() {
       {task.isSuccess && (
         <div className="w-full flex flex-col items-center text-accent-white">
           <div className="w-3/5 flex flex-col items-center">
-            <ToDoItemSpec
+            <TaskItemSpec
               task={task}
               text="Title"
               value="title"
               immediateSave={isSaving}
             />
-            <ToDoItemSpec
+            <TaskItemSpec
               task={task}
               text="Description"
               value="description"
               backup="No Description Provided"
               immediateSave={isSaving}
             />
-            <ToDoItemSpec
+            <TaskItemSpec
               task={task}
               text="Due Date"
               type="date"
               value="date"
               immediateSave={isSaving}
             />
-            <ToDoItemSpec
+            <TaskItemSpec
               task={task}
               text="Is Complete?"
               type="bool"
               value="done"
               disabled
             />
-            <ToDoItemSpec
+            <TaskItemSpec
               task={task}
               text="ID"
               type="text"

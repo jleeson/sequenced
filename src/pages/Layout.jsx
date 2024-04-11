@@ -1,12 +1,12 @@
-import ToDoAddMenu from "@/components/menus/ToDoAddMenu/ToDoAddMenu";
+import TaskAddMenu from "@/components/menus/TaskAddMenu/TaskAddMenu";
 import { NavBar } from "@/components/navigation/NavBar";
-import { ToDoContext } from "@/hooks/contexts";
+import { taskContext } from "@/hooks/contexts";
 import { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
-  const [context, setContext] = useContext(ToDoContext);
-  const [activeDate, setActiveDate] = useState(context.todo.active.date);
+  const [context, setContext] = useContext(taskContext);
+  const [activeDate, setActiveDate] = useState(context.task.active.date);
   const [isAdding, setIsAdding] = useState(false);
 
   return (
@@ -29,7 +29,7 @@ const Layout = () => {
       </div>
       <div id="absolute adder">
         <NavBar setIsAdding={setIsAdding} />
-        <ToDoAddMenu
+        <TaskAddMenu
           isOpen={isAdding}
           setIsOpen={setIsAdding}
           activeDate={activeDate}

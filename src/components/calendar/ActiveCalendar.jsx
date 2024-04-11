@@ -12,7 +12,7 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }) {
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(0);
 
-  const activeDate = context.todo.active.date;
+  const activeDate = context.task.active.date;
   const dates = generateWeek(activeDate || new Date(), 0);
 
   const changeDate = (date) => {
@@ -20,7 +20,7 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }) {
       ...context,
     };
 
-    tempContext.todo.active = {
+    tempContext.task.active = {
       date: date,
       month: date.getMonth(),
       year: date.getFullYear(),
@@ -41,12 +41,12 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }) {
     const tempMonth = activeData[1] - 1;
     const tempDay = activeData[2];
 
-    tempContext.todo.active.date = new Date();
-    tempContext.todo.active.date.setFullYear(tempYear);
-    tempContext.todo.active.date.setMonth(tempMonth);
-    tempContext.todo.active.date.setDate(tempDay);
+    tempContext.task.active.date = new Date();
+    tempContext.task.active.date.setFullYear(tempYear);
+    tempContext.task.active.date.setMonth(tempMonth);
+    tempContext.task.active.date.setDate(tempDay);
 
-    tempContext.todo.active.month = activeData[1] - 1;
+    tempContext.task.active.month = activeData[1] - 1;
     setContext(tempContext);
   }
 

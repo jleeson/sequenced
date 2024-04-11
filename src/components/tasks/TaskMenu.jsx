@@ -1,4 +1,4 @@
-import { ToDoItem } from "../todo/ToDoItem";
+import { TaskItem } from "../task/TaskItem";
 
 export default function TaskMenu({ tasks }) {
   return (
@@ -7,7 +7,7 @@ export default function TaskMenu({ tasks }) {
         {tasks.length > 0 &&
           tasks.map((task, key) => (
             <li key={key} className="w-full h-full">
-              <ToDoItem item={task} />
+              <TaskItem item={task} />
             </li>
           ))}
         {tasks.length == 0 && (

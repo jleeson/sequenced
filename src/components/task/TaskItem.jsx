@@ -2,15 +2,15 @@ import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
 import { matchDate } from "@/utils/date";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ToDoItemShell from "./ToDoItemShell";
-import ToDoItemCheckBox from "./ToDoItemCheckbox";
-import ToDoItemTitle from "./ToDoItemTitle";
-import ToDoItemMenu from "./ToDoItemMenu/ToDoItemMenu";
-import ToDoItemDate from "./ToDoItemDate";
-import { ToDoContext } from "@/hooks/contexts";
+import TaskItemShell from "./TaskItemShell";
+import TaskItemCheckBox from "./TaskItemCheckbox";
+import TaskItemTitle from "./TaskItemTitle";
+import TaskItemMenu from "./TaskItemMenu/TaskItemMenu";
+import TaskItemDate from "./TaskItemDate";
+import { taskContext } from "@/hooks/contexts";
 import { isTaskDone } from "@/utils/data";
 
-export function ToDoItem({ item }) {
+export function TaskItem({ item }) {
   if (!item) item = {};
 
   const navigate = useNavigate();
@@ -20,14 +20,14 @@ export function ToDoItem({ item }) {
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [isManaging, setIsManaging] = useState(false);
-  const [context, setContext] = useContext(ToDoContext);
+  const [context, setContext] = useContext(taskContext);
 
   const handleMarkComplete = (e) => {
     e.stopPropagation();
 
     if (item.repeater && item.repeater.length != 0) {
       let newDone = item.done || [];
-      let activeDate = context.todo.active;
+      let activeDate = context.task.active;
 
       if (!Array.isArray(item.done)) item.done = newDone;
 
@@ -52,7 +52,7 @@ export function ToDoItem({ item }) {
   };
 
   const handleInteractive = () => {
-    navigate(`/todo/view/${item.id}`);
+    navigate(`/task/view/${item.id}`);
   };
 
   const handleDelete = () => {
@@ -62,25 +62,25 @@ export function ToDoItem({ item }) {
   };
 
   return (
-    <ToDoItemShell task={item} activeDate={context.todo.active.date}>
+    <TaskItemShell task={item} activeDate={context.task.active.date}>
       <div className="w-full h-full flex flex-row justify-between gap-1">
         <div className="w-1/2 flex flex-row items-center">
-          <ToDoItemCheckBox
-            checked={!isTaskDone(item, context.todo.active.date)}
+          <TaskItemCheckBox
+            checked={!isTaskDone(item, context.task.active.date)}
             onChange={handleMarkComplete}
             onClick={(e) => e.stopPropagation()}
           />
-          <ToDoItemTitle text={item.title} />
+          <TaskItemTitle text={item.title} />
         </div>
         <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
           <div className="w-full h-full flex items-center justify-evenly">
-            <ToDoItemDate date={item.date} />
+            <TaskItemDate date={item.date} />
           </div>
           <div className="w-14 h-full flex flex-row justify-center">
-            <ToDoItemMenu item={item} />
+            <TaskItemMenu item={item} />
           </div>
         </div>
       </div>
-    </ToDoItemShell>
+    </TaskItemShell>
   );
 }

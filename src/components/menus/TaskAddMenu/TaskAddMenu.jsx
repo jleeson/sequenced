@@ -3,21 +3,21 @@ import { useContext, useReducer, useRef } from "react";
 import { formatDateTime, matchDate } from "@/utils/date";
 import { useAddTask, useTasks } from "@/hooks/tasks";
 
-import ToDoAddMenuItem from "./ToDoAddMenuItem";
+import TaskAddMenuItem from "./TaskAddMenuItem";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import ToDoAddMenuItemCustom from "./ToDoAddMenuItemCustom";
+import TaskAddMenuItemCustom from "./TaskAddMenuItemCustom";
 import { createIDUnmatched } from "@/utils/id";
-import { ToDoContext } from "@/hooks/contexts";
+import { taskContext } from "@/hooks/contexts";
 
 const reducer = (data, payload) => ({ ...data, ...payload });
 
-export default function ToDoAddMenu({
+export default function TaskAddMenu({
   isOpen,
   setIsOpen,
   activeDate,
   setActiveDate,
 }) {
-  const [context] = useContext(ToDoContext);
+  const [context] = useContext(taskContext);
   const tasks = useTasks();
 
   const [task, setTask] = useReducer(reducer, {
@@ -85,18 +85,18 @@ export default function ToDoAddMenu({
             </div>
 
             <div className="flex flex-col gap-3">
-              <ToDoAddMenuItem
+              <TaskAddMenuItem
                 name="Name"
                 value={task.title}
                 onChange={(e) => setTask({ title: e.target.value })}
               />
-              <ToDoAddMenuItem
+              <TaskAddMenuItem
                 name="Description"
                 type="textarea"
                 value={task.description}
                 onChange={(e) => setTask({ description: e.target.value })}
               />
-              <ToDoAddMenuItem
+              <TaskAddMenuItem
                 name="Due Date"
                 type="datetime-local"
                 value={formatDateTime(activeDate)}
@@ -116,7 +116,7 @@ export default function ToDoAddMenu({
                       <Disclosure.Button>Advanced Options</Disclosure.Button>
                     </div>
                     <Disclosure.Panel>
-                      <ToDoAddMenuItemCustom name="Repeating">
+                      <TaskAddMenuItemCustom name="Repeating">
                         <select
                           className="border border-accent-white bg-accent-black-500 px-2 py-1"
                           value={task.repeater}
@@ -130,7 +130,7 @@ export default function ToDoAddMenu({
                           <option value="two-weekly">Every 2 Weeks</option>
                           <option value="monthly">Every Month</option>
                         </select>
-                      </ToDoAddMenuItemCustom>
+                      </TaskAddMenuItemCustom>
                     </Disclosure.Panel>
                   </div>
                 )}

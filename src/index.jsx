@@ -5,13 +5,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Meds from "./pages/Meds";
 import Mood from "./pages/Mood";
-import ToDo from "./pages/ToDo";
+import Task from "./pages/Task";
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
 import "./index.css";
 
-import ToDoViewer from "./components/menus/ToDoViewer";
-import { ToDoContext } from "./hooks/contexts";
+import TaskViewer from "./components/menus/TaskViewer";
+import { taskContext } from "./hooks/contexts";
 
 import { initializeAdMob } from "@/utils/ads";
 import { initializeNotifications } from "./utils/notifs";
@@ -27,7 +27,7 @@ const queryClient = new QueryClient({
 
 export default function App() {
   const [context, setContext] = useState({
-    todo: {
+    task: {
       active: {
         date: new Date(),
         month: new Date().getMonth(),
@@ -43,20 +43,20 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ToDoContext.Provider value={[context, setContext]}>
+      <taskContext.Provider value={[context, setContext]}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<ToDo />} />
-              <Route path="/todo/view/:id" element={<ToDoViewer />} />
+              <Route index element={<Task />} />
+              <Route path="/task/view/:id" element={<TaskViewer />} />
               {/* <Route path="/meds" element={<Meds />} /> */}
               {/* <Route path="/mood" element={<Mood />} /> */}
-              <Route path="/todo" element={<ToDo />} />
+              <Route path="/task" element={<Task />} />
               <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
-      </ToDoContext.Provider>
+      </taskContext.Provider>
     </QueryClientProvider>
   );
 }

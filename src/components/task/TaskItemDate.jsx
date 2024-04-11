@@ -3,7 +3,7 @@ import { isDateGreater } from "@/utils/data";
 import { isOverdue } from "@/utils/date";
 import { formatDigits } from "@/utils/math";
 
-export default function ToDoItemDate({ date }) {
+export default function TaskItemDate({ date }) {
   const checkRelative = (date) => {
     const today = new Date();
     const checkedDate = new Date(date);

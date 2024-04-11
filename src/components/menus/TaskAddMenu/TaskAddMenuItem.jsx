@@ -1,4 +1,4 @@
-export default function ToDoAddMenuItem({ name, type, value, onChange }) {
+export default function TaskAddMenuItem({ name, type, value, onChange }) {
   let inputPiece = (
     <input
       id={name.toLowerCase()}

@@ -3,7 +3,7 @@ import { useUpdateTask } from "@/hooks/tasks";
 import { formatDateClean, formatDateTime } from "@/utils/date";
 import { useState } from "react";
 
-export default function ToDoItemSpec({
+export default function TaskItemSpec({
   task: baseTask,
   type,
   text,

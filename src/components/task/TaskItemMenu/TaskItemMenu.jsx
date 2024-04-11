@@ -1,9 +1,9 @@
 import more_icon from "@/assets/more.svg";
 import { useState } from "react";
-import ToDoItemMenuSelection from "./ToDoItemMenuSelection";
-import ToDoItemMenuDeletion from "./ToDoItemMenuDeletion";
+import TaskItemMenuSelection from "./TaskItemMenuSelection";
+import TaskItemMenuDeletion from "./TaskItemMenuDeletion";
 
-export default function ToDoItemMenu({ item }) {
+export default function TaskItemMenu({ item }) {
   const [isManaging, setIsManaging] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -16,7 +16,7 @@ export default function ToDoItemMenu({ item }) {
         <img src={more_icon} className="invert" />
       </div>
       <div>
-        <ToDoItemMenuSelection
+        <TaskItemMenuSelection
           item={item}
           isManaging={isManaging}
           setIsManaging={setIsManaging}
@@ -24,7 +24,7 @@ export default function ToDoItemMenu({ item }) {
         />
       </div>
       <div>
-        <ToDoItemMenuDeletion
+        <TaskItemMenuDeletion
           item={item}
           setIsManaging={setIsManaging}
           isDeleting={isDeleting}

@@ -1,7 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import { useDeleteTask } from "@/hooks/tasks";
 
-export default function ToDoItemMenuDeletion({
+export default function TaskItemMenuDeletion({
   item,
   setIsManaging,
   isDeleting,

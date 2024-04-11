@@ -1,4 +1,4 @@
-export default function ToDoItemCheckBox(props) {
+export default function TaskItemCheckBox(props) {
   return (
     <div className="w-7 h-7 flex flex-row items-center justify-center border border-accent-black-300 rounded-full px-0.5 py-0.5">
       <input

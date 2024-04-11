@@ -1,4 +1,4 @@
-export default function ToDoItemMenuPiece(props) {
+export default function TaskItemMenuPiece(props) {
   let { text, color } = props;
 
   return (
