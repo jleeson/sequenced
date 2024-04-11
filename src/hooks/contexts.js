@@ -1,5 +1,4 @@
 import { createContext } from "react";
 
-export const taskContext = createContext({
-    
-});
+/* context data for the task internally */
+export const taskContext = createContext({});

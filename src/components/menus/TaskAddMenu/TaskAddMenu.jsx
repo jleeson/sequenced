@@ -127,7 +127,7 @@ export default function TaskAddMenu({
                           <option value="">Do Not Repeat</option>
                           <option value="daily">Every Day</option>
                           <option value="weekly">Every Week</option>
-                          <option value="two-weekly">Every 2 Weeks</option>
+                          <option value="bi-weekly">Every 2 Weeks</option>
                           <option value="monthly">Every Month</option>
                         </select>
                       </TaskAddMenuItemCustom>

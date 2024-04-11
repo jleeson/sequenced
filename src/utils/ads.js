@@ -9,11 +9,15 @@ import {
 
 import { Capacitor } from "@capacitor/core";
 
+// TODO: Change to env vars
 const adID = {
   ios: "ca-app-pub-8077676966001385/4881999812",
   android: "ca-app-pub-8077676966001385/3426637289",
 };
 
+/**
+ * Initializes the AdMob systems
+ */
 export async function initializeAdMob() {
   const isIOS = Capacitor.getPlatform() == "ios";
 

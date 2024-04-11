@@ -1,18 +1,20 @@
 import { useContext, useState } from "react";
 import { useTasks, filterBroken } from "@/hooks/tasks";
-import ActiveCalendar from "../components/calendar/ActiveCalendar";
-import DayTasks from "../components/calendar/DayTasks";
 import { useNavigate } from "react-router-dom";
-import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import { taskContext } from "@/hooks/contexts";
 import { sortByDate } from "@/utils/data";
 
+import DayTasks from "../components/calendar/DayTasks";
+import ActiveCalendar from "../components/calendar/ActiveCalendar";
+import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
+
 export default function Task() {
-  const tasks = useTasks();
-  const navigate = useNavigate();
   const [context, setContext] = useContext(taskContext);
   const [activeDate, setActiveDate] = useState(context.task.active.date);
 
+  const tasks = useTasks();
+  const navigate = useNavigate();
+  
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">
       {tasks.isLoading && <span>Loading...</span>}
