@@ -6,10 +6,10 @@ import { useAddTask, useTasks } from "@/hooks/tasks";
 import TaskAddMenuItem from "./TaskAddMenuItem";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import TaskAddMenuItemCustom from "./TaskAddMenuItemCustom";
-import { createIDUnmatched } from "@/utils/id";
 import { taskContext } from "@/hooks/contexts";
+import { createID } from "@/utils/id";
 
-const reducer = (data, payload) => ({ ...data, ...payload });
+const reducer = (data: any, payload: any) => ({ ...data, ...payload });
 
 export default function TaskAddMenu({
   isOpen,
@@ -17,7 +17,7 @@ export default function TaskAddMenu({
   activeDate,
   setActiveDate,
 }) {
-  const [context] = useContext(taskContext);
+  const [context, setContext] = useContext(taskContext);
   const tasks = useTasks();
 
   const [task, setTask] = useReducer(reducer, {
@@ -42,7 +42,7 @@ export default function TaskAddMenu({
   };
 
   const SubmitForm = () => {
-    task.id = createIDUnmatched(tasks.data);
+    task.id = createID(tasks.data);
 
     addTask(task);
 

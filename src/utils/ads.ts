@@ -4,7 +4,8 @@ import {
   BannerAdPosition,
   BannerAdPluginEvents,
   AdmobConsentStatus,
-  MaxAdContentRating
+  MaxAdContentRating,
+  AdMobBannerSize
 } from "@capacitor-community/admob";
 
 import { Capacitor } from "@capacitor/core";
@@ -15,9 +16,7 @@ const adID = {
   android: "ca-app-pub-8077676966001385/3426637289",
 };
 
-/**
- * Initializes the AdMob systems
- */
+/* Initializes the AdMob systems */
 export async function initializeAdMob() {
   const isIOS = Capacitor.getPlatform() == "ios";
 
@@ -31,9 +30,9 @@ export async function initializeAdMob() {
     await AdMob.showConsentForm();
   }
 
-  AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info) => {
-    const shell = document.querySelector("#unit-container");
-    const margin = parseInt(info.height, 10);
+  AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info: AdMobBannerSize) => {
+    const shell = document.querySelector<HTMLElement>("#unit-container");
+    const margin = info.height;
 
     if (margin == 0) shell.style.marginTop = "0px";
 

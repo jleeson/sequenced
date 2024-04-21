@@ -1,3 +1,4 @@
+import { Task } from "@/hooks/tasks";
 import { matchDate } from "./date";
 
 /**
@@ -5,7 +6,7 @@ import { matchDate } from "./date";
  * @param {Array} arr array to sort
  * @returns sorted array
  */
-export function sortByDate(arr) {
+export function sortByDate(arr: Task[]) {
   return arr.sort((a, b) => (a.date < b.date ? -1 : 1));
 }
 
@@ -37,6 +38,7 @@ export function isDateWithinProximity(mode, a, b) {
     case "daily":
       tempDate = new Date(a.date);
       if (isDateGreater(tempDate, b)) return true;
+      break;
 
     case "weekly":
       tempDate = new Date(a.date);

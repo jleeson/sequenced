@@ -1,34 +1,39 @@
 import { Preferences } from "@capacitor/preferences";
-import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
+import {
+  useQueryClient,
+  useQuery,
+  useMutation,
+  UseQueryResult,
+  UseMutationResult,
+} from "@tanstack/react-query";
 
-export function filterBroken(tasks) {
+export interface Task {
+  title?: string;
+  description?: string;
+  date?: string;
+  id?: string;
+  done?: string;
+}
+
+/* Filters out ghost tasks */
+export function filterBroken(tasks: Task[]): Task[] {
   return tasks?.filter((task) => task.id != undefined);
 }
 
-/**
- * Loads task array from Preferences database
- * @returns An array of tasks
- */
-export async function loadTasks() {
+/* Loads task array from Preferences database */
+export async function loadTasks(): Promise<Task[]> {
   const { value } = await Preferences.get({ key: "tasks" });
   return value ? JSON.parse(value) : [];
 }
 
-/**
- * Loads tasks and finds the task with given id
- * @param {string} id id of the task
- * @returns task data
- */
-export async function loadTaskById(id) {
+/* Loads tasks and finds the task with given id */
+export async function loadTaskById(id: string): Promise<Task> {
   const tasks = await loadTasks();
-  return tasks.find((task) => task.id == id);
+  return tasks.find((task) => task.id == id) || {};
 }
 
-/**
- * Returns query data
- * @returns query data from tasks database
- */
-export function useTasks() {
+/* returns query data */
+export function useTasks(): UseQueryResult {
   return useQuery({
     queryKey: ["tasks"],
     queryFn: loadTasks,
@@ -36,12 +41,8 @@ export function useTasks() {
   });
 }
 
-/**
- * Return query data of tasks, and finds specific task from given id
- * @param {string} id id of the task
- * @returns task data
- */
-export function useTaskById(id) {
+/* Return query data of tasks, and finds specific task from given id */
+export function useTaskById(id: string): UseQueryResult {
   return useQuery({
     queryKey: ["tasks", id],
     queryFn: () => loadTaskById(id),
@@ -49,14 +50,11 @@ export function useTaskById(id) {
   });
 }
 
-/**
- * Adds a task to the tasks database
- * @returns mutation of the addition
- */
-export function useAddTask() {
+/* Adds a task to the tasks database */
+export function useAddTask(): UseMutationResult {
   const queryClient = useQueryClient();
 
-  const mutationFn = async (task) => {
+  const mutationFn = async (task: Task) => {
     const tasks = [...(await loadTasks()), task];
     await Preferences.set({ key: "tasks", value: JSON.stringify(tasks) });
   };
@@ -68,14 +66,11 @@ export function useAddTask() {
   return useMutation({ mutationFn, onSuccess });
 }
 
-/**
- * Updates specific task
- * @returns Mutation to update the task
- */
-export function useUpdateTask() {
+/* Updates specific task */
+export function useUpdateTask(): UseMutationResult {
   const queryClient = useQueryClient();
 
-  const mutationFn = async ({ id, data }) => {
+  const mutationFn = async ({ id, data }: { id: string; data: Object }) => {
     const tasks = await loadTasks();
     const index = tasks.indexOf(tasks.find((task) => task.id == id));
 
@@ -91,11 +86,8 @@ export function useUpdateTask() {
   return useMutation({ mutationFn, onSuccess });
 }
 
-/**
- * Delete specific task
- * @returns Mutation to task the task
- */
-export function useDeleteTask() {
+/* Delete specific task */
+export function useDeleteTask(): UseMutationResult {
   const queryClient = useQueryClient();
 
   const mutationFn = async (task) => {

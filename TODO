@@ -5,6 +5,8 @@ Sequenced:
       ☐ Give hour countdown if task is due today
       ☐ Allow full-customization of repeating task
       ☐ Remove Advanced Options Accordian
+      ☐ Fix bug where clicking date/setting date does not set the date for adding tasks
+      ☐ Implement Tap-To-View feature on tasks
 
     Settings:
       ☐ Allow Customizing All Notifications (Such as Daily Reminders)
@@ -24,7 +26,6 @@ Sequenced:
       ☐ Create Task Quick Count
 
     Tasks:
-      ☐ Add a max character length
       ☐ Allow adding tags
       ☐ Allow adding grouping
       ☐ Add sub-tasks

@@ -20,7 +20,7 @@ export function TaskItem({ item }) {
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [isManaging, setIsManaging] = useState(false);
-  const [context, setContext] = useContext(taskContext);
+  const [context] = useContext(taskContext);
 
   const handleMarkComplete = (e) => {
     e.stopPropagation();
@@ -53,12 +53,6 @@ export function TaskItem({ item }) {
 
   const handleInteractive = () => {
     navigate(`/task/view/${item.id}`);
-  };
-
-  const handleDelete = () => {
-    deleteTask(item);
-
-    setIsDeleting(false);
   };
 
   return (

@@ -1,28 +1,12 @@
 import today_icon from "@/assets/today.svg";
-import { isDateGreater } from "@/utils/data";
 import { isOverdue } from "@/utils/date";
 import { formatDigits } from "@/utils/math";
 
 export default function TaskItemDate({ date }) {
-  const checkRelative = (date) => {
+  const checkRelative = (date: Date) => {
     const today = new Date();
     const checkedDate = new Date(date);
     const relative = checkedDate.getDate() - today.getDate();
-
-    const getTime = (date) => {
-      let timeHours = date.getHours();
-      let timeprint = "a.m";
-
-      if (timeHours >= 12) {
-        timeprint = "p.m";
-        timeHours -= 12;
-      }
-
-      return `${formatDigits(timeHours, 2)}:${formatDigits(
-        date.getMinutes(),
-        2
-      )} ${timeprint}`;
-    };
 
     if (relative >= 0 && relative <= 1) {
       if (relative == 1) {

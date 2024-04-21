@@ -2,13 +2,11 @@ import { useState } from "react";
 import CalendarArrow from "./CalendarArrow";
 import {
   formatDate,
-  formatDateClean,
-  formatMonthYear,
   generateWeek,
 } from "@/utils/date";
 import CalendarItem from "./CalendarItem";
 
-export default function ActiveCalendar({ context, setContext, setActiveDate }) {
+export default function ActiveCalendar({ context, setContext, setActiveDate }: {context: React.Context<Object>}) {
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(0);
 

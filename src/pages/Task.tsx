@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { useTasks, filterBroken } from "@/hooks/tasks";
-import { useNavigate } from "react-router-dom";
 import { taskContext } from "@/hooks/contexts";
 import { sortByDate } from "@/utils/data";
 
@@ -13,7 +12,6 @@ export default function Task() {
   const [activeDate, setActiveDate] = useState(context.task.active.date);
 
   const tasks = useTasks();
-  const navigate = useNavigate();
   
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">
