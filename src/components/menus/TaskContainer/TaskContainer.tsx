@@ -20,6 +20,8 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
   const [context, setContext] = useContext(taskContext);
   const [taskFilter, setTaskFilter] = useState("incomplete");
 
+  const baseTasks = tasks;
+
   let active = context.task.menus[activeFilter];
 
   const handleClick = () => {
@@ -42,7 +44,9 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
 
   if (taskFilter == "all") taskDisplay = tasks;
   else if (taskFilter == "incomplete")
-    taskDisplay = tasks.filter((task) => isTaskDone(task, context.task.active.date));
+    taskDisplay = tasks.filter((task) =>
+      isTaskDone(task, context.activeDate)
+    );
 
   return (
     <div className="flex flex-col items-center w-[90%] my-2">
@@ -59,7 +63,15 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
                     className={open ? "rotate-90 transform" : ""}
                     width="32"
                   />
-                  <h1 className="text-xl">{title}</h1>
+                  <div className="flex flex-row gap-2">
+                    <h1 className="text-xl">{title}</h1>
+                    {tasks.filter((task) => !task.done).length > 0 && (
+                      <h1 className="text-xl text-accent-black-400">
+                        ({tasks.filter((task) => !task.done).length}/
+                        {baseTasks.length})
+                      </h1>
+                    )}
+                  </div>
                 </div>
                 <div className="flex flex-row items-center">
                   <Menu>
@@ -93,22 +105,5 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
         )}
       </Disclosure>
     </div>
-
-    // <div className="flex flex-col items-center w-[90%] my-2">
-    //   <div className="flex flex-row">
-    //     <div
-    //       className="flex flex-row justify-evenly items-center"
-    //       onClick={handleClick}
-    //     >
-    //       <img src={imgSrc} className="mt-1 w-8 h-8 invert" />
-
-    //       <img src={imgSrc} className="mt-1 w-8 h-8 invert" />
-    //     </div>
-    //     <div className="flex items-center" onClick={handleVis}>
-    //       <img src={eyeIcon} className="absolute invert" />
-    //     </div>
-    //   </div>
-    //   {!active && <TaskMenu tasks={taskDisplay} />}
-    // </div>
   );
 }

@@ -9,10 +9,18 @@ export default function TaskItemDate({ date }) {
     const relative = checkedDate.getDate() - today.getDate();
 
     if (relative >= 0 && relative <= 1) {
+      const hourDifference = checkedDate.getHours() - today.getHours();
+      const minuteDifference = checkedDate.getMinutes() - today.getMinutes();
+
       if (relative == 1) {
         return `Tomorrow`;
       } else {
-        return `Today`;
+        if (hourDifference == 0)
+          if (minuteDifference < 0) return `${minuteDifference * -1} mins ago`;
+          else return `${minuteDifference} mins`;
+
+        if (hourDifference < 0) return `${hourDifference * -1} hours ago`;
+        return `${hourDifference} hours`;
       }
     } else {
       return `${formatDigits(checkedDate.getMonth() + 1, 2)}/${formatDigits(

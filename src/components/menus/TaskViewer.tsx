@@ -51,13 +51,13 @@ export default function TaskViewer() {
               value="done"
               disabled
             />
-            <TaskItemSpec
+            {/* <TaskItemSpec
               task={task}
               text="ID"
               type="text"
               value="id"
               immediateSave={isSaving}
-            />
+            /> */}
           </div>
           <div className="my-4">
             <button

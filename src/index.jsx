@@ -27,13 +27,8 @@ const queryClient = new QueryClient({
 
 export default function App() {
   const [context, setContext] = useState({
+    activeDate: new Date(),
     task: {
-      active: {
-        date: new Date(),
-        month: new Date().getMonth(),
-        year: new Date().getFullYear(),
-        menus: [],
-      },
       menus: {
         dailyTasks: false,
         generalTasks: false,

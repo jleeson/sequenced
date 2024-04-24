@@ -14,8 +14,6 @@ const reducer = (data: any, payload: any) => ({ ...data, ...payload });
 export default function TaskAddMenu({
   isOpen,
   setIsOpen,
-  activeDate,
-  setActiveDate,
 }) {
   const [context, setContext] = useContext(taskContext);
   const tasks = useTasks();
@@ -23,26 +21,30 @@ export default function TaskAddMenu({
   const [task, setTask] = useReducer(reducer, {
     title: "",
     description: "",
-    date: new Date(activeDate),
+    date: new Date(context.activeDate),
   });
 
-  if (!matchDate(new Date(task.date), new Date(activeDate)))
-    setTask({ date: new Date(activeDate) });
+  if (!matchDate(new Date(task.date), new Date(context.activeDate)))
+    setTask({ date: new Date(context.activeDate) });
 
   const { mutate: addTask } = useAddTask();
+
+  const ChangeDate = (e) => {
+
+  }
 
   const ResetForm = () => {
     setTask({
       title: "",
       description: "",
-      date: new Date(activeDate),
+      date: new Date(context.activeDate),
     });
 
     setIsOpen(false);
   };
 
   const SubmitForm = () => {
-    task.id = createID(tasks.data);
+    task.id = createID(20);
 
     addTask(task);
 
@@ -99,42 +101,27 @@ export default function TaskAddMenu({
               <TaskAddMenuItem
                 name="Due Date"
                 type="datetime-local"
-                value={formatDateTime(activeDate)}
+                value={formatDateTime(context.activeDate)}
                 onChange={(e) => {
-                  setActiveDate(new Date(e.target.value));
+                  ChangeDate(new Date(e.target.value));
                   setTask({ date: new Date(e.target.value) });
                 }}
               />
-              <Disclosure>
-                {({ open }) => (
-                  <div>
-                    <div className="flex flex-row gap-1">
-                      <ChevronRightIcon
-                        className={open ? "rotate-90 transform" : ""}
-                        width="32"
-                      />
-                      <Disclosure.Button>Advanced Options</Disclosure.Button>
-                    </div>
-                    <Disclosure.Panel>
-                      <TaskAddMenuItemCustom name="Repeating">
-                        <select
-                          className="border border-accent-white bg-accent-black-500 px-2 py-1"
-                          value={task.repeater}
-                          onChange={(e) => {
-                            setTask({ repeater: e.target.value });
-                          }}
-                        >
-                          <option value="">Do Not Repeat</option>
-                          <option value="daily">Every Day</option>
-                          <option value="weekly">Every Week</option>
-                          <option value="bi-weekly">Every 2 Weeks</option>
-                          <option value="monthly">Every Month</option>
-                        </select>
-                      </TaskAddMenuItemCustom>
-                    </Disclosure.Panel>
-                  </div>
-                )}
-              </Disclosure>
+              <TaskAddMenuItemCustom name="Repeating">
+                <select
+                  className="border border-accent-white bg-accent-black-500 px-2 py-1"
+                  value={task.repeater}
+                  onChange={(e) => {
+                    setTask({ repeater: e.target.value });
+                  }}
+                >
+                  <option value="">Do Not Repeat</option>
+                  <option value="daily">Every Day</option>
+                  <option value="weekly">Every Week</option>
+                  <option value="bi-weekly">Every 2 Weeks</option>
+                  <option value="monthly">Every Month</option>
+                </select>
+              </TaskAddMenuItemCustom>
             </div>
 
             <div className="flex flex-row justify-evenly mt-6">

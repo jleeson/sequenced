@@ -6,7 +6,6 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   const [context, setContext] = useContext(taskContext);
-  const [activeDate, setActiveDate] = useState(context.task.active.date);
   const [isAdding, setIsAdding] = useState(false);
 
   return (
@@ -32,8 +31,6 @@ const Layout = () => {
         <TaskAddMenu
           isOpen={isAdding}
           setIsOpen={setIsAdding}
-          activeDate={activeDate}
-          setActiveDate={setActiveDate}
         />
       </div>
     </>

@@ -9,7 +9,9 @@ import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 
 export default function Task() {
   const [context, setContext] = useContext(taskContext);
-  const [activeDate, setActiveDate] = useState(context.task.active.date);
+  const [activeDate, setActiveDate] = useState(context.activeDate);
+
+  console.log("CTX", context);
 
   const tasks = useTasks();
   
@@ -26,7 +28,7 @@ export default function Task() {
               setActiveDate={setActiveDate}
             />
             <DayTasks
-              day={context.task.active.date}
+              day={context.activeDate}
               tasks={sortByDate(filterBroken(tasks.data))}
             />
             <TaskContainer

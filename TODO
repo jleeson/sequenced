@@ -1,16 +1,24 @@
 Sequenced:
   1.0.5:
     Tasks:
-      ☐ Add Task Counter
-      ☐ Give hour countdown if task is due today
+      ✔ Add Task Counter
+      ✔ Give hour countdown if task is due today
+      ✔ Remove Advanced Options Accordian
+      ✔ Fix bug where clicking date/setting date does not set the date for adding tasks
+      ✔ Implement Tap-To-View feature on tasks
+      ✔ Fix Ghost Tasks
+      ✔ Clean up active date system
+      ✔ Fix "Date" overflow issue (see "Tomorrow" text) 
+      ☐ Clean up details UI (and prevent overflow)
+      ☐ Add sub-tasks
       ☐ Allow full-customization of repeating task
-      ☐ Remove Advanced Options Accordian
-      ☐ Fix bug where clicking date/setting date does not set the date for adding tasks
-      ☐ Implement Tap-To-View feature on tasks
 
     Settings:
       ☐ Allow Customizing All Notifications (Such as Daily Reminders)
       ☐ Only send notification for daily reminder if tasks exist
+
+    Navigation:
+      ☐ Add Settings Icon
 
   Other Tasks:
     Navigation: 
@@ -18,7 +26,6 @@ Sequenced:
       ☐ Add Tasks Icon
       ☐ Migrate Add Button Into 3-Panel System
       ☐ Add Lists Icon
-      ☐ Add Settings Icon
 
     Home Page:
       ☐ Make List of Only Daily Tasks
@@ -28,9 +35,9 @@ Sequenced:
     Tasks:
       ☐ Allow adding tags
       ☐ Allow adding grouping
-      ☐ Add sub-tasks
       ☐ Implement Search Query
-      ☐ Clean up details UI (and prevent overflow)
+      ☐ Implement Previous Context Menu into details
+      ☐ Fix repeating tasks showing "Today" when on another day
       ☐ Allow for no due-date
 
     List:

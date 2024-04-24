@@ -27,7 +27,7 @@ export function TaskItem({ item }) {
 
     if (item.repeater && item.repeater.length != 0) {
       let newDone = item.done || [];
-      let activeDate = context.task.active;
+      let activeDate = context.activeDate;
 
       if (!Array.isArray(item.done)) item.done = newDone;
 
@@ -51,16 +51,22 @@ export function TaskItem({ item }) {
     setIsManaging(false);
   };
 
-  const handleInteractive = () => {
+  const handleInteractive = (e) => {
+    e.stopPropagation();
+
     navigate(`/task/view/${item.id}`);
   };
 
   return (
-    <TaskItemShell task={item} activeDate={context.task.active.date}>
+    <TaskItemShell
+      task={item}
+      activeDate={context.activeDate}
+      onClick={(e) => handleInteractive(e)}
+    >
       <div className="w-full h-full flex flex-row justify-between gap-1">
         <div className="w-1/2 flex flex-row items-center">
           <TaskItemCheckBox
-            checked={!isTaskDone(item, context.task.active.date)}
+            checked={!isTaskDone(item, context.activeDate)}
             onChange={handleMarkComplete}
             onClick={(e) => e.stopPropagation()}
           />
@@ -69,9 +75,6 @@ export function TaskItem({ item }) {
         <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
           <div className="w-full h-full flex items-center justify-evenly">
             <TaskItemDate date={item.date} />
-          </div>
-          <div className="w-14 h-full flex flex-row justify-center">
-            <TaskItemMenu item={item} />
           </div>
         </div>
       </div>

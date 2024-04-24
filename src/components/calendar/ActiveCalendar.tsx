@@ -9,8 +9,8 @@ import CalendarItem from "./CalendarItem";
 export default function ActiveCalendar({ context, setContext, setActiveDate }: {context: React.Context<Object>}) {
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(0);
-
-  const activeDate = context.task.active.date;
+  
+  const activeDate = context.activeDate;
   const dates = generateWeek(activeDate || new Date(), 0);
 
   const changeDate = (date) => {
@@ -18,11 +18,7 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }: {
       ...context,
     };
 
-    tempContext.task.active = {
-      date: date,
-      month: date.getMonth(),
-      year: date.getFullYear(),
-    };
+    tempContext.activeDate = date;
 
     setActiveDate(date);
     setContext(tempContext);
@@ -39,12 +35,12 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }: {
     const tempMonth = activeData[1] - 1;
     const tempDay = activeData[2];
 
-    tempContext.task.active.date = new Date();
-    tempContext.task.active.date.setFullYear(tempYear);
-    tempContext.task.active.date.setMonth(tempMonth);
-    tempContext.task.active.date.setDate(tempDay);
+    tempContext.activeDate = new Date();
+    tempContext.activeDate.setFullYear(tempYear);
+    tempContext.activeDate.setMonth(tempMonth);
+    tempContext.activeDate.setDate(tempDay);
 
-    tempContext.task.active.month = activeData[1] - 1;
+    setActiveDate(tempContext.activeDate);
     setContext(tempContext);
   }
 

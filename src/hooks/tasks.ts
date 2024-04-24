@@ -7,6 +7,7 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 
+// TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
 export interface Task {
   title?: string;
   description?: string;
@@ -23,7 +24,7 @@ export function filterBroken(tasks: Task[]): Task[] {
 /* Loads task array from Preferences database */
 export async function loadTasks(): Promise<Task[]> {
   const { value } = await Preferences.get({ key: "tasks" });
-  return value ? JSON.parse(value) : [];
+  return JSON.parse(value ?? "[]").filter((task: Task) => task.id);
 }
 
 /* Loads tasks and finds the task with given id */
@@ -51,7 +52,7 @@ export function useTaskById(id: string): UseQueryResult {
 }
 
 /* Adds a task to the tasks database */
-export function useAddTask(): UseMutationResult {
+export function useAddTask(): UseMutationResult<void, Error, Task, unknown> {
   const queryClient = useQueryClient();
 
   const mutationFn = async (task: Task) => {
@@ -67,12 +68,12 @@ export function useAddTask(): UseMutationResult {
 }
 
 /* Updates specific task */
-export function useUpdateTask(): UseMutationResult {
+export function useUpdateTask(): UseMutationResult<void, Error, { id: string; data: Object; }, unknown> {
   const queryClient = useQueryClient();
 
   const mutationFn = async ({ id, data }: { id: string; data: Object }) => {
     const tasks = await loadTasks();
-    const index = tasks.indexOf(tasks.find((task) => task.id == id));
+    const index = tasks.findIndex((task) => task.id == id);
 
     tasks[index] = data;
 
@@ -87,14 +88,13 @@ export function useUpdateTask(): UseMutationResult {
 }
 
 /* Delete specific task */
-export function useDeleteTask(): UseMutationResult {
+export function useDeleteTask(): UseMutationResult<void, Error, Task, unknown> {
   const queryClient = useQueryClient();
 
-  const mutationFn = async (task) => {
+  const mutationFn = async ({ id }: Task) => {
     const tasks = await loadTasks();
-    const realTask = tasks.find((t) => t.id == task.id);
-    const realIndex = tasks.indexOf(realTask);
-    tasks.splice(realIndex, 1);
+    const index = tasks.findIndex((task) => task.id == id);
+    tasks.splice(index, 1);
 
     await Preferences.set({ key: "tasks", value: JSON.stringify(tasks) });
   };
