@@ -10,7 +10,7 @@ import TaskItemDate from "./TaskItemDate";
 import { taskContext } from "@/hooks/contexts";
 import { isTaskDone } from "@/utils/data";
 
-export function TaskItem({ item }) {
+export function TaskItem({ item, setIsInspecting }) {
   if (!item) item = {};
 
   const navigate = useNavigate();
@@ -18,9 +18,9 @@ export function TaskItem({ item }) {
   const { mutate: deleteTask } = useDeleteTask();
   const { mutate: updateTask } = useUpdateTask();
 
+  const [context, setContext] = useContext(taskContext);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isManaging, setIsManaging] = useState(false);
-  const [context] = useContext(taskContext);
 
   const handleMarkComplete = (e) => {
     e.stopPropagation();
@@ -54,7 +54,12 @@ export function TaskItem({ item }) {
   const handleInteractive = (e) => {
     e.stopPropagation();
 
-    navigate(`/task/view/${item.id}`);
+    setContext({
+      ...context,
+      activeTask: item,
+    });
+
+    setIsInspecting(true);
   };
 
   return (

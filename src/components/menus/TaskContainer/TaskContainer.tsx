@@ -16,7 +16,7 @@ import TaskMenuItem from "./TaskMenuItem";
 import { matchDate } from "@/utils/date";
 import { isTaskDone } from "@/utils/data";
 
-export default function TaskContainer({ title, tasks, activeFilter }) {
+export default function TaskContainer({ title, tasks, activeFilter, setIsInspecting }) {
   const [context, setContext] = useContext(taskContext);
   const [taskFilter, setTaskFilter] = useState("incomplete");
 
@@ -99,7 +99,7 @@ export default function TaskContainer({ title, tasks, activeFilter }) {
               </div>
             </Disclosure.Button>
             <Disclosure.Panel className="w-full h-full">
-              {!active && <TaskMenu tasks={taskDisplay} />}
+              {!active && <TaskMenu tasks={taskDisplay} setIsInspecting={setIsInspecting} />}
             </Disclosure.Panel>
           </>
         )}

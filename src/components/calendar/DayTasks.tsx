@@ -2,7 +2,7 @@ import { getNameByDate, matchDate } from "@/utils/date";
 import TaskContainer from "../menus/TaskContainer/TaskContainer";
 import { isDateWithinProximity } from "@/utils/data";
 
-export default function DayTasks({ day, tasks }) {
+export default function DayTasks({ day, tasks, setIsInspecting }) {
   const getDayTasks = () => {
     const dayTasks = [];
 
@@ -27,6 +27,7 @@ export default function DayTasks({ day, tasks }) {
       activeFilter="generalTasks"
       title={`${getNameByDate(day.getDay())}'s Tasks`}
       tasks={getDayTasks()}
+      setIsInspecting={setIsInspecting}
     />
   );
 }

@@ -1,13 +1,13 @@
 import { TaskItem } from "../task/TaskItem";
 
-export default function TaskMenu({ tasks }) {
+export default function TaskMenu({ tasks, setIsInspecting }) {
   return (
     <div className="flex flex-col items-center w-full h-full">
       <ul className="w-full gap-3 flex flex-col justify-start items-center overflow-y-scroll py-4">
         {tasks.length > 0 &&
           tasks.map((task, key) => (
             <li key={key} className="w-full h-full">
-              <TaskItem item={task} />
+              <TaskItem item={task} setIsInspecting={setIsInspecting} />
             </li>
           ))}
         {tasks.length == 0 && (

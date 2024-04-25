@@ -5,16 +5,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Meds from "./pages/Meds";
 import Mood from "./pages/Mood";
-import Task from "./pages/Task";
-import Layout from "./pages/Layout";
-import NoPage from "./pages/NoPage";
+import Task from "@/pages/Task";
+import Layout from "@/pages/Layout";
+import NoPage from "@/pages/NoPage";
 import "./index.css";
 
-import TaskViewer from "./components/menus/TaskViewer";
-import { taskContext } from "./hooks/contexts";
+import TaskViewer from "@/components/menus/TaskViewer/TaskViewer";
+import { taskContext } from "@/hooks/contexts";
 
 import { initializeAdMob } from "@/utils/ads";
-import { initializeNotifications } from "./utils/notifs";
+import { initializeNotifications } from "@/utils/notifs";
 
 /* define the query client for react-query */
 const queryClient = new QueryClient({

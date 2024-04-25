@@ -6,15 +6,15 @@ import { sortByDate } from "@/utils/data";
 import DayTasks from "../components/calendar/DayTasks";
 import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
+import TaskViewer from "@/components/menus/TaskViewer/TaskViewer";
 
 export default function Task() {
   const [context, setContext] = useContext(taskContext);
   const [activeDate, setActiveDate] = useState(context.activeDate);
-
-  console.log("CTX", context);
+  const [isInspecting, setIsInspecting] = useState(false);
 
   const tasks = useTasks();
-  
+
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">
       {tasks.isLoading && <span>Loading...</span>}
@@ -28,14 +28,24 @@ export default function Task() {
               setActiveDate={setActiveDate}
             />
             <DayTasks
+              setIsInspecting={setIsInspecting}
               day={context.activeDate}
               tasks={sortByDate(filterBroken(tasks.data))}
             />
             <TaskContainer
+              setIsInspecting={setIsInspecting}
               title="All Tasks"
               tasks={sortByDate(filterBroken(tasks.data))}
               activeFilter="dailyTasks"
             />
+          </div>
+          <div>
+            <TaskViewer
+              context={context}
+              setContext={setContext}
+              isOpen={isInspecting}
+              setIsOpen={setIsInspecting}
+            ></TaskViewer>
           </div>
         </div>
       )}
