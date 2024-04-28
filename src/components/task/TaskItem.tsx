@@ -31,7 +31,7 @@ export function TaskItem({ item, setIsInspecting }) {
 
       if (!Array.isArray(item.done)) item.done = newDone;
 
-      let rawDate = new Date(activeDate.date);
+      let rawDate = new Date(activeDate);
       rawDate.setHours(0, 0, 0, 0);
 
       let foundDate = [...item.done].find((ite) =>
