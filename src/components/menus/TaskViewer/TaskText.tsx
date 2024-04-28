@@ -37,7 +37,11 @@ export function TaskText({
                   ? formatDateTime(tempData)
                   : tempData
               }
-              onChange={(e) => setTempData(e.target.value)}
+              onChange={(e) => {
+                if (props.type == "datetime-local")
+                  setTempData(new Date(e.target.value));
+                else setTempData(e.target.value);
+              }}
               maxLength={28}
               className={`w-64 ${
                 size == "medium" ? "min-h-24" : "min-h-10"
