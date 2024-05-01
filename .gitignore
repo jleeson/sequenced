@@ -28,7 +28,7 @@ dist-ssr
 #####
 
 # ios/
-android/
+# android/
 dist/
 
 #########################
