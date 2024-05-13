@@ -38,6 +38,8 @@ export function TaskText({
                   : tempData
               }
               onChange={(e) => {
+                e.stopPropagation();
+                
                 if (props.type == "datetime-local")
                   setTempData(new Date(e.target.value));
                 else setTempData(e.target.value);

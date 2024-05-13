@@ -1,4 +1,10 @@
-import { LocalNotificationSchema, LocalNotifications, PendingResult, PermissionStatus } from "@capacitor/local-notifications";
+import {
+  LocalNotificationSchema,
+  LocalNotifications,
+  PendingLocalNotificationSchema,
+  PendingResult,
+  PermissionStatus,
+} from "@capacitor/local-notifications";
 import { getSettings, setSettings } from "./settings";
 
 /* Checks if a user has been reminded */
@@ -27,20 +33,28 @@ export async function initializeNotifications() {
 }
 
 /* Sets daily reminders */
-export async function setDailyReminders() {
+export async function setDailyReminders(hour: number, minute: number) {
   const timeBuilder = new Date();
-  timeBuilder.setHours(8, 0, 0, 0);
-  timeBuilder.setDate(timeBuilder.getDate() + 1);
 
-  scheduleNotification({
+  if (!hour || !minute) timeBuilder.setHours(8, 0, 0, 0);
+
+  if (hour) timeBuilder.setHours(hour);
+
+  if (minute) timeBuilder.setMinutes(minute);
+
+  const id = new Date().getTime();
+
+  await scheduleNotification({
     title: "Sequenced: ADHD Manager",
-    id: new Date().getTime(),
-    body: "Don't forget to check your task-list!",
+    id,
+    body: "Don't forget to check your tasks!",
     schedule: {
       at: timeBuilder,
       every: "day",
     },
   });
+
+  return await getPendingById(id);
 }
 
 /* Checks if the system is sending daily notifications */
@@ -57,12 +71,19 @@ export async function getPending(): Promise<PendingResult> {
   return await LocalNotifications.getPending();
 }
 
+export async function getPendingById(
+  id: number
+): Promise<PendingLocalNotificationSchema | undefined> {
+  const pending = await getPending();
+  return pending.notifications.find((notif) => notif.id == id);
+}
+
 /* Sets the state of the daily reminder checker */
 export async function setHasRemindedToday(state: boolean): Promise<Boolean> {
   const settings = await getSettings();
   settings.hasRemindedToday = state || true;
   await setSettings(settings);
-  
+
   return settings.hasRemindedToday;
 }
 
@@ -86,7 +107,9 @@ export async function requestPermissions(): Promise<PermissionStatus> {
 }
 
 /* Schedules many notifications */
-export async function scheduleNotification(...options: LocalNotificationSchema[]) {
+export async function scheduleNotification(
+  ...options: LocalNotificationSchema[]
+) {
   await setNotificationConfig();
 
   const checked = await checkPermissions();
@@ -98,4 +121,17 @@ export async function scheduleNotification(...options: LocalNotificationSchema[]
   } else {
     console.log(`Unable to send notification: Missing Permissions`);
   }
+}
+
+export async function cancelNotifications(
+  notifications: LocalNotificationSchema[]
+) {
+  LocalNotifications.cancel({ notifications });
+}
+
+export async function cancelNotification(
+  notification: LocalNotificationSchema | undefined
+) {
+  if (notification)
+    LocalNotifications.cancel({ notifications: [notification] });
 }

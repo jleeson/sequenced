@@ -56,6 +56,7 @@ export default function TaskAddMenu({ isOpen, setIsOpen }) {
   };
 
   const CloseMenu = (e) => {
+    e.stopPropagation();
     setIsOpen(false);
   }
 

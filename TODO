@@ -1,17 +1,17 @@
 Sequenced:
   1.0.6:
     Navigation:
-      ☐ Add Settings Icon
+      ✔ Add Settings Icon
 
     Tasks:
       ☐ Allow for no due-date
       ☐ Add sub-tasks
       ☐ Fix repeating tasks showing "Today" when on another day
       ☐ Allow full-customization of repeating task
+      ✔ When adding task, fix ability to change month, without menu closing
 
     Settings:
-      ☐ Allow Customizing All Notifications (Such as Daily Reminders)
-      ☐ Only send notification for daily reminder if tasks exist
+      ✔ Allow Customizing All Notifications (Such as Daily Reminders)
 
   1.0.5:
     Bug Fixes:
@@ -29,7 +29,7 @@ Sequenced:
       ✔ Fix Calendar Alignment
       ✔ Fixed so date does not clsoe Menus (Edit & Add)
       ✔ Fix repeating task removing the repeater on date change 
-
+    
   Other Tasks:
     Navigation: 
       ☐ Add Home Icon 
@@ -55,6 +55,7 @@ Sequenced:
     Settings:
       ☐ Allow RESET Button
       ☐ Allow for Compact/Comfortable UI (Showing just title and date vs Showing Title & Date | Description & Tags )
+      ☐ Only send notification for daily reminder if tasks exist
 
     Branding:
       ☐ Work on Color Scheme

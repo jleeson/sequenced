@@ -9,14 +9,16 @@ export function NavBar({ setIsAdding }) {
     <div className="flex justify-center items-center w-full absolute bottom-0 bg-accent-black-700 nav-pad">
       <div className="w-full h-16 flex flex-row justify-evenly items-center rounded-t-md">
         <div className="flex flex-row grow justify-evenly">
-          {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
-          <img
-            src={home_icon}
-            className="invert w-full h-full"
-            width="32"
-            height="32"
-          />
-        </div> */}
+          <a href="/">
+            <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+              <img
+                src={home_icon}
+                className="invert w-full h-full"
+                width="32"
+                height="32"
+              />
+            </div>
+          </a>
           {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
             <a
               href="/"
@@ -52,14 +54,14 @@ export function NavBar({ setIsAdding }) {
             height="32"
           />
         </div> */}
-          {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+          <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
             <a
               href="/settings"
               className="invert w-full h-full flex items-center justify-center"
             >
               <img src={settings_icon} width="32" height="32" />
             </a>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

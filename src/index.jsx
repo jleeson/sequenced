@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Meds from "./pages/Meds";
 import Mood from "./pages/Mood";
 import Task from "@/pages/Task";
+import Settings from "./pages/Settings";
 import Layout from "@/pages/Layout";
 import NoPage from "@/pages/NoPage";
 import "./index.css";
@@ -43,10 +44,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Task />} />
-              <Route path="/task/view/:id" element={<TaskViewer />} />
-              {/* <Route path="/meds" element={<Meds />} /> */}
-              {/* <Route path="/mood" element={<Mood />} /> */}
               <Route path="/task" element={<Task />} />
+              <Route path="/settings" element={<Settings />}></Route>
               <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>
