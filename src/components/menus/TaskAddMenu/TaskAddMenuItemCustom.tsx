@@ -4,7 +4,7 @@ export default function ToDoAddMenuItemCustom({ name, children }) {
       <label htmlFor={name.toLowerCase()} className="text-lg px-1">
         {name}
       </label>
-      <div>{children}</div>
+      <div className="flex flex-row w-full h-full">{children}</div>
     </div>
   );
 }

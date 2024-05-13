@@ -12,9 +12,9 @@ export function sortByDate(arr: Task[]) {
 
 /**
  * Checks if one date is greater than the other
- * @param {Date} a 
- * @param {Date} b 
- * @returns 
+ * @param {Date} a
+ * @param {Date} b
+ * @returns
  */
 export function isDateGreater(a, b) {
   if (a.getMonth() == b.getMonth()) {
@@ -42,14 +42,7 @@ export function isDateWithinProximity(mode, a, b) {
 
     case "weekly":
       tempDate = new Date(a.date);
-      for (let i = 0; i < 100; i++) {
-        tempDate.setDate(new Date(a.date).getDate() + i * 7);
-        if (matchDate(tempDate, b)) {
-          return true;
-        }
-      }
-
-      return false;
+      return new Date(a.date).getDay() == new Date(b).getDay();
 
     case "bi-weekly":
       tempDate = new Date(a.date);
@@ -80,10 +73,10 @@ export function isDateWithinProximity(mode, a, b) {
 }
 
 /**
- * 
+ *
  * @param {Object} task task
  * @param {Object} activeDate context date
- * @returns 
+ * @returns
  */
 export function isTaskDone(task, activeDate) {
   if (Array.isArray(task.done)) {

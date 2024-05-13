@@ -45,7 +45,7 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }: {
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full px-2">
       <div className="w-full flex justify-center my-3">
         <div className="w-2/3 py-1 flex justify-center border border-accent-white rounded-lg">
           <input

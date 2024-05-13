@@ -1,15 +1,34 @@
 Sequenced:
-  1.0.5:
+  1.0.6:
+    Navigation:
+      ☐ Add Settings Icon
+
     Tasks:
-      ✔ Add Task Counter
-      ✔ Give hour countdown if task is due today
-      ✔ Remove Advanced Options Accordian
-      ✔ Fix bug where clicking date/setting date does not set the date for adding tasks
-      ✔ Implement Tap-To-View feature on tasks
-      ✔ Fix Ghost Tasks
-      ✔ Clean up active date system
-      ✔ Fix "Date" overflow issue (see "Tomorrow" text) 
-      ✔ Clean up details UI (and prevent overflow)
+      ☐ Allow for no due-date
+      ☐ Add sub-tasks
+      ☐ Fix repeating tasks showing "Today" when on another day
+      ☐ Allow full-customization of repeating task
+
+    Settings:
+      ☐ Allow Customizing All Notifications (Such as Daily Reminders)
+      ☐ Only send notification for daily reminder if tasks exist
+
+  1.0.5:
+    Bug Fixes:
+      ✔ Changing Date Input doesn't update active date on new item
+      ✔ Repeating Section in Add Item does not match rest of the Add Item Layout
+      ✔ Fix Blue on Blue on Inputs
+      ✔ Fix New Item Padding
+      ✔ Make Repeating Take Full Width
+      ✔ Fix New Item Buttons Alignment
+      ✔ Editing the due date shrinks the box 
+      ✔ Align Delete and Close Buttons in Task Viewer (Edit Menu)
+      ✔ Remove Modal Borders
+      ✔ Fix "Delete Menu" into its own area
+      ✔ Swap Order of Delete and Close to Match Rest of UI
+      ✔ Fix Calendar Alignment
+      ✔ Fixed so date does not clsoe Menus (Edit & Add)
+      ✔ Fix repeating task removing the repeater on date change 
 
   Other Tasks:
     Navigation: 
@@ -17,7 +36,6 @@ Sequenced:
       ☐ Add Tasks Icon
       ☐ Migrate Add Button Into 3-Panel System
       ☐ Add Lists Icon
-      ☐ Add Settings Icon
 
     Home Page:
       ☐ Make List of Only Daily Tasks
@@ -29,10 +47,6 @@ Sequenced:
       ☐ Allow adding grouping
       ☐ Implement Search Query
       ☐ Implement Previous Context Menu into details
-      ☐ Fix repeating tasks showing "Today" when on another day
-      ☐ Allow for no due-date
-      ☐ Add sub-tasks
-      ☐ Allow full-customization of repeating task
 
     List:
       ☐ Implement Lists Ability
@@ -41,9 +55,10 @@ Sequenced:
     Settings:
       ☐ Allow RESET Button
       ☐ Allow for Compact/Comfortable UI (Showing just title and date vs Showing Title & Date | Description & Tags )
-      ☐ Allow Customizing All Notifications (Such as Daily Reminders)
-      ☐ Only send notification for daily reminder if tasks exist
 
     Branding:
       ☐ Work on Color Scheme
       ☐ Work out getting a proper logo
+
+    Misc:
+      ☐ Turn Add Item Repeater into Component

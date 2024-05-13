@@ -30,12 +30,12 @@ export default function Task() {
             <DayTasks
               setIsInspecting={setIsInspecting}
               day={context.activeDate}
-              tasks={sortByDate(filterBroken(tasks.data))}
+              tasks={sortByDate(tasks.data)}
             />
             <TaskContainer
               setIsInspecting={setIsInspecting}
               title="All Tasks"
-              tasks={sortByDate(filterBroken(tasks.data))}
+              tasks={sortByDate(tasks.data)}
               activeFilter="dailyTasks"
             />
           </div>

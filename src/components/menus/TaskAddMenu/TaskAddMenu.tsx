@@ -6,15 +6,12 @@ import { useAddTask, useTasks } from "@/hooks/tasks";
 import TaskAddMenuItem from "./TaskAddMenuItem";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import TaskAddMenuItemCustom from "./TaskAddMenuItemCustom";
-import { taskContext } from "@/hooks/contexts";
+import { TaskContext, taskContext } from "@/hooks/contexts";
 import { createID } from "@/utils/id";
 
 const reducer = (data: any, payload: any) => ({ ...data, ...payload });
 
-export default function TaskAddMenu({
-  isOpen,
-  setIsOpen,
-}) {
+export default function TaskAddMenu({ isOpen, setIsOpen }) {
   const [context, setContext] = useContext(taskContext);
   const tasks = useTasks();
 
@@ -29,9 +26,12 @@ export default function TaskAddMenu({
 
   const { mutate: addTask } = useAddTask();
 
-  const ChangeDate = (e) => {
-
-  }
+  const ChangeDate = (date: Date) => {
+    setContext({
+      ...context,
+      activeDate: date,
+    });
+  };
 
   const ResetForm = () => {
     setTask({
@@ -55,13 +55,17 @@ export default function TaskAddMenu({
     ResetForm();
   };
 
+  const CloseMenu = (e) => {
+    setIsOpen(false);
+  }
+
   const ref = useRef(null);
 
   return (
     <Transition
       as={Dialog}
       show={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={(e) => CloseMenu(e)}
       className="relative z-50 flex items-center justify-center"
       initialFocus={ref}
       ref={ref}
@@ -75,7 +79,7 @@ export default function TaskAddMenu({
           leave="ease-in duration-200"
           leaveFrom="translate-y-0"
           leaveTo="translate-y-96"
-          className="flex flex-col w-full bg-accent-black-900 text-accent-white border border-accent-white px-2 py-1 rounded-t-xl pb-8 items-center"
+          className="flex flex-col w-full bg-accent-black-900 text-accent-white shadow-inner shadow-accent-black-400 px-2 py-1 rounded-t-xl pb-8 items-center"
         >
           <div className="flex flex-col w-3/4">
             <div className="flex flex-col items-center text-xl py-1 my-1">
@@ -109,7 +113,7 @@ export default function TaskAddMenu({
               />
               <TaskAddMenuItemCustom name="Repeating">
                 <select
-                  className="border border-accent-white bg-accent-black-500 px-2 py-1"
+                  className="appearance-none w-full h-full text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll"
                   value={task.repeater}
                   onChange={(e) => {
                     setTask({ repeater: e.target.value });
@@ -124,19 +128,24 @@ export default function TaskAddMenu({
               </TaskAddMenuItemCustom>
             </div>
 
-            <div className="flex flex-row justify-evenly mt-6">
-              <button
-                className="border border-accent-black w-32 h-10 rounded-lg text-lg bg-red-600 text-accent-white"
-                onClick={CancelForm}
-              >
-                Cancel
-              </button>
-              <button
-                className="border border-accent-black w-32 h-10 rounded-lg text-lg bg-green-600 text-accent-white"
-                onClick={SubmitForm}
-              >
-                Create
-              </button>
+            <div className="flex flex-row justify-left mt-6 gap-3">
+              <div className="flex grow justify-start">
+                <button
+                  className="border border-accent-white w-full h-10 rounded-lg text-lg bg-red-600 text-accent-white"
+                  onClick={CancelForm}
+                >
+                  Cancel
+                </button>
+              </div>
+
+              <div className="flex grow justify-end">
+                <button
+                  className="border border-accent-white w-full h-10 rounded-lg text-lg bg-green-600 text-accent-white"
+                  onClick={SubmitForm}
+                >
+                  Create
+                </button>
+              </div>
             </div>
           </div>
         </Transition.Child>

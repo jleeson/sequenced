@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { TaskText } from "./TaskText";
 import { TaskDelete } from "./TaskDelete";
@@ -6,6 +6,7 @@ import { useUpdateTask } from "@/hooks/tasks";
 
 export default function TaskViewer({ context, setContext, isOpen, setIsOpen }) {
   const { mutate: updateTask } = useUpdateTask();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const task = context?.activeTask;
   const ref = useRef(null);
@@ -39,7 +40,7 @@ export default function TaskViewer({ context, setContext, isOpen, setIsOpen }) {
     <Transition
       as={Dialog}
       show={isOpen}
-      onClose={() => closeMenu()}
+      onClose={() => {}}
       className="relative z-50 flex items-center justify-center"
       initialFocus={ref}
       ref={ref}
@@ -53,50 +54,63 @@ export default function TaskViewer({ context, setContext, isOpen, setIsOpen }) {
           leave="ease-in duration-200"
           leaveFrom="translate-y-0"
           leaveTo="translate-y-96"
-          className="flex flex-col w-full bg-accent-black-900 text-accent-white border border-accent-white px-2 py-1 rounded-t-xl pb-8 items-center"
+          className="flex flex-col w-full bg-accent-black-900 text-accent-white shadow-inner shadow-accent-black-400 px-2 py-1 rounded-t-xl pb-8 items-center"
         >
-          <div className="inset-0 w-full h-fit bg-accent-black-900 flex flex-col items-center p-4 rounded-t-xl">
-            <Dialog.Title className="text-xl text-accent-white my-2">
-              Viewing Task
-            </Dialog.Title>
-            <div className="flex flex-col gap-2">
-              <TaskText
-                name="Title"
-                value={task?.title}
-                handleSave={(data) => update({ title: data })}
-              />
-              <TaskText
-                name="Description"
-                value={task?.description}
-                handleSave={(data) => update({ description: data })}
-                size="medium"
-              />
-              <TaskText
-                name="Due Date"
-                type="datetime-local"
-                value={new Date(task?.date)}
-                handleSave={(data) => update({ date: data })}
-              />
-              {task?.repeater && (
+          <div
+            className={`inset-0 w-64 h-fit bg-accent-black-900 flex flex-col items-center p-4 rounded-t-xl`}
+          >
+            <div className={`${isDeleting && "blur-sm"} `}>
+              <Dialog.Title className="text-xl text-accent-white my-2">
+                Viewing Task
+              </Dialog.Title>
+              <div className="flex flex-col gap-2">
                 <TaskText
-                  name="Repeating"
-                  value={task?.repeater}
-                  handleSave={(data) => update({ repeater: data })}
-                  className="capitalize"
-                  disabled
+                  name="Title"
+                  value={task?.title}
+                  handleSave={(data) => update({ title: data })}
                 />
-              )}
+                <TaskText
+                  name="Description"
+                  value={task?.description}
+                  handleSave={(data) => update({ description: data })}
+                  size="medium"
+                />
+                <TaskText
+                  name="Due Date"
+                  type="datetime-local"
+                  value={new Date(task?.date)}
+                  handleSave={(data) => update({ date: data })}
+                />
+                {task?.repeater && (
+                  <TaskText
+                    name="Repeating"
+                    value={task?.repeater}
+                    handleSave={(data) => update({ repeater: data })}
+                    className="capitalize"
+                    disabled
+                  />
+                )}
+              </div>
             </div>
-            <div className="my-4">
-              <TaskDelete task={task} closeMenu={closeMenu} />
-            </div>
-            <div className="flex flex-col bottom-6">
-              <button
-                onClick={() => closeMenu()}
-                className="border border-accent-white py-1 px-4 rounded-md text-white bg-accent-blue-800"
+            <div className="w-64 flex flex-row justify-left mt-6 gap-3">
+              <div
+                className={`flex grow justify-end ${isDeleting && "blur-sm"}`}
               >
-                Close
-              </button>
+                <button
+                  onClick={() => closeMenu()}
+                  className="w-full bg-blue-600 text-accent-white border border-accent-white px-1 py-1 rounded-md"
+                >
+                  Close
+                </button>
+              </div>
+              <div className="flex grow justify-start">
+                <TaskDelete
+                  task={task}
+                  closeMenu={closeMenu}
+                  isDeleting={isDeleting}
+                  setIsDeleting={setIsDeleting}
+                />
+              </div>
             </div>
           </div>
         </Transition.Child>
