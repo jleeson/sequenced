@@ -4,11 +4,10 @@ Sequenced:
       ✔ Add Settings Icon
 
     Tasks:
-      ☐ Allow for no due-date
-      ☐ Add sub-tasks
-      ☐ Fix repeating tasks showing "Today" when on another day
-      ☐ Allow full-customization of repeating task
+      ✔ Allow for no due-date
+      ✔ Fix repeating tasks showing "Today" when on another day
       ✔ When adding task, fix ability to change month, without menu closing
+      ✔ Add "Remind me" Feature on Tasks
 
     Settings:
       ✔ Allow Customizing All Notifications (Such as Daily Reminders)
@@ -28,7 +27,7 @@ Sequenced:
       ✔ Swap Order of Delete and Close to Match Rest of UI
       ✔ Fix Calendar Alignment
       ✔ Fixed so date does not clsoe Menus (Edit & Add)
-      ✔ Fix repeating task removing the repeater on date change 
+      ✔ Fix repeating task removing the repeater on date change
     
   Other Tasks:
     Navigation: 
@@ -47,6 +46,8 @@ Sequenced:
       ☐ Allow adding grouping
       ☐ Implement Search Query
       ☐ Implement Previous Context Menu into details
+      ☐ Allow full-customization of repeating task
+      ☐ Add sub-tasks
 
     List:
       ☐ Implement Lists Ability

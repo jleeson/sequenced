@@ -1,28 +1,27 @@
 import { Dialog, Disclosure, Transition } from "@headlessui/react";
 import { useContext, useReducer, useRef } from "react";
 import { formatDateTime, matchDate } from "@/utils/date";
-import { useAddTask, useTasks } from "@/hooks/tasks";
+import { Task, useAddTask, useTasks } from "@/hooks/tasks";
 
 import TaskAddMenuItem from "./TaskAddMenuItem";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import TaskAddMenuItemCustom from "./TaskAddMenuItemCustom";
 import { TaskContext, taskContext } from "@/hooks/contexts";
 import { createID } from "@/utils/id";
+import { getPending, scheduleNotification } from "@/utils/notifs";
+import TaskAddMenuSelect from "./TaskAddMenuSelect";
 
 const reducer = (data: any, payload: any) => ({ ...data, ...payload });
 
 export default function TaskAddMenu({ isOpen, setIsOpen }) {
-  const [context, setContext] = useContext(taskContext);
+  const [context, setContext] = useContext<TaskContext>(taskContext);
   const tasks = useTasks();
 
   const [task, setTask] = useReducer(reducer, {
     title: "",
     description: "",
-    date: new Date(context.activeDate),
+    date: new Date(context.tempActiveDate || context.activeDate),
   });
-
-  if (!matchDate(new Date(task.date), new Date(context.activeDate)))
-    setTask({ date: new Date(context.activeDate) });
 
   const { mutate: addTask } = useAddTask();
 
@@ -30,6 +29,13 @@ export default function TaskAddMenu({ isOpen, setIsOpen }) {
     setContext({
       ...context,
       activeDate: date,
+    });
+  };
+
+  const ChangeTempDate = (date: Date) => {
+    setContext({
+      ...context,
+      tempActiveDate: date,
     });
   };
 
@@ -44,9 +50,10 @@ export default function TaskAddMenu({ isOpen, setIsOpen }) {
   };
 
   const SubmitForm = () => {
-    task.id = createID(20);
+    if (!task.id) task.id = createID(20);
 
     addTask(task);
+    SetNotification(task);
 
     ResetForm();
   };
@@ -56,11 +63,64 @@ export default function TaskAddMenu({ isOpen, setIsOpen }) {
   };
 
   const CloseMenu = (e) => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     setIsOpen(false);
-  }
+  };
 
   const ref = useRef(null);
+
+  const SetNotification = async (task: Task) => {
+    if (!task || task.reminder == "") return;
+
+    const setDate: Date = task.date || new Date();
+
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+    switch (task.reminder) {
+      case "15":
+        setDate.setTime(setDate.getTime() - 15 * minute);
+        break;
+
+      case "30":
+        setDate.setTime(setDate.getTime() - 30 * minute);
+        break;
+
+      case "45":
+        setDate.setTime(setDate.getTime() - 45 * minute);
+        break;
+
+      case "60":
+        setDate.setTime(setDate.getTime() - 1 * hour);
+        break;
+
+      case "120":
+        setDate.setTime(setDate.getTime() - 2 * hour);
+        break;
+
+      case "720":
+        setDate.setTime(setDate.getTime() - 12 * hour);
+        break;
+
+      case "1440":
+        setDate.setTime(setDate.getTime() - 1 * day);
+        break;
+    }
+
+
+    const notif = await scheduleNotification({
+      id: Math.floor(Math.random() * 2147483647),
+      title: "Sequenced: Do Your Task",
+      body: `Task: ${task.title}`,
+      schedule: {
+        at: setDate,
+      },
+    });
+
+    console.log("NOTIFI", notif);
+  };
 
   return (
     <Transition
@@ -95,38 +155,80 @@ export default function TaskAddMenu({ isOpen, setIsOpen }) {
               <TaskAddMenuItem
                 name="Name"
                 value={task.title}
-                onChange={(e) => setTask({ title: e.target.value })}
+                onChange={(e) => setTask({ ...task, title: e.target.value })}
               />
               <TaskAddMenuItem
                 name="Description"
                 type="textarea"
                 value={task.description}
-                onChange={(e) => setTask({ description: e.target.value })}
+                onChange={(e) =>
+                  setTask({ ...task, description: e.target.value })
+                }
               />
-              <TaskAddMenuItem
-                name="Due Date"
-                type="datetime-local"
-                value={formatDateTime(context.activeDate)}
-                onChange={(e) => {
-                  ChangeDate(new Date(e.target.value));
-                  setTask({ date: new Date(e.target.value) });
-                }}
-              />
-              <TaskAddMenuItemCustom name="Repeating">
-                <select
-                  className="appearance-none w-full h-full text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll"
-                  value={task.repeater}
+              {task.date.getTime() != 0 && (
+                <TaskAddMenuItem
+                  name="Due Date"
+                  type="datetime-local"
+                  value={formatDateTime(context.activeDate)}
                   onChange={(e) => {
-                    setTask({ repeater: e.target.value });
+                    ChangeDate(new Date(e.target.value));
+                    setTask({ ...task, date: new Date(e.target.value) });
                   }}
+                />
+              )}
+              <div className={`my-2`}>
+                <button
+                  onClick={() => {
+                    if (task.date.getTime() != 0) {
+                      ChangeTempDate(new Date(0));
+                      setTask({ ...task, date: new Date(0) });
+                    } else {
+                      ChangeDate(new Date());
+                      setTask({ ...task, date: new Date() });
+                    }
+                  }}
+                  className={`px-2 py-2 ${
+                    task.date.getTime() != 0 && "bg-accent-red-500"
+                  } ${
+                    task.date.getTime() == 0 && "bg-accent-blue-500"
+                  } w-40 text-center rounded-md`}
                 >
-                  <option value="">Do Not Repeat</option>
-                  <option value="daily">Every Day</option>
-                  <option value="weekly">Every Week</option>
-                  <option value="bi-weekly">Every 2 Weeks</option>
-                  <option value="monthly">Every Month</option>
-                </select>
-              </TaskAddMenuItemCustom>
+                  {task.date.getTime() != 0 && "Remove Due Date"}
+                  {task.date.getTime() == 0 && "Add Due Date"}
+                </button>
+              </div>
+              <TaskAddMenuSelect
+                name="Remind Me"
+                value={task.reminder}
+                onChange={async (e) => {
+                  setTask({ reminder: e.target.value });
+                }}
+                options={[
+                  { name: "Do not remind", value: "" },
+                  { name: "0min before", value: "0" },
+                  { name: "15min before", value: "15" },
+                  { name: "30min before", value: "30" },
+                  { name: "45min before", value: "45" },
+                  { name: "1hr Before", value: "60" },
+                  { name: "2hr Before", value: "120" },
+                  { name: "12hr before", value: "720" },
+                  { name: "1 day before", value: "1440" },
+                ]}
+              />
+              <TaskAddMenuSelect
+                name="Repeating"
+                value={task.repeater}
+                onChange={(e) => {
+                  setTask({ repeater: e.target.value });
+                }}
+                options={[
+                  { name: "Do Not Repeat", value: "" },
+                  { name: "Every Day", value: "daily" },
+                  { name: "Every Week", value: "weekly" },
+                  { name: "Every 2 Weeks", value: "bi-weekly" },
+                  { name: "Every Month", value: "monthly" },
+                ]}
+              />
             </div>
 
             <div className="flex flex-row justify-left mt-6 gap-3">

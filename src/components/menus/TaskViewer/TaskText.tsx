@@ -17,6 +17,24 @@ export function TaskText({
     setIsEditing(false);
   };
 
+  if (props.type == "select")
+    return (
+      <div className="flex flex-col gap-2">
+        <label className="text-lg">{name}</label>
+        <select
+          className="appearance-none w-full h-full text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll"
+          value={value}
+          onChange={props.onChange}
+        >
+          {props.options.map((option, key) => (
+            <option key={key} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+
   return (
     <div className={`${className}`}>
       <h1 className="text-lg text-accent-white">{name}</h1>
@@ -39,7 +57,7 @@ export function TaskText({
               }
               onChange={(e) => {
                 e.stopPropagation();
-                
+
                 if (props.type == "datetime-local")
                   setTempData(new Date(e.target.value));
                 else setTempData(e.target.value);

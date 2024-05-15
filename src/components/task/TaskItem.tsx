@@ -41,8 +41,6 @@ export function TaskItem({ item, setIsInspecting }) {
       if (!foundDate) newDone.push(rawDate);
       else newDone.splice(newDone.indexOf(rawDate), 1);
 
-      console.log(newDone);
-
       updateTask({ id: item.id, data: { ...item, done: newDone } });
     } else {
       updateTask({ id: item.id, data: { ...item, done: !item.done } });
@@ -79,7 +77,7 @@ export function TaskItem({ item, setIsInspecting }) {
         </div>
         <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
           <div className="w-full h-full flex items-center justify-evenly">
-            <TaskItemDate date={item.date} />
+            {new Date(item.date).getTime() != 0 && <TaskItemDate task={item} />}
           </div>
         </div>
       </div>

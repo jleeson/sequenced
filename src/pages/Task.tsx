@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTasks, filterBroken } from "@/hooks/tasks";
 import { taskContext } from "@/hooks/contexts";
 import { sortByDate } from "@/utils/data";
@@ -7,6 +7,7 @@ import DayTasks from "../components/calendar/DayTasks";
 import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import TaskViewer from "@/components/menus/TaskViewer/TaskViewer";
+import { getPending } from "@/utils/notifs";
 
 export default function Task() {
   const [context, setContext] = useContext(taskContext);
@@ -14,6 +15,13 @@ export default function Task() {
   const [isInspecting, setIsInspecting] = useState(false);
 
   const tasks = useTasks();
+
+  useEffect(() => {
+    (async () => {
+      const pending = await getPending();
+      console.log("Pending", pending);
+    })();
+  }, []);
 
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">

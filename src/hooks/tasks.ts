@@ -11,9 +11,11 @@ import {
 export interface Task {
   title?: string;
   description?: string;
-  date?: string;
+  date?: Date;
   id?: string;
-  done?: string;
+  done?: boolean;
+  repeater?: string;
+  reminder?: string
 }
 
 /* Filters out ghost tasks */

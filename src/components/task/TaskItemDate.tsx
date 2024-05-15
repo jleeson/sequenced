@@ -1,8 +1,24 @@
 import today_icon from "@/assets/today.svg";
+import { TaskContext, taskContext } from "@/hooks/contexts";
 import { isOverdue } from "@/utils/date";
 import { formatDigits } from "@/utils/math";
+import { useContext } from "react";
 
-export default function TaskItemDate({ date }) {
+export default function TaskItemDate({ task }) {
+  const [context] = useContext<TaskContext>(taskContext);
+
+  const taskDate: Date = new Date(task.date);
+  let date: Date = taskDate;
+
+  if (task.repeater) {
+    date = new Date();
+    date.setHours(
+      taskDate.getHours(),
+      taskDate.getMinutes(),
+      taskDate.getSeconds()
+    );
+  }
+
   const checkRelative = (date: Date) => {
     const today = new Date();
     const checkedDate = new Date(date);

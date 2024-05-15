@@ -4,6 +4,7 @@ import {
   PendingLocalNotificationSchema,
   PendingResult,
   PermissionStatus,
+  ScheduleResult,
 } from "@capacitor/local-notifications";
 import { getSettings, setSettings } from "./settings";
 
@@ -36,6 +37,8 @@ export async function initializeNotifications() {
 export async function setDailyReminders(hour: number, minute: number) {
   const timeBuilder = new Date();
 
+  timeBuilder.setDate(timeBuilder.getDate() + 1);
+  
   if (!hour || !minute) timeBuilder.setHours(8, 0, 0, 0);
 
   if (hour) timeBuilder.setHours(hour);
@@ -109,18 +112,22 @@ export async function requestPermissions(): Promise<PermissionStatus> {
 /* Schedules many notifications */
 export async function scheduleNotification(
   ...options: LocalNotificationSchema[]
-) {
+): Promise<ScheduleResult | undefined> {
   await setNotificationConfig();
 
   const checked = await checkPermissions();
 
   if (checked.display == "granted") {
-    await LocalNotifications.schedule({
+    const notif = await LocalNotifications.schedule({
       notifications: [...options],
     });
+
+    return notif;
   } else {
     console.log(`Unable to send notification: Missing Permissions`);
   }
+
+  return undefined;
 }
 
 export async function cancelNotifications(
