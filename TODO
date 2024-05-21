@@ -1,33 +1,9 @@
 Sequenced:
   1.0.6:
-    Navigation:
-      ✔ Add Settings Icon
-
-    Tasks:
-      ✔ Allow for no due-date
-      ✔ Fix repeating tasks showing "Today" when on another day
-      ✔ When adding task, fix ability to change month, without menu closing
-      ✔ Add "Remind me" Feature on Tasks
-
-    Settings:
-      ✔ Allow Customizing All Notifications (Such as Daily Reminders)
-
-  1.0.5:
     Bug Fixes:
-      ✔ Changing Date Input doesn't update active date on new item
-      ✔ Repeating Section in Add Item does not match rest of the Add Item Layout
-      ✔ Fix Blue on Blue on Inputs
-      ✔ Fix New Item Padding
-      ✔ Make Repeating Take Full Width
-      ✔ Fix New Item Buttons Alignment
-      ✔ Editing the due date shrinks the box 
-      ✔ Align Delete and Close Buttons in Task Viewer (Edit Menu)
-      ✔ Remove Modal Borders
-      ✔ Fix "Delete Menu" into its own area
-      ✔ Swap Order of Delete and Close to Match Rest of UI
-      ✔ Fix Calendar Alignment
-      ✔ Fixed so date does not clsoe Menus (Edit & Add)
-      ✔ Fix repeating task removing the repeater on date change
+      ☐ Keep Toggle Status for Groups
+      ☐ Changing status of due date can cause duplication
+      ☐ Setting set to "Do not remind" yet still reminds at time of creation
     
   Other Tasks:
     Navigation: 
@@ -48,6 +24,7 @@ Sequenced:
       ☐ Implement Previous Context Menu into details
       ☐ Allow full-customization of repeating task
       ☐ Add sub-tasks
+      ☐ Allow Repeat Tasks to Send Notifications per repeat cycle
 
     List:
       ☐ Implement Lists Ability
