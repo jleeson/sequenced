@@ -55,7 +55,7 @@ export default function TaskContainer({ title, tasks, activeFilter, setIsInspect
           <>
             <Disclosure.Button
               as="div"
-              className="w-full flex flex-row items-center bg-transparent border border-accent-white rounded-lg px-2"
+              className="w-full flex flex-row items-center bg-transparent border border-accent-white rounded-lg px-2 hover:scale-105"
             >
               <div className="w-full flex flex-row justify-between">
                 <div className="flex flex-row items-center py-1">

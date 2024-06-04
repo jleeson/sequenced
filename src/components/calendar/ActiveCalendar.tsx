@@ -47,17 +47,17 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }: {
   return (
     <div className="w-full h-full px-2">
       <div className="w-full flex justify-center my-3">
-        <div className="w-2/3 py-1 flex justify-center border border-accent-white rounded-lg">
+        <div className="w-2/3 py-1 flex justify-center border border-accent-white rounded-lg hover:scale-105">
           <input
             type="date"
             value={formatDate(activeDate)}
             onChange={changeActiveMonth}
-            className="bg-transparent text-accent-black invert px-1 m-0 text-center text-xl "
+            className="bg-transparent text-accent-black invert px-1 m-0 text-center text-xl"
           />
         </div>
       </div>
-      <div className="w-full h-full flex flex-row items-center">
-        <div className="w-full flex flex-row justify-between px-4">
+      <div className="w-full h-full flex flex-row items-center justify-center">
+        <div className="w-full md:w-[90%] flex flex-row justify-between px-4">
           {dates.map((date, key) => (
             <CalendarItem
               key={key}

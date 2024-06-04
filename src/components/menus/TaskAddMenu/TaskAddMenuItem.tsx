@@ -4,7 +4,7 @@ export default function TaskAddMenuItem({ name, type, value, onChange }) {
       id={name.toLowerCase()}
       name={name.toLowerCase()}
       type={type}
-      className="text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll"
+      className="text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll hover:scale-105"
       placeholder={`${name}...`}
       value={value}
       onChange={onChange}
@@ -17,7 +17,7 @@ export default function TaskAddMenuItem({ name, type, value, onChange }) {
       <textarea
         id={name.toLowerCase()}
         name={name.toLowerCase()}
-        className="resize-none text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll"
+        className="resize-none text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll hover:scale-105"
         placeholder={`${name}...`}
         value={value}
         onChange={onChange}

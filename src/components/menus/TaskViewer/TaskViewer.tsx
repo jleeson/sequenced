@@ -163,7 +163,7 @@ export default function TaskViewer({ context, setContext, isOpen, setIsOpen }) {
                         CheckTime(task) && "bg-accent-red-500"
                       } ${
                         !CheckTime(task) && "bg-accent-blue-500"
-                      } w-40 text-center rounded-md`}
+                      } w-40 text-center rounded-md hover:scale-105`}
                     >
                       {CheckTime(task) && "Remove Due Date"}
                       {!CheckTime(task) && "Add Due Date"}
@@ -215,7 +215,7 @@ export default function TaskViewer({ context, setContext, isOpen, setIsOpen }) {
                 >
                   <button
                     onClick={() => closeMenu()}
-                    className="w-full bg-blue-600 text-accent-white border border-accent-white px-1 py-1 rounded-md"
+                    className="w-full bg-blue-600 text-accent-white border border-accent-white px-1 py-1 rounded-md hover:scale-105"
                   >
                     Close
                   </button>

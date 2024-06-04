@@ -10,7 +10,7 @@ export function NavBar({ setIsAdding }) {
       <div className="w-full h-16 flex flex-row justify-evenly items-center rounded-t-md">
         <div className="flex flex-row grow justify-evenly">
           <a href="/">
-            <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+            <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg hover:scale-105">
               <img
                 src={home_icon}
                 className="invert w-full h-full"
@@ -29,7 +29,7 @@ export function NavBar({ setIsAdding }) {
           </div> */}
         </div>
         <div className="flex justify-center items-center">
-          <div className="flex justify-center items-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+          <div className="flex justify-center items-center w-12 h-12 bg-accent-blue-700 rounded-lg hover:scale-105">
             <button
               onClick={() => setIsAdding(true)}
               className="flex text-center justify-center items-center w-12 h-12 text-3xl rounded-full text-white"
@@ -54,7 +54,7 @@ export function NavBar({ setIsAdding }) {
             height="32"
           />
         </div> */}
-          <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+          <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg hover:scale-105">
             <a
               href="/settings"
               className="invert w-full h-full flex items-center justify-center"

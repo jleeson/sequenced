@@ -1,5 +1,9 @@
 Sequenced:
   1.0.6:
+    Design:
+      ✔ Fix Calendar Line on IPads+
+      ✔ UI Hover Effects
+
     Bug Fixes:
       ☐ Keep Toggle Status for Groups
       ☐ Changing status of due date can cause duplication
@@ -25,6 +29,7 @@ Sequenced:
       ☐ Allow full-customization of repeating task
       ☐ Add sub-tasks
       ☐ Allow Repeat Tasks to Send Notifications per repeat cycle
+      ☐ Keep Toggle Status for Groups
 
     List:
       ☐ Implement Lists Ability
