@@ -18,7 +18,7 @@ export function TaskDelete({ task, closeMenu, isDeleting, setIsDeleting }) {
         <button
           className={`${
             isDeleting && "blur-sm"
-          } w-full bg-red-600 text-accent-white border border-accent-white px-1 py-1 rounded-md hover:scale-105`}
+          } w-full bg-red-600 text-accent-white border border-accent-white px-1 py-1 rounded-md hover:bg-red-700`}
           onClick={() => setIsDeleting(true)}
         >
           Delete
@@ -29,13 +29,13 @@ export function TaskDelete({ task, closeMenu, isDeleting, setIsDeleting }) {
           </h1>
           <div className="flex w-full justify-center items-center gap-8">
             <button
-              className="w-16 h-8 text-lg rounded-md bg-accent-red-600 text-accent-white hover:scale-105"
+              className="w-16 h-8 text-lg rounded-md bg-accent-red-600 text-accent-white hover:bg-red-700"
               onClick={() => setDeleteTask()}
             >
               Yes
             </button>
             <button
-              className="w-16 h-8 text-lg rounded-md bg-accent-blue-600 text-accent-white hover:scale-105"
+              className="w-16 h-8 text-lg rounded-md bg-accent-blue-600 text-accent-white hover:bg-blue-700"
               onClick={() => setIsDeleting(false)}
             >
               No
@@ -47,7 +47,7 @@ export function TaskDelete({ task, closeMenu, isDeleting, setIsDeleting }) {
 
   return (
     <button
-      className="w-full bg-red-600 text-accent-white border border-accent-white px-1 py-1 rounded-md hover:scale-105"
+      className="w-full bg-red-600 text-accent-white border border-accent-white px-1 py-1 rounded-md hover:bg-red-700"
       onClick={() => setIsDeleting(true)}
     >
       Delete

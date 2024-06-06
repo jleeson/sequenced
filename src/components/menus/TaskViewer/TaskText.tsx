@@ -22,7 +22,7 @@ export function TaskText({
       <div className="flex flex-col gap-2">
         <label className="text-lg">{name}</label>
         <select
-          className="appearance-none w-full h-full text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll hover:scale-105"
+          className="appearance-none w-full h-full text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll hover:bg-accent-black-600"
           value={value}
           onChange={props.onChange}
         >
@@ -45,7 +45,7 @@ export function TaskText({
               {...props}
               value={tempData}
               onChange={(e) => setTempData(e.target.value)}
-              className={`w-64 items-center flex text-base border border-accent-white inputy-1 px-2 bg-accent-black-600 text-accent-black-300 rounded-md hover:scale-105`}
+              className={`w-64 items-center flex text-base border border-accent-white inputy-1 px-2 bg-accent-black-600 text-accent-black-300 rounded-md hover:bg-accent-black-700`}
             />
           ) : (
             <input
@@ -65,12 +65,12 @@ export function TaskText({
               maxLength={28}
               className={`w-64 ${
                 size == "medium" ? "min-h-24" : "min-h-10"
-              } items-center flex text-base border border-accent-white inputy-1 px-2 bg-accent-black-600 text-accent-black-300 rounded-md hover:scale-105`}
+              } items-center flex text-base border border-accent-white inputy-1 px-2 bg-accent-black-600 text-accent-black-300 rounded-md hover:bg-accent-black-700`}
             />
           )}
 
           <button
-            className="py-1 px-2 bg-accent-blue-600 rounded-md border-accent-white mt-2 hover:scale-105"
+            className="py-1 px-2 bg-accent-blue-600 rounded-md border-accent-white mt-2 hover:bg-accent-blue-700"
             onClick={(e) => saveData()}
           >
             Save
@@ -80,7 +80,7 @@ export function TaskText({
       {!isEditing &&
         (size == "medium" ? (
           <textarea
-            className={`w-64 h-20 items-center flex text-base border border-accent-white py-1 px-2 bg-accent-black-600 text-accent-white rounded-md hover:scale-105`}
+            className={`w-64 h-20 items-center flex text-base border border-accent-white py-1 px-2 bg-accent-black-600 text-accent-white rounded-md hover:bg-accent-black-700`}
             onClick={() => setIsEditing(true)}
             value={value}
             onChange={() => {}}
@@ -89,7 +89,7 @@ export function TaskText({
           <p
             className={`w-64 ${
               size == "medium" ? "min-h-24" : "min-h-10"
-            } items-center flex text-base border border-accent-white py-1 px-2 bg-accent-black-600 text-accent-white rounded-md hover:scale-105`}
+            } items-center flex text-base border border-accent-white py-1 px-2 bg-accent-black-600 text-accent-white rounded-md hover:bg-accent-black-700`}
             onClick={() => setIsEditing(true)}
           >
             {props?.type == "datetime-local" && formatDateClean(value)}

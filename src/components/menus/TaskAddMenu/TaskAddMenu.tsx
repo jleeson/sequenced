@@ -188,10 +188,10 @@ export default function TaskAddMenu({ isOpen, setIsOpen }) {
                     }
                   }}
                   className={`px-2 py-2 ${
-                    task.date.getTime() != 0 && "bg-accent-red-500"
+                    task.date.getTime() != 0 && "bg-accent-red-500 hover:bg-accent-red-600"
                   } ${
-                    task.date.getTime() == 0 && "bg-accent-blue-500"
-                  } w-40 text-center rounded-md hover:scale-105`}
+                    task.date.getTime() == 0 && "bg-accent-blue-500 hover:bg-accent-blue-600"
+                  } w-40 text-center rounded-md`}
                 >
                   {task.date.getTime() != 0 && "Remove Due Date"}
                   {task.date.getTime() == 0 && "Add Due Date"}
@@ -234,7 +234,7 @@ export default function TaskAddMenu({ isOpen, setIsOpen }) {
             <div className="flex flex-row justify-left mt-6 gap-3">
               <div className="flex grow justify-start">
                 <button
-                  className="border border-accent-white w-full h-10 rounded-lg text-lg bg-red-600 text-accent-white hover:scale-105"
+                  className="border border-accent-white w-full h-10 rounded-lg text-lg bg-red-600 text-accent-white hover:bg-red-700"
                   onClick={CancelForm}
                 >
                   Cancel
@@ -243,7 +243,7 @@ export default function TaskAddMenu({ isOpen, setIsOpen }) {
 
               <div className="flex grow justify-end">
                 <button
-                  className="border border-accent-white w-full h-10 rounded-lg text-lg bg-green-600 text-accent-white hover:scale-105"
+                  className="border border-accent-white w-full h-10 rounded-lg text-lg bg-green-600 text-accent-white hover:bg-green-700"
                   onClick={SubmitForm}
                 >
                   Create

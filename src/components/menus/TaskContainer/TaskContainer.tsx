@@ -16,7 +16,12 @@ import TaskMenuItem from "./TaskMenuItem";
 import { matchDate } from "@/utils/date";
 import { isTaskDone } from "@/utils/data";
 
-export default function TaskContainer({ title, tasks, activeFilter, setIsInspecting }) {
+export default function TaskContainer({
+  title,
+  tasks,
+  activeFilter,
+  setIsInspecting,
+}) {
   const [context, setContext] = useContext(taskContext);
   const [taskFilter, setTaskFilter] = useState("incomplete");
 
@@ -44,18 +49,16 @@ export default function TaskContainer({ title, tasks, activeFilter, setIsInspect
 
   if (taskFilter == "all") taskDisplay = tasks;
   else if (taskFilter == "incomplete")
-    taskDisplay = tasks.filter((task) =>
-      isTaskDone(task, context.activeDate)
-    );
+    taskDisplay = tasks.filter((task) => isTaskDone(task, context.activeDate));
 
   return (
-    <div className="flex flex-col items-center w-[90%] my-2">
+    <div className="group flex flex-col items-center w-[90%] my-2">
       <Disclosure defaultOpen={true}>
         {({ open }) => (
           <>
             <Disclosure.Button
               as="div"
-              className="w-full flex flex-row items-center bg-transparent border border-accent-white rounded-lg px-2 hover:scale-105"
+              className="w-full flex flex-row items-center bg-transparent border border-accent-white rounded-lg px-2  hover:bg-accent-black-900 [&:has(.task-container-accordian:hover)]:bg-transparent"
             >
               <div className="w-full flex flex-row justify-between">
                 <div className="flex flex-row items-center py-1">
@@ -76,9 +79,14 @@ export default function TaskContainer({ title, tasks, activeFilter, setIsInspect
                 <div className="flex flex-row items-center">
                   <Menu>
                     <Menu.Button>
-                      <AdjustmentsHorizontalIcon width="32" />
+                      <div className="group/filter task-container-accordian">
+                        <AdjustmentsHorizontalIcon
+                          width="32"
+                          className="group-hover/filter:fill-accent-blue-500"
+                        />
+                      </div>
                     </Menu.Button>
-                    <div className="relative inset-0 z-50">
+                    <div className="group/filter relative inset-0 z-50">
                       <Menu.Items className="flex flex-col absolute right-4 top-4 gap-2 bg-black border border-accent-white rounded-lg py-4 px-4">
                         <TaskMenuItem
                           active={taskFilter == "all"}
@@ -99,7 +107,12 @@ export default function TaskContainer({ title, tasks, activeFilter, setIsInspect
               </div>
             </Disclosure.Button>
             <Disclosure.Panel className="w-full h-full">
-              {!active && <TaskMenu tasks={taskDisplay} setIsInspecting={setIsInspecting} />}
+              {!active && (
+                <TaskMenu
+                  tasks={taskDisplay}
+                  setIsInspecting={setIsInspecting}
+                />
+              )}
             </Disclosure.Panel>
           </>
         )}

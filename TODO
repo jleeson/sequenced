@@ -3,6 +3,7 @@ Sequenced:
     Design:
       ✔ Fix Calendar Line on IPads+
       ✔ UI Hover Effects
+      ✔ Proper Hover Fixes with Colors VS Scale
 
     Bug Fixes:
       ☐ Keep Toggle Status for Groups

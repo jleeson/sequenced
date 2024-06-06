@@ -11,7 +11,7 @@ const Layout = () => {
   return (
     <>
       <div
-        className="w-full h-full flex flex-col justify-between items-center"
+        className="w-full h-full flex flex-col justify-between items-center md:container md:px-16 md:py-2"
         id="basis"
       >
         <div className="flex flex-row justify-center items-center w-full">

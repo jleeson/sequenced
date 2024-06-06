@@ -26,7 +26,7 @@ export default function CalendarItem({ activeDate, date, changeDate }) {
         activeDate.getDate() == date.getDate()
           ? "bg-accent-blue-600"
           : "bg-transparent"
-      } rounded-lg px-2 py-2 border border-accent-white-100 hover:scale-105`}
+      } rounded-lg px-2 py-2 border border-accent-white-100 hover:bg-accent-black-900`}
       onClick={(e) => changeDate(date, e)}
     >
       <div className="flex flex-col justify-center items-center">
