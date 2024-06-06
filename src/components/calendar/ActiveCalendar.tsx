@@ -1,19 +1,29 @@
 import { useState } from "react";
 import CalendarArrow from "./CalendarArrow";
-import {
-  formatDate,
-  generateWeek,
-} from "@/utils/date";
+import { formatDate, generateWeek } from "@/utils/date";
 import CalendarItem from "./CalendarItem";
 
-export default function ActiveCalendar({ context, setContext, setActiveDate }: {context: React.Context<Object>}) {
+import { TaskContext } from "@/hooks/contexts";
+
+export default function ActiveCalendar({
+  context,
+  setContext,
+  setActiveDate,
+}: {
+  context: TaskContext;
+}) {
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(0);
-  
+  const [swipeCounter, setSwipeCounter] = useState<number>(0);
+
+  let touchstartX = 0;
+  let touchendX = 0;
+
   const activeDate = context.activeDate;
+
   const dates = generateWeek(activeDate || new Date(), 0);
 
-  const changeDate = (date) => {
+  const changeDate = (date: Date) => {
     let tempContext = {
       ...context,
     };
@@ -24,7 +34,7 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }: {
     setContext(tempContext);
   };
 
-  function changeActiveMonth(e) {
+  function changeActiveMonth(e: React.ChangeEvent<HTMLInputElement>) {
     let activeData = e.target.value.split("-");
 
     let tempContext = {
@@ -44,6 +54,29 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }: {
     setContext(tempContext);
   }
 
+  const checkDirection = () => {
+    if (touchendX < touchstartX) return -1;
+    if (touchendX > touchstartX) return 1;
+
+    return 0;
+  };
+
+  const touchstart = (e) => {
+    touchstartX = e.changedTouches[0].screenX;
+  };
+
+  const touchend = (e) => {
+    touchendX = e.changedTouches[0].screenX;
+    const direction = checkDirection();
+
+    const tempDate = activeDate;
+
+    if (direction == 1) tempDate.setDate(tempDate.getDate() + 7);
+    else if (direction == -1) tempDate.setDate(tempDate.getDate() - 7);
+
+    changeDate(tempDate);
+  };
+
   return (
     <div className="w-full h-full px-2">
       <div className="w-full flex justify-center my-3">
@@ -57,7 +90,11 @@ export default function ActiveCalendar({ context, setContext, setActiveDate }: {
         </div>
       </div>
       <div className="w-full h-full flex flex-row items-center justify-center">
-        <div className="w-full md:w-[90%] flex flex-row justify-between px-4">
+        <div
+          className="w-full md:w-[90%] flex flex-row justify-between px-4"
+          onTouchStart={touchstart}
+          onTouchEnd={touchend}
+        >
           {dates.map((date, key) => (
             <CalendarItem
               key={key}

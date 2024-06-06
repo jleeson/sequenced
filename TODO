@@ -5,11 +5,24 @@ Sequenced:
       ✔ UI Hover Effects
       ✔ Proper Hover Fixes with Colors VS Scale
 
+    Navigation:
+      ✔ Swipe on the week to swap it
+
+    UI:
+      ☐ Calendar on the left [TODAY] on the side
+      ☐ Scroll on body -> Weekly -> Monthly
+
     Bug Fixes:
       ☐ Keep Toggle Status for Groups
       ☐ Changing status of due date can cause duplication
       ☐ Setting set to "Do not remind" yet still reminds at time of creation
     
+    Tasks:
+      ☐ Add sub-tasks
+
+    List:
+      ☐ Implement Lists Ability
+
   Other Tasks:
     Navigation: 
       ☐ Add Home Icon 
@@ -24,16 +37,14 @@ Sequenced:
 
     Tasks:
       ☐ Allow adding tags
-      ☐ Allow adding grouping
       ☐ Implement Search Query
       ☐ Implement Previous Context Menu into details
       ☐ Allow full-customization of repeating task
-      ☐ Add sub-tasks
       ☐ Allow Repeat Tasks to Send Notifications per repeat cycle
       ☐ Keep Toggle Status for Groups
+      ☐ Allow adding grouping
 
     List:
-      ☐ Implement Lists Ability
       ☐ Implement Categories
 
     Settings:
