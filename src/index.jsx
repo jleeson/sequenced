@@ -29,6 +29,7 @@ const queryClient = new QueryClient({
 export default function App() {
   const [context, setContext] = useState({
     activeDate: new Date(),
+    groupsActive: [],
     task: {
       menus: {
         dailyTasks: false,

@@ -24,6 +24,7 @@ export default function DayTasks({ day, tasks, setIsInspecting }) {
 
   return (
     <TaskContainer
+      identifier="daily"
       activeFilter="generalTasks"
       title={`${getNameByDate(day.getDay())}'s Tasks`}
       tasks={getDayTasks()}

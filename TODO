@@ -10,12 +10,9 @@ Sequenced:
 
     UI:
       ✔ Calendar on the left [TODAY] on the side
-      ☐ Scroll on body -> Weekly -> Monthly
 
     Bug Fixes:
-      ☐ Keep Toggle Status for Groups
-      ☐ Changing status of due date can cause duplication
-      ☐ Setting set to "Do not remind" yet still reminds at time of creation
+      ✔ Keep Toggle Status for Groups
     
     Tasks:
       ☐ Add sub-tasks
@@ -58,3 +55,11 @@ Sequenced:
 
     Misc:
       ☐ Turn Add Item Repeater into Component
+
+    UI:
+      ☐ Scroll on body Daily -> Weekly -> Monthly
+
+    Bug Fixes:
+      ☐ Changing status of due date can cause duplication
+      ☐ Setting set to "Do not remind" yet still reminds at time of creation
+

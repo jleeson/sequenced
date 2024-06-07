@@ -14,6 +14,8 @@ export default function Task() {
   const [activeDate, setActiveDate] = useState(context.activeDate);
   const [isInspecting, setIsInspecting] = useState(false);
 
+  console.log("CTX", context);
+
   const tasks = useTasks();
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export default function Task() {
             <ActiveCalendar
               context={context}
               setContext={setContext}
+              // TODO: remove this need
               setActiveDate={setActiveDate}
             />
             <DayTasks
@@ -41,6 +44,7 @@ export default function Task() {
               tasks={sortByDate(tasks.data)}
             />
             <TaskContainer
+              identifier="all"
               setIsInspecting={setIsInspecting}
               title="All Tasks"
               tasks={sortByDate(tasks.data)}

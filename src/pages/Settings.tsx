@@ -5,7 +5,7 @@ import {
   getPending,
   setDailyReminders,
 } from "@/utils/notifs";
-import { Settings, getSettings, setSettings } from "@/utils/settings";
+import { Settings, getSettings, setSettings } from "@/hooks/settings";
 import { PendingLocalNotificationSchema } from "@capacitor/local-notifications";
 import { useEffect, useState } from "react";
 

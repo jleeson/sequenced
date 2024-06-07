@@ -23,15 +23,29 @@ export default function CalendarItem({ activeDate, date, changeDate }) {
   return (
     <div
       className={`w-11 h-16 ${
+        activeDate.getDate() != date.getDate() && currentDate == date.getDate()
+          ? "text-accent-blue-600"
+          : "text-accent-white"
+      } ${
         activeDate.getDate() == date.getDate()
-          ? "bg-accent-blue-600"
+          ? "bg-accent-blue-600 text-accent-white"
           : "bg-transparent"
       } rounded-lg px-2 py-2 border border-accent-white-100 hover:bg-accent-black-900`}
       onClick={(e) => changeDate(date, e)}
     >
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-center">{convertDay(date.getDay()).slice(0, 3)}</h1>
-        <h1 className={`text-accent-white text-center`}>
+        <h1
+          className={`${
+            activeDate.getDate() == date.getDate()
+              ? "bg-accent-blue-600 text-accent-white"
+              : "bg-transparent"
+          } ${
+            activeDate.getDate() != date.getDate() && currentDate == date.getDate()
+              ? "text-accent-blue-600"
+              : "text-accent-white"
+          } text-center`}
+        >
           {date.getMonth() + 1}/{date.getDate()}
         </h1>
       </div>

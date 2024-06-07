@@ -82,20 +82,14 @@ export default function ActiveCalendar({
   return (
     <div className="w-full h-full px-2">
       <div className="w-full flex justify-center my-3">
-        <div className="flex flex-row w-[90%] justify-between">
-          <div className="flex justify-center w-[75%] py-1 border border-accent-white rounded-lg hover:bg-accent-black-900">
+        <div className="flex flex-row w-[90%] justify-center">
+          <div className="flex justify-center w-full py-1 border border-accent-white rounded-lg hover:bg-accent-black-900">
             <input
               type="date"
               value={formatDate(activeDate)}
               onChange={changeActiveMonth}
               className="bg-transparent text-accent-black invert px-1 m-0 text-center text-xl"
             />
-          </div>
-          <div
-            className="flex w-8 justify-center items-center"
-            onClick={() => changeDate(new Date())}
-          >
-            <img src={CalendarIcon} className="w-8" />
           </div>
         </div>
       </div>

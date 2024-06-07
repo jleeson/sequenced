@@ -6,7 +6,7 @@ import {
   PermissionStatus,
   ScheduleResult,
 } from "@capacitor/local-notifications";
-import { getSettings, setSettings } from "./settings";
+import { getSettings, setSettings } from "@/hooks/settings";
 
 /* Checks if a user has been reminded */
 export async function hasRemindedToday(): Promise<boolean> {
@@ -34,7 +34,7 @@ export async function initializeNotifications() {
 }
 
 /* Sets daily reminders */
-export async function setDailyReminders(hour: number, minute: number) {
+export async function setDailyReminders(hour?: number, minute?: number) {
   const timeBuilder = new Date();
 
   timeBuilder.setDate(timeBuilder.getDate() + 1);
