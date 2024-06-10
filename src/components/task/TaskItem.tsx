@@ -1,14 +1,14 @@
 import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
 import { matchDate } from "@/utils/date";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TaskItemShell from "./TaskItemShell";
 import TaskItemCheckBox from "./TaskItemCheckbox";
 import TaskItemTitle from "./TaskItemTitle";
 import TaskItemMenu from "./TaskItemMenu/TaskItemMenu";
 import TaskItemDate from "./TaskItemDate";
-import { taskContext } from "@/hooks/contexts";
 import { isTaskDone } from "@/utils/data";
+import { useApp } from "@/hooks/app";
 
 export function TaskItem({ item, setIsInspecting }) {
   if (!item) item = {};
@@ -18,7 +18,8 @@ export function TaskItem({ item, setIsInspecting }) {
   const { mutate: deleteTask } = useDeleteTask();
   const { mutate: updateTask } = useUpdateTask();
 
-  const [context, setContext] = useContext(taskContext);
+  const [appData, setAppData] = useApp();
+
   const [isDeleting, setIsDeleting] = useState(false);
   const [isManaging, setIsManaging] = useState(false);
 
@@ -27,7 +28,7 @@ export function TaskItem({ item, setIsInspecting }) {
 
     if (item.repeater && item.repeater.length != 0) {
       let newDone = item.done || [];
-      let activeDate = context.activeDate;
+      let activeDate = appData.activeDate;
 
       if (!Array.isArray(item.done)) item.done = newDone;
 
@@ -52,8 +53,10 @@ export function TaskItem({ item, setIsInspecting }) {
   const handleInteractive = (e) => {
     e.stopPropagation();
 
-    setContext({
-      ...context,
+    console.log("TEST");
+
+    setAppData({
+      ...appData,
       activeTask: item,
     });
 
@@ -61,26 +64,58 @@ export function TaskItem({ item, setIsInspecting }) {
   };
 
   return (
-    <TaskItemShell
-      task={item}
-      activeDate={context.activeDate}
-      onClick={(e) => handleInteractive(e)}
-    >
-      <div className="w-full h-full flex flex-row justify-between gap-1">
-        <div className="w-1/2 flex flex-row items-center">
-          <TaskItemCheckBox
-            checked={!isTaskDone(item, context.activeDate)}
-            onChange={handleMarkComplete}
-            onClick={(e) => e.stopPropagation()}
-          />
-          <TaskItemTitle text={item.title} />
-        </div>
-        <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
-          <div className="w-full h-full flex items-center justify-evenly">
-            {new Date(item.date).getTime() != 0 && <TaskItemDate task={item} />}
+    <div className="flex flex-col">
+      <TaskItemShell
+        task={item}
+        activeDate={appData.activeDate}
+        onClick={(e) => handleInteractive(e)}
+      >
+        <div className="w-full h-full flex flex-row justify-between gap-1">
+          <div className="w-1/2 flex flex-row items-center">
+            <TaskItemCheckBox
+              checked={!isTaskDone(item, appData.activeDate)}
+              onChange={handleMarkComplete}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <TaskItemTitle text={item.title} />
+          </div>
+          <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
+            <div className="w-full h-full flex items-center justify-evenly">
+              {new Date(item.date).getTime() != 0 && (
+                <TaskItemDate task={item} />
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </TaskItemShell>
+      </TaskItemShell>
+      {item.type == "group" &&
+        item.subtasks?.map((task) => (
+          <div className="w-full px-2 my-2 flex flex-row justify-center items-center">
+            <TaskItemShell
+              task={task}
+              activeDate={appData.activeDate}
+              onClick={(e) => handleInteractive(e)}
+            >
+              <div className="w-full h-full flex flex-row justify-between gap-1">
+                <div className="w-1/2 flex flex-row items-center">
+                  <TaskItemCheckBox
+                    checked={!isTaskDone(task, appData.activeDate)}
+                    onChange={handleMarkComplete}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  <TaskItemTitle text={task.title} />
+                </div>
+                <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
+                  <div className="w-full h-full flex items-center justify-evenly">
+                    {new Date(task.date).getTime() != 0 && (
+                      <TaskItemDate task={task} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </TaskItemShell>
+          </div>
+        ))}
+    </div>
   );
 }

@@ -17,8 +17,8 @@ Sequenced:
     Tasks:
       ☐ Add sub-tasks
 
-    List:
-      ☐ Implement Lists Ability
+    Misc:
+      ✔ Combine Add Menu and Edit Menu into one
 
   Other Tasks:
     Navigation: 
@@ -42,6 +42,7 @@ Sequenced:
       ☐ Allow adding grouping
 
     List:
+      ☐ Implement Lists Ability
       ☐ Implement Categories
 
     Settings:
@@ -55,6 +56,7 @@ Sequenced:
 
     Misc:
       ☐ Turn Add Item Repeater into Component
+      ☐ Merge Add/Edit systems
 
     UI:
       ☐ Scroll on body Daily -> Weekly -> Monthly

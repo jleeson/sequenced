@@ -1,7 +1,9 @@
-import { StrictMode, useEffect, useState } from "react";
+import { StrictMode, useReducer } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Pages
 import Home from "./pages/Home";
 import Meds from "./pages/Meds";
 import Mood from "./pages/Mood";
@@ -9,13 +11,14 @@ import Task from "@/pages/Task";
 import Settings from "./pages/Settings";
 import Layout from "@/pages/Layout";
 import NoPage from "@/pages/NoPage";
-import "./index.css";
 
-import TaskViewer from "@/components/menus/TaskViewer/TaskViewer";
-import { taskContext } from "@/hooks/contexts";
+// Styles
+import "./index.css";
 
 import { initializeAdMob } from "@/utils/ads";
 import { initializeNotifications } from "@/utils/notifs";
+
+import { AppContext, useAppReducer } from "@/hooks/app";
 
 /* define the query client for react-query */
 const queryClient = new QueryClient({
@@ -26,21 +29,14 @@ const queryClient = new QueryClient({
   },
 });
 
+// TODO: remove tempActiveDate.
+
 export default function App() {
-  const [context, setContext] = useState({
-    activeDate: new Date(),
-    groupsActive: [],
-    task: {
-      menus: {
-        dailyTasks: false,
-        generalTasks: false,
-      },
-    },
-  });
+  const reducer = useAppReducer();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <taskContext.Provider value={[context, setContext]}>
+      <AppContext.Provider value={reducer}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
@@ -51,7 +47,7 @@ export default function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-      </taskContext.Provider>
+      </AppContext.Provider>
     </QueryClientProvider>
   );
 }

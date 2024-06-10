@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import TaskMenu from "../../tasks/TaskMenu";
 
 import dropdown_icon from "@/assets/dropdown.svg";
@@ -10,13 +10,13 @@ import invisible_icon from "@/assets/invisible.svg";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 
-import { TaskContext, taskContext } from "@/hooks/contexts";
 import { Disclosure, Menu } from "@headlessui/react";
 import TaskMenuItem from "./TaskMenuItem";
 import { matchDate } from "@/utils/date";
 import { isTaskDone } from "@/utils/data";
 import { Task } from "@/hooks/tasks";
 import { useUpdateSettings, useSettings } from "@/hooks/settings";
+import { useApp, useAppReducer } from "@/hooks/app";
 
 interface ContainerSettings {
   identifier: string;
@@ -31,7 +31,7 @@ export default function TaskContainer({
   activeFilter,
   setIsInspecting,
 }: ContainerSettings) {
-  const [context, setContext] = useContext(taskContext);
+  const [appData, setAppData] = useApp();
   const [taskFilter, setTaskFilter] = useState("incomplete");
   const { mutate: setSettings } = useUpdateSettings();
   const settings = useSettings();
@@ -62,7 +62,7 @@ export default function TaskContainer({
 
   if (taskFilter == "all") taskDisplay = tasks;
   else if (taskFilter == "incomplete")
-    taskDisplay = tasks.filter((task) => isTaskDone(task, context.activeDate));
+    taskDisplay = tasks.filter((task) => isTaskDone(task, appData.activeDate));
 
   return (
     <div className="group flex flex-col items-center w-[90%] my-2">

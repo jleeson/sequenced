@@ -1,11 +1,10 @@
 import TaskAddMenu from "@/components/menus/TaskAddMenu/TaskAddMenu";
 import { NavBar } from "@/components/navigation/NavBar";
-import { taskContext } from "@/hooks/contexts";
-import { useContext, useState } from "react";
+import TaskInfoMenu from "@/components/task/TaskInfoMenu/TaskInfoMenu";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
-  const [context, setContext] = useContext(taskContext);
   const [isAdding, setIsAdding] = useState(false);
 
   return (
@@ -22,16 +21,14 @@ const Layout = () => {
             id="unit-container"
             className="flex flex-col justify-center items-center bg-accent-black text-accent-white w-full h-full overflow-y-scroll"
           >
-            <Outlet isAdding={isAdding} setIsAdding={setIsAdding} />
+            <Outlet />
           </div>
         </div>
       </div>
       <div id="absolute adder">
         <NavBar setIsAdding={setIsAdding} />
-        <TaskAddMenu
-          isOpen={isAdding}
-          setIsOpen={setIsAdding}
-        />
+        <TaskInfoMenu type="add" isOpen={isAdding} setIsOpen={setIsAdding} />
+        {/* <TaskAddMenu isOpen={isAdding} setIsOpen={setIsAdding} /> */}
       </div>
     </>
   );

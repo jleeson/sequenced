@@ -1,11 +1,10 @@
 import today_icon from "@/assets/today.svg";
-import { TaskContext, taskContext } from "@/hooks/contexts";
+import { useApp } from "@/hooks/app";
 import { isOverdue } from "@/utils/date";
 import { formatDigits } from "@/utils/math";
-import { useContext } from "react";
 
 export default function TaskItemDate({ task }) {
-  const [context] = useContext<TaskContext>(taskContext);
+  const [appData, setAppData] = useApp();
 
   const taskDate: Date = new Date(task.date);
   let date: Date = taskDate;

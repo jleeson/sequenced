@@ -1,23 +1,22 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTasks, filterBroken } from "@/hooks/tasks";
-import { taskContext } from "@/hooks/contexts";
 import { sortByDate } from "@/utils/data";
 
 import DayTasks from "../components/calendar/DayTasks";
 import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
-import TaskViewer from "@/components/menus/TaskViewer/TaskViewer";
 import { getPending } from "@/utils/notifs";
+import { useApp } from "@/hooks/app";
+import TaskInfoMenu from "@/components/task/TaskInfoMenu/TaskInfoMenu";
 
 export default function Task() {
-  const [context, setContext] = useContext(taskContext);
-  const [activeDate, setActiveDate] = useState(context.activeDate);
+  const [appData, setAppData] = useApp();
+  const [activeDate, setActiveDate] = useState(appData.activeDate);
   const [isInspecting, setIsInspecting] = useState(false);
-
-  console.log("CTX", context);
 
   const tasks = useTasks();
 
+  // TODO: Turn into React Query
   useEffect(() => {
     (async () => {
       const pending = await getPending();
@@ -33,14 +32,14 @@ export default function Task() {
         <div className="pb-12">
           <div className="flex flex-col items-center gap-2">
             <ActiveCalendar
-              context={context}
-              setContext={setContext}
+              appData={appData}
+              setAppData={setAppData}
               // TODO: remove this need
               setActiveDate={setActiveDate}
             />
             <DayTasks
               setIsInspecting={setIsInspecting}
-              day={context.activeDate}
+              day={appData.activeDate}
               tasks={sortByDate(tasks.data)}
             />
             <TaskContainer
@@ -52,12 +51,11 @@ export default function Task() {
             />
           </div>
           <div>
-            <TaskViewer
-              context={context}
-              setContext={setContext}
+            <TaskInfoMenu
+              type="edit"
               isOpen={isInspecting}
               setIsOpen={setIsInspecting}
-            ></TaskViewer>
+            />
           </div>
         </div>
       )}

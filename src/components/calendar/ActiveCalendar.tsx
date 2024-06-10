@@ -3,16 +3,12 @@ import CalendarArrow from "./CalendarArrow";
 import { formatDate, generateWeek } from "@/utils/date";
 import CalendarItem from "./CalendarItem";
 
-import { TaskContext } from "@/hooks/contexts";
-
 import CalendarIcon from "@/assets/calendar.svg";
 
 export default function ActiveCalendar({
-  context,
-  setContext,
+  appData,
+  setAppData,
   setActiveDate,
-}: {
-  context: TaskContext;
 }) {
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(0);
@@ -21,39 +17,39 @@ export default function ActiveCalendar({
   let touchstartX = 0;
   let touchendX = 0;
 
-  const activeDate = context.activeDate;
+  const activeDate = appData.activeDate;
 
   const dates = generateWeek(activeDate || new Date(), 0);
 
   const changeDate = (date: Date) => {
-    let tempContext = {
-      ...context,
+    let tempData = {
+      ...appData,
     };
 
-    tempContext.activeDate = date;
+    tempData.activeDate = date;
 
     setActiveDate(date);
-    setContext(tempContext);
+    setAppData(tempData);
   };
 
   function changeActiveMonth(e: React.ChangeEvent<HTMLInputElement>) {
     let activeData = e.target.value.split("-");
 
-    let tempContext = {
-      ...context,
+    let tempData = {
+      ...appData,
     };
 
     const tempYear = activeData[0];
     const tempMonth = activeData[1] - 1;
     const tempDay = activeData[2];
 
-    tempContext.activeDate = new Date();
-    tempContext.activeDate.setFullYear(tempYear);
-    tempContext.activeDate.setMonth(tempMonth);
-    tempContext.activeDate.setDate(tempDay);
+    tempData.activeDate = new Date();
+    tempData.activeDate.setFullYear(tempYear);
+    tempData.activeDate.setMonth(tempMonth);
+    tempData.activeDate.setDate(tempDay);
 
-    setActiveDate(tempContext.activeDate);
-    setContext(tempContext);
+    setActiveDate(tempData.activeDate);
+    setAppData(tempData);
   }
 
   const checkDirection = () => {
