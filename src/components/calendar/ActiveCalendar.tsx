@@ -4,12 +4,9 @@ import { formatDate, generateWeek } from "@/utils/date";
 import CalendarItem from "./CalendarItem";
 
 import CalendarIcon from "@/assets/calendar.svg";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 
-export default function ActiveCalendar({
-  appData,
-  setAppData,
-  setActiveDate,
-}) {
+export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(0);
   const [swipeCounter, setSwipeCounter] = useState<number>(0);
@@ -90,19 +87,37 @@ export default function ActiveCalendar({
         </div>
       </div>
       <div className="w-full h-full flex flex-row items-center justify-center">
-        <div
-          className="w-full md:w-[90%] flex flex-row justify-between px-4"
-          onTouchStart={touchstart}
-          onTouchEnd={touchend}
-        >
-          {dates.map((date, key) => (
-            <CalendarItem
-              key={key}
-              date={date}
-              activeDate={activeDate}
-              changeDate={changeDate}
-            />
-          ))}
+        <div className="flex flex-row w-full h-full justify-evenly items-center">
+          <ChevronLeftIcon
+            className="hidden lg:flex w-10 h-10 fill-accent-black-100 hover:fill-accent-black-300"
+            onClick={(e) => {
+              const tempDate = activeDate;
+              tempDate.setDate(tempDate.getDate() - 7);
+              changeDate(tempDate);
+            }}
+          />
+          <div
+            className="w-full md:w-[90%] flex flex-row justify-between px-4"
+            onTouchStart={touchstart}
+            onTouchEnd={touchend}
+          >
+            {dates.map((date, key) => (
+              <CalendarItem
+                key={key}
+                date={date}
+                activeDate={activeDate}
+                changeDate={changeDate}
+              />
+            ))}
+          </div>
+          <ChevronRightIcon
+            className="hidden lg:flex w-10 h-10 fill-accent-black-100 hover:fill-accent-black-300"
+            onClick={(e) => {
+              const tempDate = activeDate;
+              tempDate.setDate(tempDate.getDate() + 7);
+              changeDate(tempDate);
+            }}
+          />
         </div>
       </div>
     </div>

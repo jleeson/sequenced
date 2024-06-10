@@ -22,7 +22,7 @@ export default function CalendarItem({ activeDate, date, changeDate }) {
 
   return (
     <div
-      className={`w-11 h-16 ${
+      className={`select-none w-11 h-16 ${
         activeDate.getDate() != date.getDate() && currentDate == date.getDate()
           ? "text-accent-blue-600"
           : "text-accent-white"
@@ -34,9 +34,9 @@ export default function CalendarItem({ activeDate, date, changeDate }) {
       onClick={(e) => changeDate(date, e)}
     >
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-center">{convertDay(date.getDay()).slice(0, 3)}</h1>
+        <h1 className="select-none text-center">{convertDay(date.getDay()).slice(0, 3)}</h1>
         <h1
-          className={`${
+          className={`select-none ${
             activeDate.getDate() == date.getDate()
               ? "bg-accent-blue-600 text-accent-white"
               : "bg-transparent"
