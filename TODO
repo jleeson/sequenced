@@ -1,4 +1,8 @@
 Sequenced:
+  1.0.7:
+    Tasks:
+      ☐ Add sub-tasks
+
   1.0.6:
     Design:
       ✔ Fix Calendar Line on IPads+
@@ -13,12 +17,12 @@ Sequenced:
 
     Bug Fixes:
       ✔ Keep Toggle Status for Groups
-    
-    Tasks:
-      ☐ Add sub-tasks
-
+  
     Misc:
       ✔ Combine Add Menu and Edit Menu into one
+
+    Distribution:
+      ✔ Create Desktop Build
 
   Other Tasks:
     Navigation: 

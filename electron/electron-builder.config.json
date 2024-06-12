@@ -1,16 +1,20 @@
 {
-  "appId": "com.yourdoamnin.yourapp",
+  "appId": "com.ottegi.sequenced-app",
   "directories": {
-    "buildResources": "resources"
+    "buildResources": "resources",
+    "output": "release"
   },
-  "files": [
-    "assets/**/*",
-    "build/**/*",
-    "capacitor.config.*",
-    "app/**/*"
-  ],
-  "publish": {
-    "provider": "github"
+  "publish": null,
+  "files": ["assets/**/*", "build/**/*", "capacitor.config.*", "app/**/*"],
+  "pkg": {
+    "identity": "Apple Distribution"
+  },
+  "mas": {
+    "hardenedRuntime": false,
+    "type": "distribution",
+    "category": "public.app-category.utilities",
+    "entitlements": "build/entitlements.mas.plist",
+    "entitlementsInherit": "build/entitlements.mas.inherit.plist"
   },
   "nsis": {
     "allowElevation": true,
@@ -19,10 +23,14 @@
   },
   "win": {
     "target": "nsis",
-    "icon": "assets/appIcon.ico"
+    "icon": "assets/icon.png"
   },
   "mac": {
-    "category": "your.app.category.type",
-    "target": "dmg"
+    "identity": "Apple Distribution",
+    "type": "distribution",
+    "target": "pkg",
+    "artifactName": "${productName}.${ext}",
+    "category": "Utility",
+    "icon": "assets/icon.png"
   }
 }
