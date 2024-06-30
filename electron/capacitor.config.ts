@@ -1,7 +1,7 @@
 import { CapacitorElectronConfig } from "@capacitor-community/electron";
 
 const config = {
-  appId: "com.ottegi.sequenced",
+  appId: "com.ottegi.sequenced-app",
   appName: "Sequenced",
   webDir: "dist",
   server: {

@@ -7,14 +7,16 @@
   "publish": null,
   "files": ["assets/**/*", "build/**/*", "capacitor.config.*", "app/**/*"],
   "pkg": {
-    "identity": "Apple Distribution"
+    "identity": null
   },
   "mas": {
-    "hardenedRuntime": false,
-    "type": "distribution",
+    "hardenedRuntime": true,
+    "provisioningProfile": "build/embedded.provisionprofile",
     "category": "public.app-category.utilities",
     "entitlements": "build/entitlements.mas.plist",
-    "entitlementsInherit": "build/entitlements.mas.inherit.plist"
+    "entitlementsInherit": "build/entitlements.mas.inherit.plist",
+    "gatekeeperAssess": true,
+    "asarUnpack": []
   },
   "nsis": {
     "allowElevation": true,
@@ -26,11 +28,20 @@
     "icon": "assets/icon.png"
   },
   "mac": {
-    "identity": "Apple Distribution",
+    "identity": null,
     "type": "distribution",
-    "target": "pkg",
+    "target": [
+      { "target": "mas", "arch": ["universal"] }
+    ],
     "artifactName": "${productName}.${ext}",
-    "category": "Utility",
-    "icon": "assets/icon.png"
+    "category": "public.app-category.utilities",
+    "entitlements": "build/entitlements.mas.plist",
+    "entitlementsInherit": "build/entitlements.mas.inherit.plist",
+    "icon": "assets/icon.png",
+    "hardenedRuntime": true,
+    "gatekeeperAssess": true,
+    "notarize": {
+      "teamId": "B9UMLF8BH7"
+    }
   }
 }
