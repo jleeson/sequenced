@@ -112,7 +112,13 @@ export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
   console.log(taskFilter);
 
   return (
-    <div className={`${(taskFilter == "all" || (taskFilter == "incomplete" && !item.done)) ? "flex" : "hidden"} w-full flex-col`}>
+    <div
+      className={`${
+        taskFilter == "all" || (taskFilter == "incomplete" && !item.done)
+          ? "flex"
+          : "hidden"
+      } w-full flex-col gap-2`}
+    >
       <TaskItemShell
         task={item}
         activeDate={appData.activeDate}
@@ -134,21 +140,23 @@ export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
           </div>
         </div>
       </TaskItemShell>
-      {item.type == "group" &&
-        item.subtasks?.map((subtask: Task, key: number) => (
-          <div
-            className="w-full px-2 my-2 flex flex-row justify-center items-center"
-            key={key}
-          >
-            <TaskItem
-              taskFilter={taskFilter}
-              type="subtask"
-              parent={item}
-              item={subtask}
-              setIsInspecting={setIsInspecting}
-            />
-          </div>
-        ))}
+      <div className="flex flex-col gap-1">
+        {item.type == "group" &&
+          item.subtasks?.map((subtask: Task, key: number) => (
+            <div
+              className="w-full px-2 flex flex-row justify-center items-center"
+              key={key}
+            >
+              <TaskItem
+                taskFilter={taskFilter}
+                type="subtask"
+                parent={item}
+                item={subtask}
+                setIsInspecting={setIsInspecting}
+              />
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
