@@ -230,7 +230,10 @@ export default function TaskInfoMenu({
         ref={ref}
         className="relative z-50 flex items-center justify-center"
       >
-        <div className="flex flex-row items-end justify-center fixed bottom-0 inset-0 w-full h-full">
+        {/* TODO: Change MT-36 to be dynamic with AD */}
+        <div
+          className={`flex flex-row items-end justify-center fixed bottom-0 inset-0 w-full h-full pt-36`}
+        >
           <DialogPanel className="flex flex-col w-full h-full overflow-y-scroll bg-accent-black-900 text-accent-white shadow-inner shadow-accent-black-400 px-2 py-1 rounded-t-xl pb-8 items-center">
             <div className="flex flex-col w-3/4 gap-6">
               <div

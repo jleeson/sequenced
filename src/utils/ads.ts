@@ -40,8 +40,11 @@ export async function initializeAdMob() {
   AdMob.addListener(
     BannerAdPluginEvents.SizeChanged,
     (info: AdMobBannerSize) => {
-      console.log("AD INFO CHANGE", info);
-      const shell = document.querySelector<HTMLElement>("#unit-container") as HTMLElement;
+      const root = document.querySelector<HTMLElement>("#root");
+      
+      const shell = document.querySelector<HTMLElement>(
+        "#unit-container"
+      ) as HTMLElement;
       const margin = info.height;
 
       if (margin == 0) shell.style.marginTop = "0px";
