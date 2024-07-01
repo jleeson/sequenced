@@ -273,6 +273,7 @@ export default function TaskInfoMenu({
                     subtasks={tempData.subtasks}
                     tempData={tempData}
                     setTempData={setTempData}
+                    setIsOpen={setIsOpen}
                   />
                 )}
 

@@ -12,6 +12,7 @@ export default function TaskInfoMenuSubtaskMenu({
   subtasks,
   tempData,
   setTempData,
+  setIsOpen
 }: TaskInfoMenuSubtaskMenuParams) {
   const createNewSubtask = () => {
     console.log("Initial subtasks", tempData.subtasks);
@@ -64,9 +65,11 @@ export default function TaskInfoMenuSubtaskMenu({
       <div className="flex flex-col gap-2 px-2">
         {subtasks?.map((task: Task, key: number) => (
           <TaskInfoMenuSubtask
+            parent={tempData}
             task={task}
             key={key}
             deleteSubtask={deleteSubtask}
+            setIsOpen={setIsOpen}
           />
         ))}
       </div>

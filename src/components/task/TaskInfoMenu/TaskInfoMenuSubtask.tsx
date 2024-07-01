@@ -1,16 +1,33 @@
+import { useApp } from "@/hooks/app";
 import { Task } from "@/hooks/tasks";
 
 export interface TaskInfoMenuSubtaskParams {
   task: Task;
+  parent: Task;
   deleteSubtask: CallableFunction;
 }
 
 export default function TaskInfoMenuSubtask({
   task,
+  parent,
   deleteSubtask,
+  setIsOpen,
 }: TaskInfoMenuSubtaskParams) {
+  const [appData, setAppData] = useApp();
+
+  const openSubtaskMenu = () => {
+    setAppData({
+      ...appData,
+      activeParent: parent,
+      activeTask: task,
+    });
+  };
+
   return (
-    <div className="flex flex-row items-center gap-2">
+    <div
+      className="flex flex-row items-center gap-2"
+      onClick={(e) => openSubtaskMenu()}
+    >
       <div className="w-full text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll hover:bg-accent-black-600">
         {task.title || "No Title"}
       </div>
