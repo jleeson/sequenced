@@ -5,7 +5,7 @@ import {
   BannerAdPluginEvents,
   AdmobConsentStatus,
   MaxAdContentRating,
-  AdMobBannerSize
+  AdMobBannerSize,
 } from "@capacitor-community/admob";
 
 import { Capacitor } from "@capacitor/core";
@@ -22,26 +22,46 @@ export async function initializeAdMob() {
 
   await AdMob.initialize({
     tagForChildDirectedTreatment: true,
-    maxAdContentRating: MaxAdContentRating.General
+    maxAdContentRating: MaxAdContentRating.General,
   });
 
   const consentInfo = await AdMob.requestConsentInfo();
-  if (consentInfo.isConsentFormAvailable && consentInfo.status == AdmobConsentStatus.REQUIRED) {
+  if (
+    consentInfo.isConsentFormAvailable &&
+    consentInfo.status == AdmobConsentStatus.REQUIRED
+  ) {
     await AdMob.showConsentForm();
   }
 
-  AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info: AdMobBannerSize) => {
-    const shell = document.querySelector<HTMLElement>("#unit-container");
-    const margin = info.height;
-
-    if (margin == 0) shell.style.marginTop = "0px";
-
-    if (margin > 0) {
-        const safeAreaBottom = getComputedStyle(shell).getPropertyValue("--safe-area-inset-bottom");
-        shell.style.marginTop = `calc(${margin}px - ${safeAreaBottom})`;
-        shell.style.setProperty("--banner-ad-height", shell.style.marginTop);
-    }
+  AdMob.addListener(BannerAdPluginEvents.Opened, (info: AdMobBannerSize) => {
+    console.log("AD INFO OPEN", info);
   });
+
+  AdMob.addListener(
+    BannerAdPluginEvents.SizeChanged,
+    (info: AdMobBannerSize) => {
+      console.log("AD INFO CHANGE", info);
+      const shell = document.querySelector<HTMLElement>("#unit-container") as HTMLElement;
+      const margin = info.height;
+
+      if (margin == 0) shell.style.marginTop = "0px";
+
+      if (margin > 0) {
+        const safeAreaTop = getComputedStyle(shell).getPropertyValue(
+          "--safe-area-inset-top"
+        );
+        const safeAreaBottom = getComputedStyle(shell).getPropertyValue(
+          "--safe-area-inset-bottom"
+        );
+
+        console.log("SAT", safeAreaTop);
+        console.log("SAB", safeAreaBottom);
+
+        shell.style.marginTop = `${margin}px`;
+        shell.style.setProperty("--banner-ad-height", shell.style.marginTop);
+      }
+    }
+  );
 
   await AdMob.showBanner({
     adId: isIOS ? adID.ios : adID.android,
