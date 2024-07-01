@@ -9,6 +9,7 @@ import TaskItemMenu from "./TaskItemMenu/TaskItemMenu";
 import TaskItemDate from "./TaskItemDate";
 import { isTaskDone } from "@/utils/data";
 import { useApp } from "@/hooks/app";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
 export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
   if (!item) item = {};
@@ -22,6 +23,8 @@ export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [isManaging, setIsManaging] = useState(false);
+
+  const [isAccordion, setAccordion] = useState(item.accordion || false);
 
   const handleMarkComplete = (e) => {
     e.stopPropagation();
@@ -109,8 +112,6 @@ export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
     setIsInspecting(true);
   };
 
-  console.log(taskFilter);
-
   return (
     <div
       className={`${
@@ -138,10 +139,33 @@ export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
               <TaskItemDate task={item} />
             </div>
           </div>
+          {item.type == "group" && item.subtasks?.length > 0 && (
+            <div>
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const newValue = !isAccordion;
+
+                  setAccordion(newValue);
+                  updateTask({
+                    id: item.id,
+                    data: {
+                      ...item,
+                      accordion: newValue,
+                    },
+                  });
+                }}
+              >
+                {!isAccordion && <ChevronDownIcon width="32" />}
+                {isAccordion && <ChevronUpIcon width="32" />}
+              </div>
+            </div>
+          )}
         </div>
       </TaskItemShell>
       <div className="flex flex-col gap-1">
         {item.type == "group" &&
+          !isAccordion &&
           item.subtasks?.map((subtask: Task, key: number) => (
             <div
               className="w-full px-2 flex flex-row justify-center items-center"
