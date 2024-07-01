@@ -1,5 +1,11 @@
 import { useApp } from "@/hooks/app";
-import { Task, useAddTask, useTaskById, useUpdateTask } from "@/hooks/tasks";
+import {
+  Task,
+  createInitialTaskData,
+  useAddTask,
+  useTaskById,
+  useUpdateTask,
+} from "@/hooks/tasks";
 import { createID } from "@/utils/id";
 import { scheduleNotification } from "@/utils/notifs";
 import {
@@ -14,6 +20,7 @@ import TaskInfoMenuItem from "./TaskInfoMenuItem";
 import TaskInfoMenuSelect from "./TaskInfoMenuSelect";
 import { formatDateTime } from "@/utils/date";
 import { TaskInfoMenuDelete } from "./TaskInfoMenuDelete";
+import TaskInfoMenuSubtaskMenu from "./TaskInfoMenuSubtaskMenu";
 
 interface TaskInfoMenuSettings {
   type?: string;
@@ -39,21 +46,29 @@ export default function TaskInfoMenu({
   const { mutate: updateTask } = useUpdateTask();
 
   const initialData: Task = {
-    title: "",
-    description: "",
+    ...createInitialTaskData(),
     date: new Date(appData.tempActiveDate ?? appData.activeDate),
-    done: false,
-    repeater: "",
-    reminder: "",
   };
 
   const [tempData, setTempData] = useReducer(reducer, initialData);
 
-  if (type == "edit" && tempData.id != appData.activeTask?.id)
-    setTempData({
-      ...appData.activeTask,
-      date: new Date(appData?.activeTask?.date),
-    });
+  if (type == "edit") {
+    if (
+      appData.activeTask?.id != undefined &&
+      tempData.id != appData.activeTask?.id
+    ) {
+      setTempData({
+        ...appData.activeTask,
+        date: new Date(appData?.activeTask?.date),
+      });
+
+      console.log("SET TEMP DATA", {
+        ...appData.activeTask,
+        id: undefined,
+        date: new Date(appData?.activeTask?.date),
+      });
+    }
+  }
 
   const changeAppDate = (date: Date) => {
     setAppData({
@@ -122,13 +137,14 @@ export default function TaskInfoMenu({
   };
 
   const resetForm = () => {
-    setTempData(initialData);
+    setTempData(null);
     setIsOpen(false);
   };
 
   const submitForm = () => {
     if (type == "edit") {
       saveAll();
+      resetForm();
       return;
     }
 
@@ -149,10 +165,40 @@ export default function TaskInfoMenu({
   const oldTask = useTaskById(tempData.id);
 
   const saveAll = () => {
+    if (appData.activeParent) {
+      const subTaskData = tempData;
+
+      console.log("Sub Task Data", subTaskData);
+
+      const parentData = appData.activeParent;
+
+      console.log("Parent Data", parentData);
+
+      const newSubs = appData.activeParent.subtasks;
+
+      console.log("Old Subtasks", newSubs);
+
+      for (let i = 0; i < newSubs.length; i++) {
+        if (newSubs[i].id == subTaskData.id) newSubs[i] = subTaskData;
+      }
+
+      console.log("New Subtasks", newSubs);
+
+      updateTask({
+        id: parentData.id,
+        data: {
+          ...parentData,
+          subtasks: newSubs,
+        },
+      });
+
+      return;
+    }
+
     const taskData = oldTask.data;
 
-    console.log("TD", taskData);
-    console.log("ND", tempData);
+    console.log("Task Data", taskData);
+    console.log("Temp Data", tempData);
 
     updateTask({
       id: tempData.id,
@@ -161,7 +207,7 @@ export default function TaskInfoMenu({
       },
     });
 
-    console.log("DTA", {
+    console.log("Data To Add", {
       tempData,
     });
   };
@@ -221,6 +267,14 @@ export default function TaskInfoMenu({
                     { name: "Group", value: "group" },
                   ]}
                 />
+
+                {tempData.type == "group" && (
+                  <TaskInfoMenuSubtaskMenu
+                    subtasks={tempData.subtasks}
+                    tempData={tempData}
+                    setTempData={setTempData}
+                  />
+                )}
 
                 <TaskInfoMenuItem
                   name="Description"
@@ -308,6 +362,7 @@ export default function TaskInfoMenu({
               {type == "edit" && (
                 <div className="">
                   <TaskInfoMenuDelete
+                    parent={appData.activeParent}
                     task={tempData}
                     closeMenu={closeMenu}
                     isDeleting={isDeleting}

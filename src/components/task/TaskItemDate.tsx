@@ -1,9 +1,12 @@
 import today_icon from "@/assets/today.svg";
 import { useApp } from "@/hooks/app";
+import { Task } from "@/hooks/tasks";
 import { isOverdue } from "@/utils/date";
 import { formatDigits } from "@/utils/math";
 
-export default function TaskItemDate({ task }) {
+export default function TaskItemDate({ task }: { task: Task }) {
+  if (!task?.date) return <></>;
+
   const [appData, setAppData] = useApp();
 
   const taskDate: Date = new Date(task.date);
@@ -21,6 +24,9 @@ export default function TaskItemDate({ task }) {
   const checkRelative = (date: Date) => {
     const today = new Date();
     const checkedDate = new Date(date);
+
+    if (checkedDate.getTime() == 0) return;
+
     const relative = checkedDate.getDate() - today.getDate();
 
     if (relative >= 0 && relative <= 1) {
@@ -47,14 +53,23 @@ export default function TaskItemDate({ task }) {
 
   return (
     <div className="w-full h-full flex flex-row gap-2 justify-center items-center">
-      <div
-        className={`w-full flex justify-end items-center h-6 ${
-          isOverdue(date, new Date()) ? "text-red-400" : "text-accent-white"
-        }`}
-      >
-        <h1 className="text-lg text-right">{checkRelative(date)}</h1>
-      </div>
-      <img src={today_icon} className="invert w-4 h-4" width="16" height="16" />
+      {checkRelative(date) != undefined && (
+        <>
+          <div
+            className={`w-full flex justify-end items-center h-6 ${
+              isOverdue(date, new Date()) ? "text-red-400" : "text-accent-white"
+            }`}
+          >
+            <h1 className="text-lg text-right">{checkRelative(date)}</h1>
+          </div>
+          <img
+            src={today_icon}
+            className="invert w-4 h-4"
+            width="16"
+            height="16"
+          />
+        </>
+      )}
     </div>
   );
 }

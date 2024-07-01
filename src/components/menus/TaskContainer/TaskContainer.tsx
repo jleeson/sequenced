@@ -130,6 +130,7 @@ export default function TaskContainer({
                 <TaskMenu
                   tasks={taskDisplay}
                   setIsInspecting={setIsInspecting}
+                  taskFilter={taskFilter}
                 />
                 {/* )} */}
               </Disclosure.Panel>

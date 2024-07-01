@@ -1,3 +1,4 @@
+import { createID } from "@/utils/id";
 import { Preferences } from "@capacitor/preferences";
 import {
   useQueryClient,
@@ -15,7 +16,20 @@ export interface Task {
   id?: string;
   done?: boolean;
   repeater?: string;
-  reminder?: string
+  reminder?: string;
+  subtasks?: Task[];
+}
+
+export function createInitialTaskData(): Task {
+  return {
+    title: "",
+    description: "",
+    date: new Date(),
+    done: false,
+    repeater: "",
+    reminder: "",
+    subtasks: [],
+  };
 }
 
 /* Filters out ghost tasks */
@@ -70,7 +84,12 @@ export function useAddTask(): UseMutationResult<void, Error, Task, unknown> {
 }
 
 /* Updates specific task */
-export function useUpdateTask(): UseMutationResult<void, Error, { id: string; data: Object; }, unknown> {
+export function useUpdateTask(): UseMutationResult<
+  void,
+  Error,
+  { id: string; data: Object },
+  unknown
+> {
   const queryClient = useQueryClient();
 
   const mutationFn = async ({ id, data }: { id: string; data: Object }) => {

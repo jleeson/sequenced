@@ -1,4 +1,4 @@
-import { useDeleteTask, useUpdateTask } from "@/hooks/tasks";
+import { Task, useDeleteTask, useUpdateTask } from "@/hooks/tasks";
 import { matchDate } from "@/utils/date";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ import TaskItemDate from "./TaskItemDate";
 import { isTaskDone } from "@/utils/data";
 import { useApp } from "@/hooks/app";
 
-export function TaskItem({ item, setIsInspecting }) {
+export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
   if (!item) item = {};
 
   const navigate = useNavigate();
@@ -25,6 +25,8 @@ export function TaskItem({ item, setIsInspecting }) {
 
   const handleMarkComplete = (e) => {
     e.stopPropagation();
+
+    let newData = {};
 
     if (item.repeater && item.repeater.length != 0) {
       let newDone = item.done || [];
@@ -42,18 +44,50 @@ export function TaskItem({ item, setIsInspecting }) {
       if (!foundDate) newDone.push(rawDate);
       else newDone.splice(newDone.indexOf(rawDate), 1);
 
-      updateTask({ id: item.id, data: { ...item, done: newDone } });
+      if (type == "subtask") {
+        const newSubs = [...parent.subtasks];
+        for (let i = 0; i < newSubs.length; i++) {
+          if (newSubs[i].id == item.id) newSubs[i] = { ...item, done: newDone };
+        }
+
+        newData = {
+          ...parent,
+          subtasks: newSubs,
+        };
+
+        updateTask({ id: parent.id, data: newData });
+      } else {
+        updateTask({ id: item.id, data: { ...item, done: newDone } });
+      }
     } else {
-      updateTask({ id: item.id, data: { ...item, done: !item.done } });
+      if (type == "subtask") {
+        const newSubs = [...parent.subtasks];
+        for (let i = 0; i < newSubs.length; i++) {
+          if (newSubs[i].id == item.id)
+            newSubs[i] = { ...item, done: !item.done };
+        }
+
+        newData = {
+          ...parent,
+          subtasks: newSubs,
+        };
+
+        updateTask({ id: parent.id, data: newData });
+      } else {
+        updateTask({ id: item.id, data: { ...item, done: !item.done } });
+      }
     }
 
     setIsManaging(false);
   };
 
   const handleInteractive = (e) => {
-    e.stopPropagation();
+    if (type == "subtask") {
+      handleInteractiveSubtask(e);
+      return;
+    }
 
-    console.log("TEST");
+    e.stopPropagation();
 
     setAppData({
       ...appData,
@@ -63,8 +97,22 @@ export function TaskItem({ item, setIsInspecting }) {
     setIsInspecting(true);
   };
 
+  const handleInteractiveSubtask = (e: any) => {
+    e.stopPropagation();
+
+    setAppData({
+      ...appData,
+      activeParent: parent,
+      activeTask: item,
+    });
+
+    setIsInspecting(true);
+  };
+
+  console.log(taskFilter);
+
   return (
-    <div className="flex flex-col">
+    <div className={`${(taskFilter == "all" || (taskFilter == "incomplete" && !item.done)) ? "flex" : "hidden"} w-full flex-col`}>
       <TaskItemShell
         task={item}
         activeDate={appData.activeDate}
@@ -81,39 +129,24 @@ export function TaskItem({ item, setIsInspecting }) {
           </div>
           <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
             <div className="w-full h-full flex items-center justify-evenly">
-              {new Date(item.date).getTime() != 0 && (
-                <TaskItemDate task={item} />
-              )}
+              <TaskItemDate task={item} />
             </div>
           </div>
         </div>
       </TaskItemShell>
       {item.type == "group" &&
-        item.subtasks?.map((task) => (
-          <div className="w-full px-2 my-2 flex flex-row justify-center items-center">
-            <TaskItemShell
-              task={task}
-              activeDate={appData.activeDate}
-              onClick={(e) => handleInteractive(e)}
-            >
-              <div className="w-full h-full flex flex-row justify-between gap-1">
-                <div className="w-1/2 flex flex-row items-center">
-                  <TaskItemCheckBox
-                    checked={!isTaskDone(task, appData.activeDate)}
-                    onChange={handleMarkComplete}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                  <TaskItemTitle text={task.title} />
-                </div>
-                <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
-                  <div className="w-full h-full flex items-center justify-evenly">
-                    {new Date(task.date).getTime() != 0 && (
-                      <TaskItemDate task={task} />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </TaskItemShell>
+        item.subtasks?.map((subtask: Task, key: number) => (
+          <div
+            className="w-full px-2 my-2 flex flex-row justify-center items-center"
+            key={key}
+          >
+            <TaskItem
+              taskFilter={taskFilter}
+              type="subtask"
+              parent={item}
+              item={subtask}
+              setIsInspecting={setIsInspecting}
+            />
           </div>
         ))}
     </div>
