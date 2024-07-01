@@ -16,7 +16,7 @@ export default function TaskInfoMenuSubtask({
       </div>
       <div>
         <span
-          className="px-3 py-1 bg-accent-red-500 rounded-lg"
+          className="px-5 py-2 bg-accent-red-500 rounded-lg text-lg"
           onClick={(e) => deleteSubtask(task)}
         >
           -
