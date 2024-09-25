@@ -1,10 +1,17 @@
 import { createContext, useContext, useReducer } from "react";
+import { Task } from "./tasks";
 
 export const AppContext = createContext(null);
 
 // TODO: remove tempActiveDate.
-// TODO: Build Interface
-const initialData = {
+export interface AppOptions {
+  activeDate?: Date;
+  tempActiveDate?: Date;
+  activeTask?: Task;
+  activeParent?: Task;
+}
+
+const initialData: AppOptions = {
   activeDate: new Date(),
   tempActiveDate: undefined,
   activeTask: undefined,
@@ -20,6 +27,6 @@ export function useAppReducer() {
   return useReducer(reducer, initialData);
 }
 
-export function useApp(): Iterable<any> | null {
+export function useApp(): Iterator<AppOptions> | null {
   return useContext(AppContext);
 }

@@ -8,7 +8,7 @@ import TaskItemTitle from "./TaskItemTitle";
 import TaskItemMenu from "./TaskItemMenu/TaskItemMenu";
 import TaskItemDate from "./TaskItemDate";
 import { isTaskDone } from "@/utils/data";
-import { useApp } from "@/hooks/app";
+import { AppOptions, useApp } from "@/hooks/app";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
 export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
@@ -20,6 +20,7 @@ export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
   const { mutate: updateTask } = useUpdateTask();
 
   const [appData, setAppData] = useApp();
+
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [isManaging, setIsManaging] = useState(false);
