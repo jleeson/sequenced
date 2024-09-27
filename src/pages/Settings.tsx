@@ -1,15 +1,16 @@
-import InputToggle from "@/components/inputs/InputToggle";
-import { formatDateTime } from "@/utils/date";
 import {
   cancelNotification,
   getPending,
   setDailyReminders,
 } from "@/utils/notifs";
+
 import { Settings, getSettings, setSettings } from "@/hooks/settings";
 import { PendingLocalNotificationSchema } from "@capacitor/local-notifications";
 import { useEffect, useState } from "react";
+import DailyNotifications from "./(Settings)/DailyNotifications";
+import UserLogin from "./(Settings)/UserLogin";
 
-export default function () {
+export default function SettingsPage() {
   const [tempSettings, setTempSettings] = useState<Settings>({});
 
   useEffect(() => {
@@ -91,13 +92,8 @@ export default function () {
       </div>
       <div className="w-3/4 py-2">
         <div className="flex flex-col gap-2">
-          <InputToggle
-            title="Daily Notifications"
-            defaultValue={tempSettings.sendDailyReminders}
-            onChange={(val: boolean) =>
-              UpdateSettings({ sendDailyReminders: val })
-            }
-          />
+          <DailyNotifications tempSettings={tempSettings} UpdateSettings={UpdateSettings} />
+          <UserLogin />
           {tempSettings.sendDailyReminders && (
             <div className="flex flex-col gap-2">
               <div className="flex flex-col gap-1">
