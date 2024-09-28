@@ -7,8 +7,6 @@ export default function UserLogin() {
 
     const [menuActive, setMenuActive] = useState(false);
 
-    console.log(menuActive);
-
     return (
         <div>
             {user.isLoading && <></>}
@@ -18,7 +16,7 @@ export default function UserLogin() {
                     {
                         user.data?.token ?
                             (
-                                <div>Logged in as {user.data?.email}</div>
+                                <div>Logged in as {user.data.user.email}</div>
                             ) :
                             (
                                 <div className="flex flex-col gap-2 justify-center" onClick={() => setMenuActive(true)}>

@@ -1,17 +1,49 @@
 import { Preferences } from "@capacitor/preferences";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-const SERVER_IP = "https://localhost:8080";
+export async function getToken() {
+    const { value } = await Preferences.get({ key: "token" });
+    return value ?? null;
+}
 
 export async function getUser() {
-    const { value } = await Preferences.get({ key: "token" });
-    return value ? JSON.parse(value) : {};
+
+    const token = await getToken();
+
+    const user = await (await fetch(`http://localhost:8080/user`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })).json();
+
+    if (user)
+        return user;
+
+    return {};
+}
+
+export function useToken() {
+    return useQuery({
+        queryKey: ["token"],
+        queryFn: getToken,
+        staleTime: Infinity
+    });
 }
 
 export function useUser() {
     return useQuery({
-        queryKey: ["token"],
+        queryKey: ["user"],
         queryFn: getUser,
-        staleTime: 1000 * 60 * 60 * 24 * 7
+        staleTime: Infinity
     });
+}
+
+export function reloadUser() {
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: ["user"] });
+}
+
+export function reloadToken() {
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: ["token"] });
 }

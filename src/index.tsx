@@ -21,7 +21,7 @@ import { initializeNotifications } from "@/utils/notifs";
 import { AppContext, useAppReducer } from "@/hooks/app";
 
 /* define the query client for react-query */
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
