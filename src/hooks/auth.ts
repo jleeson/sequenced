@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { reloadUser } from "./user";
 import { Preferences } from "@capacitor/preferences";
+import { queryClient } from "..";
 
 export function useLogin() {
     return useMutation({
@@ -40,4 +41,13 @@ export function useRegister() {
             return data;
         }
     })
-} 
+}
+
+export async function signout() {
+    queryClient.invalidateQueries({ queryKey: ["user"] });
+    queryClient.invalidateQueries({ queryKey: ["token"] });
+
+    await Preferences.remove({ key: "token" });
+
+    console.log("User Signed Out");
+}

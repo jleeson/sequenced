@@ -1,6 +1,8 @@
-import { useUser } from "@/hooks/user";
+import { useToken, useUser } from "@/hooks/user";
 import { useState } from "react";
 import AuthMenu from "./Login/AuthMenu";
+import { signout } from "@/hooks/auth";
+import { redirect } from "react-router-dom";
 
 export default function UserLogin() {
     const user = useUser();
@@ -16,7 +18,13 @@ export default function UserLogin() {
                     {
                         user.data?.token ?
                             (
-                                <div>Logged in as {user.data.user.email}</div>
+                                <div className="flex flex-col gap-2">
+                                    <div>Logged in as {user.data.user.email}</div>
+                                    <button onClick={async () => {
+                                        await signout();
+                                        window.location.href = "/";
+                                    }} className="px-4 py-2 bg-blue-500 text-white">Sign Out</button>
+                                </div>
                             ) :
                             (
                                 <div className="flex flex-col gap-2 justify-center" onClick={() => setMenuActive(true)}>

@@ -6,12 +6,14 @@ export default function AuthMenu() {
     const { mutate: register } = useRegister();
 
     const [mode, setMode] = useState(0);
-    const [status, setStatus] = useState(0);
 
     const registerUser = (e) => {
         e.preventDefault();
 
-        register({ email: e.target[0].value, password: e.target[1].value, confirm_password: e.target[2].value })
+        register({ email: e.target[0].value, password: e.target[1].value, confirm_password: e.target[2].value });
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 1000);
     }
 
     const loginUser = (e) => {
@@ -21,6 +23,9 @@ export default function AuthMenu() {
         const password = e.target[1].value;
 
         login({ email, password });
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 1000);
     }
 
     return (

@@ -10,16 +10,20 @@ export async function getUser() {
 
     const token = await getToken();
 
-    const user = await (await fetch(`http://localhost:8080/user`, {
+    if (!token) return null;
+
+    let user = await fetch(`http://localhost:8080/user`, {
         headers: {
             "Authorization": `Bearer ${token}`
         }
-    })).json();
+    });
+
+    user = await user.json();
 
     if (user)
         return user;
 
-    return {};
+    return null;
 }
 
 export function useToken() {
