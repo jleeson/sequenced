@@ -1,5 +1,5 @@
 {
-  "name": "sequenced-server",
+  "name": "@sequenced_app/server",
   "main": "dist/index.js",
   "private": true,
   "engines": {
