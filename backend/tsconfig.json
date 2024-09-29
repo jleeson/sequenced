@@ -1,6 +1,7 @@
 {
     "include": ["src"],
     "compilerOptions": {
+        "strict": false,
         /* features */
         "experimentalDecorators": true,
         "useDefineForClassFields": true,
@@ -17,6 +18,7 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
+        "allowJs": true,
 
         /* import path aliases */
         "baseUrl": "./src",

@@ -23,17 +23,17 @@ export class TaskController {
     }
 
     @Post("/migrate")
-    async handleMigrate(req: Request) {
-        const token: Token = await this.authService.getTokenFromRequest(req);
+    async handleMigrate({ body, headers }) {
+        const token: Token = await this.authService.getTokenFromRequest({ headers });
         const user = await this.userService.getUserByToken(token);
 
         if (user.synced) return new BadRequest("Already synced");
 
         if (!token) throw new Unauthorized("You are not authorized");
 
-        if (req.body) {
+        if (body) {
 
-            const tasks = req.body;
+            const tasks = body;
 
             const dbTasks = [];
 
