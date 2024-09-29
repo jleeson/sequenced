@@ -4,6 +4,7 @@ import { Token } from "./token.entity";
 import { User } from "@/user/user.entity";
 import { Inject, Injectable } from "@outwalk/firefly";
 import { UserService } from "@/user/user.service";
+import { Unauthorized } from "@outwalk/firefly/errors";
 
 @Injectable()
 export class AuthService {
@@ -50,6 +51,13 @@ export class AuthService {
         const hash = (await this.userService.getUserHash(user._id)).password;
 
         return bcrypt.compare(password, hash)
+    }
+
+    async isAuthorized(token) {
+        if (token)
+            return Token.exists({ token: token.token }).exec();
+
+        return false;
     }
 
 }

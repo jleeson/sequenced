@@ -10,10 +10,11 @@ export default function AuthMenu() {
     const registerUser = (e) => {
         e.preventDefault();
 
-        register({ email: e.target[0].value, password: e.target[1].value, confirm_password: e.target[2].value });
-        setTimeout(() => {
-            window.location.href = "/";
-        }, 1000);
+        const data = register({ email: e.target[0].value, password: e.target[1].value, confirm_password: e.target[2].value });
+        if (data)
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 1000);
     }
 
     const loginUser = (e) => {
@@ -22,10 +23,11 @@ export default function AuthMenu() {
         const email = e.target[0].value;
         const password = e.target[1].value;
 
-        login({ email, password });
-        setTimeout(() => {
-            window.location.href = "/";
-        }, 1000);
+        const data = login({ email, password });
+        if (data)
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 1000);
     }
 
     return (

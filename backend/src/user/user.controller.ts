@@ -23,7 +23,7 @@ export class UserController {
 
     @Post()
     createUser({ body }) {
-        console.log(body);
+        console.log("BODY", body);
     }
 
 }

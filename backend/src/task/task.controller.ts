@@ -18,21 +18,25 @@ export class TaskController {
     async getTasks(req: Request) {
         const token: Token = await this.authService.getTokenFromRequest(req);
 
-        if(!token) throw new Unauthorized("Token not authorized.");
-        
+        if (!await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
+
         const user: User = await this.userService.getUserByToken(token);
 
-        return this.taskService.getTasks(user);
+        if (user)
+            return this.taskService.getTasks(user);
+
+        throw new BadRequest("Could not get data.");
     }
 
     @Post("/migrate")
     async handleMigrate({ body, headers }) {
         const token: Token = await this.authService.getTokenFromRequest({ headers });
+
+        if (!this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
+
         const user = await this.userService.getUserByToken(token);
 
         if (user.synced) return new BadRequest("Already synced");
-
-        if (!token) throw new Unauthorized("You are not authorized");
 
         if (body) {
 

@@ -1,4 +1,3 @@
-import { createID } from "@/utils/id";
 import { Preferences } from "@capacitor/preferences";
 import {
   useQueryClient,
@@ -7,9 +6,11 @@ import {
   UseQueryResult,
   UseMutationResult,
 } from "@tanstack/react-query";
+
 import { getSync } from "./settings";
 import { getToken } from "./user";
 import { SERVER_IP } from "./app";
+import { fetchServer } from "./auth";
 
 // TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
 export interface Task {
@@ -45,19 +46,18 @@ export async function migrateTasks() {
   const { value } = await Preferences.get({ key: "tasks" });
   const tasks = JSON.parse(value ?? "[]");
 
-  const migration = await (await fetch(`${SERVER_IP}/task/migrate`, {
-    method: "POST",
-    body: JSON.stringify(tasks),
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${await getToken()}`
-    }
-  })).json();
+  const migration = await fetchServer({
+    path: "/task/migrate",
+    options: { method: "POST" },
+    body: tasks,
+    token: await getToken()
+  });
 
-  if (migration.sync)
+  if (migration.sync) {
     console.log("Synced with Cloud");
+    await Preferences.set({ key: "sync", value: "true" });
+  }
 
-  await Preferences.set({ key: "sync", value: "true" });
 }
 
 export function useMigrate() {
@@ -101,12 +101,17 @@ export async function loadTasks(): Promise<Task[]> {
   const synced = await getSync();
 
   if (synced) {
-    const tasks = await (await fetch(`${SERVER_IP}/task`, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${await getToken()}`
-      }
-    })).json();
+    const tasks = await fetchServer({
+      path: "/task",
+      token: await getToken()
+    });
+
+    // const tasks = await (await fetch(`${SERVER_IP}/task`, {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Authorization": `Bearer ${await getToken()}`
+    //   }
+    // })).json();
 
     console.log(tasks);
 

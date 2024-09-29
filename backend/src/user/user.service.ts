@@ -8,14 +8,17 @@ import { Task } from "@/task/task.entity";
 export class UserService {
 
     async getUser(id: string): Promise<User> {
-        return User.findById(id).populate<Task>("tasks").lean<User>().exec();
+        if (!id) return null;
+        return User.findById(id).lean<User>().exec();
     }
 
     async getUserByEmail(email: string): Promise<User> {
-        return User.findOne({ email }).populate<Task>("tasks").lean<User>().exec();
+        if (!email) return null;
+        return User.findOne({ email }).lean<User>().exec();
     }
 
     async getUserByToken(token: Token) {
+        if (!token) return null;
         return token.user;
     }
 
@@ -35,8 +38,6 @@ export class UserService {
     }
 
     async updateUser(user: User, data: any) {
-        console.log(data);
-        
         return User.findByIdAndUpdate(user.id, { $set: data }).exec();
     }
 }

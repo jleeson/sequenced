@@ -15,8 +15,10 @@ const Layout = () => {
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    migrate();
-
+    if (user.isSuccess && user.data) {
+      console.log("User Data Layout", user.data);
+      migrate();
+    }
   }, [])
 
   return (
@@ -25,11 +27,11 @@ const Layout = () => {
         user.isLoading && <span className="text-white text-xl">Loading...</span>
       }
       {
-        user.isError && <span>{user.error.message}</span>
+        user.isError && <span className="text-white text-xl">Error: {user.error.message}</span>
       }
       {user.isSuccess && (
         <div>
-          {!user.data && (
+          {(!user.data || (user.data?.statusCode == 401)) && (
             <div className="w-screen h-screen flex flex-col items-start gap-4">
               <div className="w-full h-1/4 flex justify-center items-end">
                 <span className="text-xl text-blue-400">Sequenced: ADHD Management</span>
@@ -39,7 +41,7 @@ const Layout = () => {
               </div>
             </div>
           )}
-          {user.data && (
+          {user.data && (user.data?.statusCode != 401) && (
             <div>
 
               <div
@@ -61,13 +63,11 @@ const Layout = () => {
               <div id="absolute adder">
                 <NavBar setIsAdding={setIsAdding} />
                 <TaskInfoMenu type="add" isOpen={isAdding} setIsOpen={setIsAdding} />
-                {/* <TaskAddMenu isOpen={isAdding} setIsOpen={setIsAdding} /> */}
               </div>
             </div>
           )}
         </div>
       )}
-
     </>
   );
 };

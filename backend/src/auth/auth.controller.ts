@@ -1,5 +1,5 @@
 import { UserService } from "@/user/user.service";
-import { Controller, Inject, Post } from "@outwalk/firefly";
+import { Controller, Get, Inject, Post } from "@outwalk/firefly";
 import { BadRequest, Unauthorized } from "@outwalk/firefly/errors";
 import { Request } from "express";
 import { AuthService } from "./auth.service";
@@ -18,29 +18,39 @@ export class AuthController {
     @Inject() authService: AuthService;
     @Inject() userService: UserService;
 
+    @Post("/validate")
+    async validate(req: Request) {
+        const { token } = req.body;
+
+        const validation = await this.authService.isAuthorized(token);
+
+        if (validation)
+            return { valid: true };
+
+        return { valid: false };
+    }
+
     @Post("/login")
     async loginToSystem(req: Request): Promise<LoginDTO> {
         const { email, password } = req.body;
 
-        if (!await this.authService.validatePassword(email, password))
-            throw new Unauthorized("Wrong Email/Password Combo.");
+        const validation = await this.authService.validatePassword(email, password);
+        if (validation) {
+            const user = await this.userService.getUserByEmail(email);
+            const token = await this.authService.getTokenByUser(user);
 
-        const token = await this.authService.getTokenFromRequest(req);
-        const user = await this.userService.getUserByToken(token);
-
-        if (!token) return new Unauthorized("You are not authorized");
-
-        return {
-            user: {
-                id: user.id,
-                email: user.email,
-            },
-            token: {
-                token: token.token,
-                createdAt: token.createdAt,
-                expiresAt: token.expiresAt
-            }
-        };
+            return {
+                user: {
+                    id: user.id,
+                    email: user.email,
+                },
+                token: {
+                    token: token.token,
+                    createdAt: token.createdAt,
+                    expiresAt: token.expiresAt
+                }
+            };
+        }
     }
 
     @Post("/register")
