@@ -45,17 +45,28 @@ export async function checkMigration() {
 export async function migrateTasks() {
   const { value } = await Preferences.get({ key: "tasks" });
   const tasks = JSON.parse(value ?? "[]");
+  const token = await getToken();
+
+  console.log("Migrating to cloud");
 
   const migration = await fetchServer({
     path: "/task/migrate",
-    options: { method: "POST" },
+    method: "POST",
     body: tasks,
-    token: await getToken()
+    token
   });
+
+  if (migration.isSynced) {
+    console.log("Loading cloud data");
+    await Preferences.set({ key: "sync", value: "true" });
+    await Preferences.set({ key: "tasks", value: JSON.stringify(migration.tasks) });
+    return null;
+  }
 
   if (migration.sync) {
     console.log("Synced with Cloud");
     await Preferences.set({ key: "sync", value: "true" });
+    return null;
   }
 
 }
@@ -113,13 +124,14 @@ export async function loadTasks(): Promise<Task[]> {
     //   }
     // })).json();
 
-    console.log(tasks);
+    console.log("TASKS", tasks);
 
     return tasks;
   } else {
-    const { value } = await Preferences.get({ key: "tasks" });
+    migrateTasks();
+    // const { value } = await Preferences.get({ key: "tasks" });
 
-    return JSON.parse(value ?? "[]").filter((task: Task) => task.id);
+    // return JSON.parse(value ?? "[]").filter((task: Task) => task.id);
   }
 
   return [];

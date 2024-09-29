@@ -1,25 +1,15 @@
-// import TaskAddMenu from "@/components/menus/TaskAddMenu/TaskAddMenu";
+import TaskAddMenu from "@/components/menus/TaskAddMenu/TaskAddMenu";
 import { NavBar } from "@/components/navigation/NavBar";
 import TaskInfoMenu from "@/components/task/TaskInfoMenu/TaskInfoMenu";
 import { useUser } from "@/hooks/user";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import AuthMenu from "./(Settings)/Login/AuthMenu";
-import { useMigrate } from "@/hooks/tasks";
 
 const Layout = () => {
-  const { mutate: migrate } = useMigrate();
-
   const user = useUser();
 
   const [isAdding, setIsAdding] = useState(false);
-
-  useEffect(() => {
-    if (user.isSuccess && user.data) {
-      console.log("User Data Layout", user.data);
-      migrate();
-    }
-  }, [])
 
   return (
     <>

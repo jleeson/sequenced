@@ -36,7 +36,15 @@ export class TaskController {
 
         const user = await this.userService.getUserByToken(token);
 
-        if (user.synced) return new BadRequest("Already synced");
+        if (user.synced) {
+            const tasks = await this.taskService.getTasks(user);
+
+            return {
+                isSynced: true,
+                sync: true,
+                tasks
+            }
+        }
 
         if (body) {
 
