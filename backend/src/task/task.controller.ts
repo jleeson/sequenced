@@ -17,6 +17,9 @@ export class TaskController {
     @Get()
     async getTasks(req: Request) {
         const token: Token = await this.authService.getTokenFromRequest(req);
+
+        if(!token) throw new Unauthorized("Token not authorized.");
+        
         const user: User = await this.userService.getUserByToken(token);
 
         return this.taskService.getTasks(user);

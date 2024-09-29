@@ -2,11 +2,12 @@ import { useMutation } from "@tanstack/react-query";
 import { reloadUser } from "./user";
 import { Preferences } from "@capacitor/preferences";
 import { queryClient } from "..";
+import { SERVER_IP } from "./app";
 
 export function useLogin() {
     return useMutation({
         mutationFn: async (body: { email: string, password: string }) => {
-            const response = await fetch(`http://localhost:8080/auth/login`, {
+            const response = await fetch(`${SERVER_IP}/auth/login`, {
                 method: "POST",
                 body: JSON.stringify(body),
                 headers: { "Content-Type": "application/json" }
@@ -26,7 +27,7 @@ export function useLogin() {
 export function useRegister() {
     return useMutation({
         mutationFn: async (body: { email: string, password: string, confirm_password: string }) => {
-            const response = await fetch(`http://localhost:8080/auth/register`, {
+            const response = await fetch(`${SERVER_IP}/auth/register`, {
                 method: "POST",
                 body: JSON.stringify(body),
                 headers: { "Content-Type": "application/json" }

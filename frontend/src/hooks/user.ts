@@ -1,5 +1,6 @@
 import { Preferences } from "@capacitor/preferences";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { SERVER_IP } from "./app";
 
 export async function getToken() {
     const { value } = await Preferences.get({ key: "token" });
@@ -12,7 +13,7 @@ export async function getUser() {
 
     if (!token) return null;
 
-    let user = await fetch(`http://localhost:8080/user`, {
+    let user = await fetch(`${SERVER_IP}/user`, {
         headers: {
             "Authorization": `Bearer ${token}`
         }

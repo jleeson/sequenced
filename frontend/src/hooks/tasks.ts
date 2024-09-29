@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-query";
 import { getSync } from "./settings";
 import { getToken } from "./user";
+import { SERVER_IP } from "./app";
 
 // TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
 export interface Task {
@@ -41,12 +42,10 @@ export async function checkMigration() {
 }
 
 export async function migrateTasks() {
-  await Preferences.set({ key: "sync", value: "true" });
-
   const { value } = await Preferences.get({ key: "tasks" });
   const tasks = JSON.parse(value ?? "[]");
 
-  const migration = await (await fetch("http://localhost:8080/task/migrate", {
+  const migration = await (await fetch(`${SERVER_IP}/task/migrate`, {
     method: "POST",
     body: JSON.stringify(tasks),
     headers: {
@@ -58,6 +57,7 @@ export async function migrateTasks() {
   if (migration.sync)
     console.log("Synced with Cloud");
 
+  await Preferences.set({ key: "sync", value: "true" });
 }
 
 export function useMigrate() {
@@ -101,7 +101,7 @@ export async function loadTasks(): Promise<Task[]> {
   const synced = await getSync();
 
   if (synced) {
-    const tasks = await (await fetch("http://localhost:8080/task", {
+    const tasks = await (await fetch(`${SERVER_IP}/task`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${await getToken()}`

@@ -3,6 +3,8 @@ import { Task } from "./tasks";
 
 export const AppContext = createContext(null);
 
+export const SERVER_IP = `http://localhost:8080`;
+
 // TODO: remove tempActiveDate.
 export interface AppOptions {
   activeDate?: Date;
