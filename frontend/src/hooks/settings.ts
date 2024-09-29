@@ -46,3 +46,23 @@ export function useUpdateSettings(): UseMutationResult<void, Error, Partial<Sett
 
   return useMutation({ mutationFn, onSuccess });
 }
+
+export async function getSync() {
+  const { value } = await Preferences.get({ key: "sync" });
+  return value ?? false;
+}
+
+export async function setSync(syncMode: boolean): Promise<void> {
+  return await Preferences.set({
+    key: "sync",
+    value: new String(syncMode).valueOf(),
+  });
+}
+
+export function useSync() {
+  return useQuery({
+    queryKey: ["sync"],
+    queryFn: getSync,
+    staleTime: Infinity
+  })
+}

@@ -8,6 +8,6 @@ export class User extends Model {
 
     @Prop(String) email: string;
     @Prop({ type: String, select: false, set: (value) => bcrypt.hashSync(value, 10) }) password: string;
-    @Prop([Task]) tasks: Task[];
+    @Prop(Boolean) synced: boolean;
 
 }

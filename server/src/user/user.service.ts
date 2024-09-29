@@ -2,20 +2,21 @@ import { Injectable } from "@outwalk/firefly";
 import { User } from "./user.entity";
 import { BadRequest } from "@outwalk/firefly/errors";
 import { Token } from "@/auth/token.entity";
+import { Task } from "@/task/task.entity";
 
 @Injectable()
 export class UserService {
 
     async getUser(id: string): Promise<User> {
-        return User.findById(id).lean<User>().exec();
+        return User.findById(id).populate<Task>("tasks").lean<User>().exec();
     }
 
     async getUserByEmail(email: string): Promise<User> {
-        return User.findOne({ email }).lean<User>().exec();
+        return User.findOne({ email }).populate<Task>("tasks").lean<User>().exec();
     }
-    
-    async getUserByToken(token: string){
-        return Token.findOne({ token }).populate<User>("user").lean<User>().exec();
+
+    async getUserByToken(token: Token) {
+        return token.user;
     }
 
     async getUserHash(id: string) {
@@ -33,4 +34,9 @@ export class UserService {
         });
     }
 
+    async updateUser(user: User, data: any) {
+        console.log(data);
+        
+        return User.findByIdAndUpdate(user.id, { $set: data }).exec();
+    }
 }

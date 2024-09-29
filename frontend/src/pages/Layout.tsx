@@ -2,14 +2,22 @@
 import { NavBar } from "@/components/navigation/NavBar";
 import TaskInfoMenu from "@/components/task/TaskInfoMenu/TaskInfoMenu";
 import { useUser } from "@/hooks/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import AuthMenu from "./(Settings)/Login/AuthMenu";
+import { useMigrate } from "@/hooks/tasks";
 
 const Layout = () => {
+  const { mutate: migrate } = useMigrate();
+
   const user = useUser();
 
   const [isAdding, setIsAdding] = useState(false);
+
+  useEffect(() => {
+    migrate();
+
+  }, [])
 
   return (
     <>
@@ -21,7 +29,7 @@ const Layout = () => {
       }
       {user.isSuccess && (
         <div>
-          {!user.data?.token && (
+          {!user.data && (
             <div className="w-screen h-screen flex flex-col items-start gap-4">
               <div className="w-full h-1/4 flex justify-center items-end">
                 <span className="text-xl text-blue-400">Sequenced: ADHD Management</span>
@@ -31,7 +39,7 @@ const Layout = () => {
               </div>
             </div>
           )}
-          {user.data?.token && (
+          {user.data && (
             <div>
 
               <div

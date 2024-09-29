@@ -3,15 +3,21 @@ import { Controller, Get, Inject, Post } from "@outwalk/firefly";
 import { Request } from "express";
 import { User } from "./user.entity";
 import { UserService } from "./user.service";
+import { AuthService } from "@/auth/auth.service";
+import { Unauthorized } from "@outwalk/firefly/errors";
 
 @Controller()
 export class UserController {
 
+    @Inject() authService: AuthService;
     @Inject() userService: UserService;
 
     @Get()
     async getUser(req) {
-        const token = req.headers.authorization.split("Bearer ")[1];
+        const token: Token = await this.authService.getTokenFromRequest(req);
+
+        if (!token) return new Unauthorized("You are not authorized");
+
         return this.userService.getUserByToken(token);
     }
 

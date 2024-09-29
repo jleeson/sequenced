@@ -7,6 +7,8 @@ import {
   UseQueryResult,
   UseMutationResult,
 } from "@tanstack/react-query";
+import { getSync } from "./settings";
+import { getToken } from "./user";
 
 // TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
 export interface Task {
@@ -32,15 +34,90 @@ export function createInitialTaskData(): Task {
   };
 }
 
+export async function checkMigration() {
+  const synced = await getSync();
+  if (!synced)
+    await migrateTasks();
+}
+
+export async function migrateTasks() {
+  await Preferences.set({ key: "sync", value: "true" });
+
+  const { value } = await Preferences.get({ key: "tasks" });
+  const tasks = JSON.parse(value ?? "[]");
+
+  const migration = await (await fetch("http://localhost:8080/task/migrate", {
+    method: "POST",
+    body: JSON.stringify(tasks),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${await getToken()}`
+    }
+  })).json();
+
+  if (migration.sync)
+    console.log("Synced with Cloud");
+
+}
+
+export function useMigrate() {
+  return useMutation({
+    mutationFn: checkMigration
+  });
+}
+
 /* Filters out ghost tasks */
 export function filterBroken(tasks: Task[]): Task[] {
   return tasks?.filter((task) => task.id != undefined);
 }
 
+// [
+//   {
+//     "title": "Group",
+//     "description": "Test",
+//     "date": "2024-09-29T01:32:15.949Z",
+//     "done": false,
+//     "repeater": "",
+//     "reminder": "",
+//     "subtasks": [
+//       {
+//         "title": "Test Sub",
+//         "description": "",
+//         "date": "2024-09-29T01:32:30.481Z",
+//         "done": false,
+//         "repeater": "",
+//         "reminder": "",
+//         "subtasks": [],
+//         "id": "BiDGc-1PDrIy9eLbhMjI"
+//       }
+//     ],
+//     "id": "ucWs4qBC9rj5N8xLN8jx",
+//     "type": "group"
+//   }
+// ]
+
 /* Loads task array from Preferences database */
 export async function loadTasks(): Promise<Task[]> {
-  const { value } = await Preferences.get({ key: "tasks" });
-  return JSON.parse(value ?? "[]").filter((task: Task) => task.id);
+  const synced = await getSync();
+
+  if (synced) {
+    const tasks = await (await fetch("http://localhost:8080/task", {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${await getToken()}`
+      }
+    })).json();
+
+    console.log(tasks);
+
+    return tasks;
+  } else {
+    const { value } = await Preferences.get({ key: "tasks" });
+
+    return JSON.parse(value ?? "[]").filter((task: Task) => task.id);
+  }
+
+  return [];
 }
 
 /* Loads tasks and finds the task with given id */

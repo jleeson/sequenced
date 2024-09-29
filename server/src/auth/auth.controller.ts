@@ -19,14 +19,16 @@ export class AuthController {
     @Inject() userService: UserService;
 
     @Post("/login")
-    async loginToSystem({ body, cookies }: Request): Promise<LoginDTO> {
-        const { email, password } = body;
+    async loginToSystem(req: Request): Promise<LoginDTO> {
+        const { email, password } = req.body;
 
         if (!await this.authService.validatePassword(email, password))
             throw new Unauthorized("Wrong Email/Password Combo.");
 
-        const user = await this.userService.getUserByEmail(email);
-        const token = await this.authService.getToken(user);
+        const token = await this.authService.getTokenFromRequest(req);
+        const user = await this.userService.getUserByToken(token);
+
+        if (!token) return new Unauthorized("You are not authorized");
 
         return {
             user: {
@@ -48,7 +50,7 @@ export class AuthController {
             throw new BadRequest("Passwords are not the same");
 
         const user = await this.userService.createUser(email, password);
-        const token = await this.authService.getToken(user);
+        const token = await this.authService.getTokenByUser(user);
 
         return {
             user: {
