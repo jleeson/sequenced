@@ -13,10 +13,10 @@ export class UserController {
     @Inject() userService: UserService;
 
     @Get()
-    async getUser(req) {
-        const token: Token = await this.authService.getTokenFromRequest(req);
+    async getUser({ headers }: Request) {
+        const token: Token = await this.authService.getTokenFromRequest(headers);
 
-        if (!token) return new Unauthorized("You are not authorized");
+        if (!await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
 
         return this.userService.getUserByToken(token);
     }

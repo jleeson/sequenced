@@ -3,8 +3,8 @@ import { Task } from "./tasks";
 
 export const AppContext = createContext(null);
 
-// export const SERVER_IP = `http://localhost:8080`;
-export const SERVER_IP = `https://sequenced.ottegi.com`;
+export const SERVER_IP = `http://localhost:8080`;
+// export const SERVER_IP = `https://sequenced.ottegi.com`;
 
 // TODO: remove tempActiveDate.
 export interface AppOptions {

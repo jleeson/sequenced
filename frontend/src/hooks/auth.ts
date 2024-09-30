@@ -1,7 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { reloadUser } from "./user";
+import { getToken, reloadUser } from "./user";
 import { Preferences } from "@capacitor/preferences";
 import { queryClient } from "..";
+
 import { SERVER_IP } from "./app";
 
 export async function fetchServer({ path, method, options, body, token }) {
@@ -11,6 +12,8 @@ export async function fetchServer({ path, method, options, body, token }) {
 
     if (token)
         headers = Object.assign(headers, { "Authorization": `Bearer ${token}` });
+    else
+        headers = Object.assign(headers, { "Authorization": `Bearer ${await getToken()}` })
 
     const response = await fetch(`${SERVER_IP}${path}`, {
         method: method ?? "GET",

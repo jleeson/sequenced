@@ -22,8 +22,8 @@ export class TaskService {
         return SubTask.insertMany(tasks);
     }
 
-    async updateTask(oldTask: Task, newTask: Task) {
-        return Task.updateOne(oldTask, { $set: newTask }).exec();
+    async updateTask(task: Task) {
+        return Task.findByIdAndUpdate(task.id, { $set: task }).exec();
     }
 
     async getTask(id: string) {
@@ -32,5 +32,10 @@ export class TaskService {
 
     async getTasks(user: User) {
         return Task.find({ users: user.id }).populate("subtasks").lean<Task>().exec();
+    }
+
+    async deleteTask(task: Task) {
+        console.log("task", task);
+        return Task.findByIdAndDelete(task.id).exec();
     }
 }

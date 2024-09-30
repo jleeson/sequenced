@@ -20,11 +20,11 @@ export class AuthService {
         return token;
     }
 
-    async getTokenFromRequest(req) {
-        if (!req.headers.authorization)
+    async getTokenFromRequest(headers) {
+        if (!headers.authorization)
             return null;
 
-        const rawToken = req.headers.authorization.split("Bearer ")[1];
+        const rawToken = headers.authorization.split("Bearer ")[1];
         return this.getTokenData(rawToken);
     }
 

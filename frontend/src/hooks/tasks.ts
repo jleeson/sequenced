@@ -9,7 +9,6 @@ import {
 
 import { getSync } from "./settings";
 import { getToken } from "./user";
-import { SERVER_IP } from "./app";
 import { fetchServer } from "./auth";
 
 // TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
@@ -82,31 +81,6 @@ export function filterBroken(tasks: Task[]): Task[] {
   return tasks?.filter((task) => task.id != undefined);
 }
 
-// [
-//   {
-//     "title": "Group",
-//     "description": "Test",
-//     "date": "2024-09-29T01:32:15.949Z",
-//     "done": false,
-//     "repeater": "",
-//     "reminder": "",
-//     "subtasks": [
-//       {
-//         "title": "Test Sub",
-//         "description": "",
-//         "date": "2024-09-29T01:32:30.481Z",
-//         "done": false,
-//         "repeater": "",
-//         "reminder": "",
-//         "subtasks": [],
-//         "id": "BiDGc-1PDrIy9eLbhMjI"
-//       }
-//     ],
-//     "id": "ucWs4qBC9rj5N8xLN8jx",
-//     "type": "group"
-//   }
-// ]
-
 /* Loads task array from Preferences database */
 export async function loadTasks(): Promise<Task[]> {
   const synced = await getSync();
@@ -117,21 +91,13 @@ export async function loadTasks(): Promise<Task[]> {
       token: await getToken()
     });
 
-    // const tasks = await (await fetch(`${SERVER_IP}/task`, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Authorization": `Bearer ${await getToken()}`
-    //   }
-    // })).json();
-
     console.log("TASKS", tasks);
 
     return tasks;
   } else {
-    migrateTasks();
-    // const { value } = await Preferences.get({ key: "tasks" });
 
-    // return JSON.parse(value ?? "[]").filter((task: Task) => task.id);
+    migrateTasks();
+
   }
 
   return [];
@@ -166,8 +132,15 @@ export function useAddTask(): UseMutationResult<void, Error, Task, unknown> {
   const queryClient = useQueryClient();
 
   const mutationFn = async (task: Task) => {
-    const tasks = [...(await loadTasks()), task];
-    await Preferences.set({ key: "tasks", value: JSON.stringify(tasks) });
+    // await Preferences.set({ key: "tasks", value: JSON.stringify(tasks) });
+    const token = await getToken();
+
+    await fetchServer({
+      path: "/task",
+      method: "POST",
+      body: task,
+      token
+    });
   };
 
   const onSuccess = async () => {
@@ -187,12 +160,11 @@ export function useUpdateTask(): UseMutationResult<
   const queryClient = useQueryClient();
 
   const mutationFn = async ({ id, data }: { id: string; data: Object }) => {
-    const tasks = await loadTasks();
-    const index = tasks.findIndex((task) => task.id == id);
-
-    tasks[index] = data;
-
-    await Preferences.set({ key: "tasks", value: JSON.stringify(tasks) });
+    await fetchServer({
+      path: "/task",
+      method: "PATCH",
+      body: data
+    });
   };
 
   const onSuccess = async () => {
@@ -206,12 +178,12 @@ export function useUpdateTask(): UseMutationResult<
 export function useDeleteTask(): UseMutationResult<void, Error, Task, unknown> {
   const queryClient = useQueryClient();
 
-  const mutationFn = async ({ id }: Task) => {
-    const tasks = await loadTasks();
-    const index = tasks.findIndex((task) => task.id == id);
-    tasks.splice(index, 1);
-
-    await Preferences.set({ key: "tasks", value: JSON.stringify(tasks) });
+  const mutationFn = async (task: Task) => {
+    await fetchServer({
+      path: "/task",
+      method: "DELETE",
+      body: task
+    })
   };
 
   const onSuccess = async () => {
