@@ -259,7 +259,7 @@ export default function TaskInfoMenu({
                   }
                 />
 
-                <TaskInfoMenuSelect
+                {/* <TaskInfoMenuSelect
                   name="Task Type"
                   value={tempData.type}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -269,7 +269,7 @@ export default function TaskInfoMenu({
                     { name: "Standard", value: "" },
                     { name: "Group", value: "group" },
                   ]}
-                />
+                /> */}
 
                 {tempData.type == "group" && (
                   <TaskInfoMenuSubtaskMenu
