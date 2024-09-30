@@ -16,10 +16,10 @@ export default function UserLogin() {
                 <div className="flex flex-col gap-2">
                     <h1 className="text-lg">Sync Status</h1>
                     {
-                        user.data?.token ?
+                        user.data?.id ?
                             (
                                 <div className="flex flex-col gap-2">
-                                    <div>Logged in as {user.data.user.email}</div>
+                                    <div>Logged in as {user.data.email}</div>
                                     <button onClick={async () => {
                                         await signout();
                                         window.location.href = "/";
