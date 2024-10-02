@@ -1,6 +1,6 @@
 import { useToken, useUser } from "@/hooks/user";
 import { useState } from "react";
-import AuthMenu from "./Login/AuthMenu";
+import AuthMenu from "../(Layout)/Login/AuthMenu";
 import { signout } from "@/hooks/auth";
 import { redirect } from "react-router-dom";
 

@@ -7,7 +7,7 @@ import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import { getPending } from "@/utils/notifs";
 import { useApp } from "@/hooks/app";
-import TaskInfoMenu from "@/components/task/TaskInfoMenu/TaskInfoMenu";
+import TaskInfoMenu from "@/pages/(Layout)/TaskInfoMenu";
 
 export default function Task() {
   const [appData, setAppData] = useApp();

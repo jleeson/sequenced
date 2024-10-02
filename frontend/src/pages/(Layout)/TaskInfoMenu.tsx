@@ -1,4 +1,5 @@
 import { useApp } from "@/hooks/app";
+
 import {
   Task,
   createInitialTaskData,
@@ -6,8 +7,10 @@ import {
   useTaskById,
   useUpdateTask,
 } from "@/hooks/tasks";
+
 import { createID } from "@/utils/id";
 import { scheduleNotification } from "@/utils/notifs";
+
 import {
   Description,
   Dialog,
@@ -15,12 +18,14 @@ import {
   DialogTitle,
   Transition,
 } from "@headlessui/react";
+
 import { Dispatch, SetStateAction, useReducer, useRef, useState } from "react";
-import TaskInfoMenuItem from "./TaskInfoMenuItem";
-import TaskInfoMenuSelect from "./TaskInfoMenuSelect";
 import { formatDateTime } from "@/utils/date";
-import { TaskInfoMenuDelete } from "./TaskInfoMenuDelete";
-import TaskInfoMenuSubtaskMenu from "./TaskInfoMenuSubtaskMenu";
+import { TaskInfoMenuDelete } from "./(TaskInfoMenu)/TaskInfoMenuDelete";
+
+import TaskInfoMenuItem from "./(TaskInfoMenu)/TaskInfoMenuItem";
+import TaskInfoMenuSelect from "./(TaskInfoMenu)/TaskInfoMenuSelect";
+import TaskInfoMenuSubtaskMenu from "./(TaskInfoMenu)/TaskInfoMenuSubtaskMenu";
 
 interface TaskInfoMenuSettings {
   type?: string;
