@@ -25,10 +25,10 @@ export async function fetchServer({ path, method, options, body, token }) {
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
 
-    // if (response.status == 401) {
-    //     console.log("NOT AUTHORIZED");
-    //     await Preferences.remove({ key: "token" });
-    // }
+    if (response.status == 401) {
+        console.log("NOT AUTHORIZED");
+        await Preferences.remove({ key: "token" });
+    }
 
     return data;
 }
@@ -39,9 +39,6 @@ export function useLogin() {
             const data = await fetchServer({
                 path: "/auth/login",
                 method: "POST",
-                options: {
-                    headers: { "Content-Type": "application/json" }
-                },
                 body
             });
 
@@ -58,16 +55,19 @@ export function useLogin() {
 export function useRegister() {
     return useMutation({
         mutationFn: async (body: { email: string, password: string, confirm_password: string }) => {
-            const response = await fetch(`${SERVER_IP}/auth/register`, {
+            const data = await fetchServer({
+                path: "/auth/register",
                 method: "POST",
-                body: JSON.stringify(body),
-                headers: { "Content-Type": "application/json" }
+                body
             });
 
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message);
 
-            await Preferences.set({ key: "token", value: data.token.tokens });
+            await Preferences.set({ key: "token", value: data.token.token });
+
+            console.log("DATA", data);
+
+            console.log(`Token set to ${data.token.token}`);
+
             reloadUser();
 
             return data;
