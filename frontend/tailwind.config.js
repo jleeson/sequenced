@@ -7,7 +7,21 @@ export default {
     },
     extend: {
       colors: {
-        "accent-white": "#ffffff",
+        "accent-white": {
+          DEFAULT: "#f0f0f0",
+          "50": "#f8f8f8",
+          "100": "#f0f0f0",
+          "200": "#dcdcdc",
+          "300": "#bdbdbd",
+          "400": "#989898",
+          "500": "#7c7c7c",
+          "600": "#656565",
+          "700": "#525252",
+          "800": "#464646",
+          "900": "#3d3d3d",
+          "950": "#292929",
+        },
+
         "accent-blue": {
           DEFAULT: "#307acf",
           50: "#f0f9fe",
@@ -63,7 +77,7 @@ export default {
           '900': '#7f1d1d',
           '950': '#450a0a',
           DEFAUlT: "#f87171"
-      },
+        },
       },
     },
   },

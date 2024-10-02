@@ -1,22 +1,20 @@
-import home_icon from "@/assets/home.svg";
 import tasks_icon from "@/assets/tasks.svg";
-import add_icon from "@/assets/add.svg";
 import lists_icon from "@/assets/lists.svg";
-import settings_icon from "@/assets/settings.svg";
+
+import AddIcon from "./Icons/AddIcon";
+import HomeIcon from "./Icons/HomeIcon";
+import SettingsIcon from "./Icons/SettingsIcon";
 
 export function NavBar({ setIsAdding }) {
   return (
-    <div className="flex justify-center items-center w-full absolute bottom-0 bg-accent-black-700 nav-pad">
+    <div className="flex justify-center items-center w-full absolute bottom-0 nav-pad shadow-inner bg-accent-black-900">
       <div className="w-full h-16 flex flex-row justify-evenly items-center rounded-t-md md:container">
         <div className="flex flex-row grow justify-evenly">
           <a href="/">
             <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg hover:bg-accent-blue-800">
-              <img
-                src={home_icon}
-                className="invert w-full h-full"
-                width="32"
-                height="32"
-              />
+              <div className="flex justify-center items-center w-full h-full p-1">
+                <HomeIcon />
+              </div>
             </div>
           </a>
           {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
@@ -34,13 +32,8 @@ export function NavBar({ setIsAdding }) {
               onClick={() => setIsAdding(true)}
               className="flex text-center justify-center items-center w-12 h-12 text-3xl rounded-full text-white"
             >
-              <div className="flex justify-center items-center w-full h-full">
-                <img
-                  src={add_icon}
-                  className="invert w-full h-full"
-                  width="32"
-                  height="32"
-                />
+              <div className="flex justify-center items-center w-full h-full p-1">
+                <AddIcon />
               </div>
             </button>
           </div>
@@ -57,9 +50,9 @@ export function NavBar({ setIsAdding }) {
           <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg hover:bg-accent-blue-800">
             <a
               href="/settings"
-              className="invert w-full h-full flex items-center justify-center"
+              className="w-full h-full flex items-center justify-center p-1"
             >
-              <img src={settings_icon} width="32" height="32" />
+              <SettingsIcon />
             </a>
           </div>
         </div>
