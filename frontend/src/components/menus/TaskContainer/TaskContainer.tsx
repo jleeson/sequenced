@@ -13,15 +13,16 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { Disclosure, Menu } from "@headlessui/react";
 import TaskMenuItem from "./TaskMenuItem";
 import { matchDate } from "@/utils/date";
-import { isTaskDone } from "@/utils/data";
+import { isTaskDone, sortByDate } from "@/utils/data";
 import { Task } from "@/hooks/tasks";
 import { useUpdateSettings, useSettings } from "@/hooks/settings";
 import { useApp, useAppReducer } from "@/hooks/app";
+import { UseQueryResult } from "@tanstack/react-query";
 
 interface ContainerSettings {
   identifier: string;
   title: string;
-  tasks: Task[];
+  tasks: UseQueryResult<Task>;
 }
 
 export default function TaskContainer({
@@ -36,7 +37,14 @@ export default function TaskContainer({
   const { mutate: setSettings } = useUpdateSettings();
   const settings = useSettings();
 
-  const baseTasks = tasks;
+
+  let baseTasks = [];
+
+  if (tasks.isSuccess)
+    baseTasks = sortByDate(tasks.data);
+
+  console.log(`[INFO] TASKS: `, baseTasks);
+
 
   const handleClick = async (open: boolean) => {
     let groupsActive = settings.data?.groupsActive;
@@ -52,17 +60,14 @@ export default function TaskContainer({
     setSettings({ groupsActive });
   };
 
-  tasks = tasks.map((task) => {
+  baseTasks = baseTasks.map((task) => {
     if (typeof task.done == "undefined") task.done = false;
 
     return task;
   });
 
-  let taskDisplay = tasks;
-
-  if (taskFilter == "all") taskDisplay = tasks;
-  else if (taskFilter == "incomplete")
-    taskDisplay = tasks.filter((task) => isTaskDone(task, appData.activeDate));
+  if (taskFilter == "incomplete")
+    baseTasks = baseTasks.filter((task) => isTaskDone(task, appData.activeDate));
 
   return (
     <div className="group flex flex-col items-center w-[90%] my-2">
@@ -87,9 +92,9 @@ export default function TaskContainer({
                     />
                     <div className="flex flex-row gap-2">
                       <h1 className="text-xl">{title}</h1>
-                      {tasks.filter((task) => !task.done).length > 0 && (
+                      {baseTasks.filter((task) => !task.done).length > 0 && (
                         <h1 className="text-xl text-accent-black-400">
-                          ({tasks.filter((task) => !task.done).length}/
+                          ({baseTasks.filter((task) => !task.done).length}/
                           {baseTasks.length})
                         </h1>
                       )}
@@ -128,7 +133,7 @@ export default function TaskContainer({
               <Disclosure.Panel className="w-full h-full">
                 {/* {!settings.data.groupsActive?.includes(identifier) && ( */}
                 <TaskMenu
-                  tasks={taskDisplay}
+                  tasks={baseTasks}
                   setIsInspecting={setIsInspecting}
                   taskFilter={taskFilter}
                 />

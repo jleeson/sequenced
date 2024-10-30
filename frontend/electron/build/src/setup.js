@@ -196,8 +196,8 @@ function setupContentSecurityPolicy(customScheme) {
         callback({
             responseHeaders: Object.assign(Object.assign({}, details.responseHeaders), { 'Content-Security-Policy': [
                     electron_is_dev_1.default
-                        ? `default-src ${customScheme}://* 'unsafe-inline' devtools://* 'unsafe-eval' data:`
-                        : `default-src ${customScheme}://* 'unsafe-inline' data:`,
+                        ? `default-src ${customScheme}://* 'unsafe-inline' https://sequenced.ottegi.com devtools://* 'unsafe-eval' data:`
+                        : `default-src ${customScheme}://* 'unsafe-inline' https://sequenced.ottegi.com data:`,
                 ] }),
         });
     });

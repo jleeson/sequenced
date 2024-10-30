@@ -24,41 +24,40 @@ export default function Task() {
     })();
   }, []);
 
+  if (tasks.isError)
+    console.log(`[ERROR] ${tasks.error}`);
+
   return (
     <div className="w-full h-full bg-accent-black text-accent-white">
-      {tasks.isLoading && <span>Loading...</span>}
-      {tasks.isError && <span>{tasks.error.message}</span>}
-      {tasks.isSuccess && (
-        <div className="pb-12">
-          <div className="flex flex-col items-center gap-2">
-            <ActiveCalendar
-              appData={appData}
-              setAppData={setAppData}
-              // TODO: remove this need
-              setActiveDate={setActiveDate}
-            />
-            <DayTasks
-              setIsInspecting={setIsInspecting}
-              day={appData.activeDate}
-              tasks={sortByDate(tasks.data)}
-            />
-            <TaskContainer
-              identifier="all"
-              setIsInspecting={setIsInspecting}
-              title="All Tasks"
-              tasks={sortByDate(tasks.data)}
-              activeFilter="dailyTasks"
-            />
-          </div>
-          <div>
-            <TaskInfoMenu
-              type="edit"
-              isOpen={isInspecting}
-              setIsOpen={setIsInspecting}
-            />
-          </div>
+      <div className="pb-12">
+        <div className="flex flex-col items-center gap-2">
+          <ActiveCalendar
+            appData={appData}
+            setAppData={setAppData}
+            // TODO: remove this need
+            setActiveDate={setActiveDate}
+          />
+          <DayTasks
+            setIsInspecting={setIsInspecting}
+            day={appData.activeDate}
+            tasks={tasks}
+          />
+          <TaskContainer
+            identifier="all"
+            setIsInspecting={setIsInspecting}
+            title="All Tasks"
+            tasks={tasks}
+            activeFilter="dailyTasks"
+          />
         </div>
-      )}
+        <div>
+          <TaskInfoMenu
+            type="edit"
+            isOpen={isInspecting}
+            setIsOpen={setIsInspecting}
+          />
+        </div>
+      </div>
     </div>
   );
 }

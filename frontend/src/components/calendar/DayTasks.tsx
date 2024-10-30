@@ -1,9 +1,14 @@
 import { getNameByDate, matchDate } from "@/utils/date";
 import TaskContainer from "../menus/TaskContainer/TaskContainer";
-import { isDateWithinProximity } from "@/utils/data";
+import { isDateWithinProximity, sortByDate } from "@/utils/data";
 
 export default function DayTasks({ day, tasks, setIsInspecting }) {
   const getDayTasks = () => {
+    if (!tasks.isSuccess)
+      return [];
+
+    tasks = sortByDate(tasks.data);
+
     const dayTasks = [];
 
     for (let task of tasks) {

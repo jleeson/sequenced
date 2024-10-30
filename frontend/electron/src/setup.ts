@@ -224,8 +224,8 @@ export function setupContentSecurityPolicy(customScheme: string): void {
         ...details.responseHeaders,
         'Content-Security-Policy': [
           electronIsDev
-            ? `default-src ${customScheme}://* 'unsafe-inline' devtools://* 'unsafe-eval' data:`
-            : `default-src ${customScheme}://* 'unsafe-inline' data:`,
+            ? `default-src ${customScheme}://* 'unsafe-inline' https://sequenced.ottegi.com devtools://* 'unsafe-eval' data:`
+            : `default-src ${customScheme}://* 'unsafe-inline' https://sequenced.ottegi.com data:`,
         ],
       },
     });
