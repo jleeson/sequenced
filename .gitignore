@@ -247,3 +247,4 @@ xcuserdata/
 #tm_build_errors
 
 .vscode/
+.env

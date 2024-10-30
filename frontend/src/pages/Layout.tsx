@@ -12,6 +12,7 @@ const Layout = () => {
   const [isAdding, setIsAdding] = useState(false);
 
   return (
+    // TODO: Migrate to have user as context for dynamic loading
     <div>
       <div id="absolute adder">
         <NavBar setIsAdding={setIsAdding} />

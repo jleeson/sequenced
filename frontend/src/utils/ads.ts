@@ -10,10 +10,9 @@ import {
 
 import { Capacitor } from "@capacitor/core";
 
-// TODO: Change to env vars
 const adID = {
-  ios: "ca-app-pub-8077676966001385/4881999812",
-  android: "ca-app-pub-8077676966001385/3426637289",
+  ios: import.meta.env.VITE_IOS_AD_ID,
+  android: import.meta.env.VITE_ANDROID_AD_ID,
 };
 
 /* Initializes the AdMob systems */
