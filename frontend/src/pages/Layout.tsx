@@ -17,22 +17,13 @@ const Layout = () => {
       <div id="absolute adder">
         <NavBar setIsAdding={setIsAdding} />
         <div>
-          {
-            user.isLoading && <span className="text-white text-xl">Loading User Data...</span>
-          }
-          {
-            user.isError && <span className="text-white text-xl">Error: {user.error.message}</span>
-          }
-          {user.isSuccess && (
-            <div>
-              {(!user.data || (user.data?.statusCode == 401)) && (
-                <AuthContainer />
-              )}
-              {user.data && (user.data?.statusCode != 401) && (
-                <DataContainer />
-              )}
-            </div>
-          )}
+
+          <div>
+            <AuthContainer />
+            {user.data && (user.data?.statusCode != 401) && (
+              <DataContainer />
+            )}
+          </div>
         </div>
         <TaskInfoMenu type="add" isOpen={isAdding} setIsOpen={setIsAdding} />
       </div>

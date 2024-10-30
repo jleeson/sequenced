@@ -7,18 +7,18 @@ import { Task } from "@/task/task.entity";
 @Injectable()
 export class UserService {
 
-    async getUser(id: string): Promise<User> {
-        if (!id) return null;
+    async getUser(id: string): Promise<User | Partial<User>> {
+        if (!id) return {};
         return User.findById(id).lean<User>().exec();
     }
 
-    async getUserByEmail(email: string): Promise<User> {
-        if (!email) return null;
+    async getUserByEmail(email: string): Promise<User | Partial<User>> {
+        if (!email) return {};
         return User.findOne({ email }).lean<User>().exec();
     }
 
-    async getUserByToken(token: Token) {
-        if (!token) return null;
+    async getUserByToken(token: Token): Promise<User | Partial<User>> {
+        if (!token) return {};
         return token.user;
     }
 
