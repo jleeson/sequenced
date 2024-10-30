@@ -38,13 +38,7 @@ export default function TaskContainer({
   const settings = useSettings();
 
 
-  let baseTasks = [];
-
-  if (tasks.isSuccess)
-    baseTasks = sortByDate(tasks.data);
-
-  console.log(`[INFO] TASKS: `, baseTasks);
-
+  let baseTasks = tasks?.isSuccess ? sortByDate(tasks?.data) : [];
 
   const handleClick = async (open: boolean) => {
     let groupsActive = settings.data?.groupsActive;
@@ -60,17 +54,21 @@ export default function TaskContainer({
     setSettings({ groupsActive });
   };
 
+  // TODO: Fix this bandaid
   baseTasks = baseTasks.map((task) => {
     if (typeof task.done == "undefined") task.done = false;
 
     return task;
   });
 
-  if (taskFilter == "incomplete")
+  // TODO: Migrate to query fetch
+  if (taskFilter == "incomplete") {
     baseTasks = baseTasks.filter((task) => isTaskDone(task, appData.activeDate));
+  }
 
   return (
     <div className="group flex flex-col items-center w-[90%] my-2">
+      {/* Migrate to dynamic loading content */}
       {settings.isLoading && <span>Loading...</span>}
       {settings.isError && <span>Error: {settings.error.message}</span>}
       {settings.isSuccess && (
