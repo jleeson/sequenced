@@ -16,7 +16,6 @@ const Layout = () => {
       <div id="absolute adder">
         <NavBar setIsAdding={setIsAdding} />
         <div>
-
           <div>
             <AuthContainer />
             <DataContainer />
