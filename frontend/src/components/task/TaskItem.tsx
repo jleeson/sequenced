@@ -115,72 +115,75 @@ export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
 
   return (
     <div
-      className={`${
-        taskFilter == "all" || (taskFilter == "incomplete" && !item.done)
-          ? "flex"
-          : "hidden"
-      } w-full flex-col gap-2`}
+      className={`${taskFilter == "all" || (taskFilter == "incomplete" && !item.done)
+        ? "flex"
+        : "hidden"
+        } w-full flex-col gap-2`}
     >
       <TaskItemShell
         task={item}
         activeDate={appData.activeDate}
         onClick={(e) => handleInteractive(e)}
       >
-        <div className="w-full h-full flex flex-row justify-between gap-1">
-          <div className="w-1/2 flex flex-row items-center">
-            <TaskItemCheckBox
-              checked={!isTaskDone(item, appData.activeDate)}
-              onChange={handleMarkComplete}
-              onClick={(e) => e.stopPropagation()}
-            />
-            <TaskItemTitle text={item.title} />
-          </div>
-          <div className="w-1/2 flex flex-row flex-end items-center justify-end gap-1">
-            <div className="w-full h-full flex items-center justify-evenly">
-              <TaskItemDate task={item} />
-            </div>
-          </div>
-          {item.type == "group" && item.subtasks?.length > 0 && (
-            <div>
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const newValue = !isAccordion;
+        <div className="w-full h-full flex flex-row items-center">
+          <TaskItemCheckBox
+            checked={!isTaskDone(item, appData.activeDate)}
+            onChange={handleMarkComplete}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <div className="w-full">
+            <div className="w-full flex flex-row items-center justify-between">
+              <TaskItemTitle text={item.title} />
+              {item.type == "group" && item.subtasks?.length > 0 && (
+                <div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const newValue = !isAccordion;
 
-                  setAccordion(newValue);
-                  updateTask({
-                    id: item.id,
-                    data: {
-                      ...item,
-                      accordion: newValue,
-                    },
-                  });
-                }}
-              >
-                {!isAccordion && <ChevronDownIcon width="32" />}
-                {isAccordion && <ChevronUpIcon width="32" />}
+                      setAccordion(newValue);
+                      updateTask({
+                        id: item.id,
+                        data: {
+                          ...item,
+                          accordion: newValue,
+                        },
+                      });
+                    }}
+                  >
+                    {!isAccordion && <ChevronDownIcon width="32" />}
+                    {isAccordion && <ChevronUpIcon width="32" />}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="w-fit flex flex-row flex-end items-center justify-start px-3">
+              <div className="w-full h-full flex items-center justify-evenly">
+                <TaskItemDate task={item} />
               </div>
             </div>
-          )}
+          </div>
         </div>
       </TaskItemShell>
-      <div className="flex flex-col gap-1">
-        {item.type == "group" &&
-          !isAccordion &&
-          item.subtasks?.map((subtask: Task, key: number) => (
-            <div
-              className="w-full px-2 flex flex-row justify-center items-center"
-              key={key}
-            >
-              <TaskItem
-                taskFilter={taskFilter}
-                type="subtask"
-                parent={item}
-                item={subtask}
-                setIsInspecting={setIsInspecting}
-              />
-            </div>
-          ))}
+      <div className="w-full flex justify-end">
+        <div className="w-full pl-10 flex flex-col justify-end gap-1">
+          {item.type == "group" &&
+            !isAccordion &&
+            item.subtasks?.map((subtask: Task, key: number) => (
+              <div
+                className="w-full flex flex-row justify-center items-center"
+                key={key}
+              >
+                <TaskItem
+                  taskFilter={taskFilter}
+                  type="subtask"
+                  parent={item}
+                  item={subtask}
+                  setIsInspecting={setIsInspecting}
+                />
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );

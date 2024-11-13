@@ -7,11 +7,11 @@ import SettingsIcon from "./Icons/SettingsIcon";
 
 export function NavBar({ setIsAdding }) {
   return (
-    <div className="flex justify-center items-center w-full absolute bottom-0 nav-pad shadow-inner bg-accent-black-900">
+    <div className="flex justify-center items-center w-full absolute bottom-0 nav-pad bg-white">
       <div className="w-full h-16 flex flex-row justify-evenly items-center rounded-t-md md:container">
         <div className="flex flex-row grow justify-evenly">
           <a href="/">
-            <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg hover:bg-accent-blue-800">
+            <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-500 rounded-lg hover:bg-accent-blue-800">
               <div className="flex justify-center items-center w-full h-full p-1">
                 <HomeIcon />
               </div>
@@ -27,7 +27,7 @@ export function NavBar({ setIsAdding }) {
           </div> */}
         </div>
         <div className="flex justify-center items-center">
-          <div className="flex justify-center items-center w-12 h-12 bg-accent-blue-700 rounded-lg hover:bg-accent-blue-800">
+          <div className="flex justify-center items-center w-12 h-12 bg-accent-blue-500 rounded-lg hover:bg-accent-blue-800">
             <button
               onClick={() => setIsAdding(true)}
               className="flex text-center justify-center items-center w-12 h-12 text-3xl rounded-full text-white"
@@ -39,7 +39,7 @@ export function NavBar({ setIsAdding }) {
           </div>
         </div>
         <div className="flex flex-row grow justify-evenly">
-          {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
+          {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-500 rounded-lg">
           <img
             src={lists_icon}
             className="invert w-full h-full"
@@ -47,7 +47,7 @@ export function NavBar({ setIsAdding }) {
             height="32"
           />
         </div> */}
-          <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg hover:bg-accent-blue-800">
+          <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-500 rounded-lg hover:bg-accent-blue-800">
             <a
               href="/settings"
               className="w-full h-full flex items-center justify-center p-1"

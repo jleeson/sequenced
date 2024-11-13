@@ -10,10 +10,10 @@ export default function DataContainer() {
                 <div className="flex flex-row justify-center items-center w-full">
                     <div className="my-1"></div>
                 </div>
-                <div className="flex flex-col justify-center items-center bg-accent-black text-accent-white w-full h-full overflow-y-scroll">
+                <div className="flex flex-col justify-center items-center w-full h-full overflow-y-scroll">
                     <div
                         id="unit-container"
-                        className="flex flex-col justify-center items-center bg-accent-black text-accent-white w-full h-full overflow-y-scroll"
+                        className="flex flex-col justify-center items-center w-full h-full overflow-y-scroll"
                     >
                         <Outlet />
                     </div>

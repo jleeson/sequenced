@@ -18,7 +18,7 @@ export default function TaskInfoMenuItem({
       id={name.toLowerCase()}
       name={name.toLowerCase()}
       type={type}
-      className="text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll hover:bg-accent-black-600"
+      className="text-base px-2 py-2 bg-white border border-accent-black-500 rounded-md text-black overflow-x-hidden overflow-y-scroll hover:bg-accent-white-100"
       placeholder={`${name}...`}
       value={value as any}
       onChange={onChange}
@@ -31,7 +31,7 @@ export default function TaskInfoMenuItem({
       <textarea
         id={name.toLowerCase()}
         name={name.toLowerCase()}
-        className="resize-none text-base px-2 py-2 bg-accent-black-500 border border-accent-white rounded-md text-accent-white overflow-x-hidden overflow-y-scroll hover:bg-accent-black-600"
+        className="resize-none text-base px-2 py-2 bg-white border border-accent-black-500 rounded-md text-black overflow-x-hidden overflow-y-scroll hover:bg-accent-white-100"
         placeholder={`${name}...`}
         value={value as any}
         onChange={onChange}

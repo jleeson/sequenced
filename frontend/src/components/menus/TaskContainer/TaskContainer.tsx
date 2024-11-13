@@ -80,7 +80,7 @@ export default function TaskContainer({
               <Disclosure.Button
                 onClick={async () => await handleClick(open)}
                 as="div"
-                className="w-full flex flex-row items-center bg-transparent border border-accent-white rounded-lg px-2  hover:bg-accent-black-900 [&:has(.task-container-accordian:hover)]:bg-transparent"
+                className="w-full flex flex-row items-center border bg-accent-blue-500 text-accent-white border-accent-blue-500 rounded-lg px-2  hover:bg-accent-blue-600 [&:has(.task-container-accordian:hover)]:bg-accent-blue-500"
               >
                 <div className="w-full flex flex-row justify-between">
                   <div className="flex flex-row items-center py-1">
@@ -91,7 +91,7 @@ export default function TaskContainer({
                     <div className="flex flex-row gap-2">
                       <h1 className="text-xl">{title}</h1>
                       {baseTasks.filter((task) => !task.done).length > 0 && (
-                        <h1 className="text-xl text-accent-black-400">
+                        <h1 className="text-xl text-accent-white">
                           ({baseTasks.filter((task) => !task.done).length}/
                           {baseTasks.length})
                         </h1>

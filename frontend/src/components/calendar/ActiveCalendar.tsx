@@ -76,7 +76,7 @@ export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
     <div className="w-full h-full px-2">
       <div className="w-full flex justify-center my-3">
         <div className="flex flex-row w-[90%] justify-center">
-          <div className="flex justify-center w-full py-1 border border-accent-white rounded-lg hover:bg-accent-black-900">
+          <div className="flex justify-center w-full py-1 border bg-accent-blue-500 shadow-lg rounded-lg hover:bg-accent-blue-600">
             <input
               type="date"
               value={formatDate(activeDate)}
