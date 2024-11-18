@@ -9,5 +9,8 @@
     "frontend",
     "backend",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@types/express": "^5.0.0"
+  }
 }
