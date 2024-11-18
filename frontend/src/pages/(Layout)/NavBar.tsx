@@ -4,19 +4,25 @@ import lists_icon from "@/assets/lists.svg";
 import AddIcon from "./Icons/AddIcon";
 import HomeIcon from "./Icons/HomeIcon";
 import SettingsIcon from "./Icons/SettingsIcon";
+import { useState } from "react";
+import TaskInfoMenu from "./TaskInfoMenu";
+import { Link } from "react-router-dom";
 
-export function NavBar({ setIsAdding }) {
+export function NavBar() {
+  const [isAdding, setIsAdding] = useState(false);
+
   return (
     <div className="flex justify-center items-center w-full absolute bottom-0 nav-pad bg-white">
       <div className="w-full h-16 flex flex-row justify-evenly items-center rounded-t-md md:container">
         <div className="flex flex-row grow justify-evenly">
-          <a href="/">
+          <Link to="/">
             <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-500 rounded-lg hover:bg-accent-blue-800">
               <div className="flex justify-center items-center w-full h-full p-1">
                 <HomeIcon />
               </div>
             </div>
-          </a>
+          </Link>
+
           {/* <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-700 rounded-lg">
             <a
               href="/"
@@ -48,15 +54,15 @@ export function NavBar({ setIsAdding }) {
           />
         </div> */}
           <div className="flex items-center justify-center w-12 h-12 bg-accent-blue-500 rounded-lg hover:bg-accent-blue-800">
-            <a
-              href="/settings"
+            <Link to="/settings"
               className="w-full h-full flex items-center justify-center p-1"
             >
               <SettingsIcon />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
+      <TaskInfoMenu type="add" isOpen={isAdding} setIsOpen={setIsAdding} />
     </div>
   );
 }

@@ -9,19 +9,16 @@ import DataContainer from "./(Layout)/DataContainer";
 const Layout = () => {
   const user = useUser();
 
-  const [isAdding, setIsAdding] = useState(false);
-
   return (
     <div>
       <div id="absolute adder">
-        <NavBar setIsAdding={setIsAdding} />
+        <NavBar />
         <div>
           <div>
             <AuthContainer />
             <DataContainer />
           </div>
         </div>
-        <TaskInfoMenu type="add" isOpen={isAdding} setIsOpen={setIsAdding} />
       </div>
     </div>
   );
