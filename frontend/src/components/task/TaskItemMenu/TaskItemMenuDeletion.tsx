@@ -22,7 +22,7 @@ export default function TaskItemMenuDeletion({
       className="relative z-50"
     >
       <div className="fixed inset-0 flex w-screen items-center justify-center">
-        <Dialog.Panel className="w-3/4 flex flex-col gap-2 p-6 bg-accent-black-600 text-accent-white shadow-lg rounded-lg items-center">
+        <Dialog.Panel className="w-3/4 flex flex-col gap-2 p-6 text-black border border-solid shadow-lg rounded-lg items-center">
           <Dialog.Title className="text-xl">
             Delete Task
           </Dialog.Title>

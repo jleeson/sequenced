@@ -6,7 +6,7 @@ import DayTasks from "../components/calendar/DayTasks";
 import ActiveCalendar from "../components/calendar/ActiveCalendar";
 import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import { getPending } from "@/utils/notifs";
-import { useApp } from "@/hooks/app";
+import { SERVER_IP, useApp } from "@/hooks/app";
 import TaskInfoMenu from "@/pages/(Layout)/TaskInfoMenu";
 
 export default function Task() {
@@ -31,6 +31,7 @@ export default function Task() {
     <div className="w-full h-full bg-white text-accent-black">
       <div className="pb-12">
         <div className="flex flex-col items-center gap-2">
+          <h1 className="p-2">{SERVER_IP}</h1>
           <ActiveCalendar
             appData={appData}
             setAppData={setAppData}
