@@ -2,44 +2,47 @@ import { useLogin, useRegister } from "@/hooks/auth";
 import { useState } from "react";
 
 export default function AuthMenu() {
-    const { mutate: login } = useLogin();
-    const { mutate: register } = useRegister();
+    const { mutateAsync: login } = useLogin();
+    const { mutateAsync: register } = useRegister();
 
     const [mode, setMode] = useState(0);
+    const [statusText, setStatus] = useState("");
 
-    const registerUser = (e) => {
+    const registerUser = async (e) => {
         e.preventDefault();
 
-        register({ email: e.target[0].value, password: e.target[1].value, confirm_password: e.target[2].value });
+        await register({ email: e.target[0].value, password: e.target[1].value, confirm_password: e.target[2].value });
         setTimeout(() => {
             window.location.href = "/";
         }, 1000);
     }
 
-    const loginUser = (e) => {
+    const loginUser = async (e) => {
         e.preventDefault();
 
         const email = e.target[0].value;
         const password = e.target[1].value;
 
-        login({ email, password });
-        setTimeout(() => {
-            window.location.href = "/";
-        }, 1000);
+        const message = await login({ email, password });
+        setStatus(message);
+        // setTimeout(() => {
+        //     window.location.href = "/";
+        // }, 1000);
     }
 
     return (
         <div className="w-full h-full flex flex-col items-center gap-4 bg-white text-accent-black">
+            <span className="text-base text-red-500">{statusText}</span>
             <div className="flex">
                 {mode == 0 && <span className="text-xl">Login</span>}
                 {mode == 1 && <span className="text-xl">Register</span>}
             </div>
-            <form className="w-3/4 flex flex-col gap-4 shadow-2xl border border-solid px-6 py-6 rounded-md" onSubmit={(...args) => {
+            <form className="w-3/4 flex flex-col gap-4 shadow-2xl border border-solid px-6 py-6 rounded-md" onSubmit={async (...args) => {
                 if (mode == 0)
-                    loginUser(...args);
+                    await loginUser(...args);
 
                 if (mode == 1)
-                    registerUser(...args);
+                    await registerUser(...args);
             }}>
                 <div className="h-20 flex flex-col gap-2">
                     <label className="text-lg" htmlFor="email">Email</label>

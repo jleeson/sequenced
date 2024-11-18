@@ -5,7 +5,7 @@ import { queryClient } from "..";
 
 import { SERVER_IP } from "./app";
 
-export async function fetchServer({ path, method, options, body, token }) {
+export async function fetchServer({ path, method, options, body, token, full }) {
     let headers = {
         "Content-Type": "application/json",
     }
@@ -24,7 +24,14 @@ export async function fetchServer({ path, method, options, body, token }) {
 
     const data = await response.json();
 
-    if (!response.ok) throw new Error(data.message);
+    if (!response.ok) {
+        if (full) {
+            console.log(`[ERROR] ${data.message}`);
+            return { type: "ERROR", message: data.message };
+        }
+
+        throw new Error(data.message);
+    }
 
     if (response.status == 401) {
         console.log("NOT AUTHORIZED");
@@ -40,8 +47,13 @@ export function useLogin() {
             const data = await fetchServer({
                 path: "/auth/login",
                 method: "POST",
-                body
+                body,
+                full: true
             });
+
+            if (data.type == "ERROR") {
+                return data.message;
+            }
 
             console.log(`Token set to ${data.token.token}`);
 

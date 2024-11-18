@@ -35,6 +35,7 @@ export class AuthController {
         const { email, password } = req.body;
 
         const validation = await this.authService.validatePassword(email, password);
+
         if (validation) {
             const user = await this.userService.getUserByEmail(email);
             const token = await this.authService.getTokenByUser(user);
@@ -50,6 +51,8 @@ export class AuthController {
                     expiresAt: token.expiresAt
                 }
             };
+        } else {
+            throw new Unauthorized("Incorrect Email/Password Combo.");
         }
     }
 
