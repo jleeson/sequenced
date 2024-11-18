@@ -31,7 +31,6 @@ export default function Task() {
     <div className="w-full h-full bg-white text-accent-black">
       <div className="pb-12">
         <div className="flex flex-col items-center gap-2">
-          <h1 className="p-2">{SERVER_IP}</h1>
           <ActiveCalendar
             appData={appData}
             setAppData={setAppData}
