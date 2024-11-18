@@ -92,8 +92,17 @@ export class TaskController {
                     dbSubtasks.push((await this.taskService.addSubtasks(task.subtasks))[0]);
                 }
 
+                let done = task.done;
+
+                if(task.done != null)
+                    if(typeof task.done != "boolean")
+                        done = true;
+                    else
+                        done = task.done;
+
                 task = {
                     ...task,
+                    done,
                     users: [user.id],
                     subtasks: dbSubtasks
                 };
