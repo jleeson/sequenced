@@ -43,12 +43,10 @@ export function useUser() {
     });
 }
 
-export function reloadUser() {
-    const queryClient = useQueryClient();
+export function reloadUser(queryClient) {
     queryClient.invalidateQueries({ queryKey: ["user"] });
 }
 
-export function reloadToken() {
-    const queryClient = useQueryClient();
+export function reloadToken(queryClient) {
     queryClient.invalidateQueries({ queryKey: ["token"] });
 }

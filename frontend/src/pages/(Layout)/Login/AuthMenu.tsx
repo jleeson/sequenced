@@ -1,9 +1,12 @@
 import { useLogin, useRegister } from "@/hooks/auth";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthMenu() {
     const { mutateAsync: login } = useLogin();
     const { mutateAsync: register } = useRegister();
+
+    const navigate = useNavigate();
 
     const [mode, setMode] = useState(0);
     const [statusText, setStatus] = useState("");
@@ -11,10 +14,13 @@ export default function AuthMenu() {
     const registerUser = async (e) => {
         e.preventDefault();
 
-        await register({ email: e.target[0].value, password: e.target[1].value, confirm_password: e.target[2].value });
-        setTimeout(() => {
-            window.location.href = "/";
-        }, 1000);
+        const message = await register({ email: e.target[0].value, password: e.target[1].value, confirm_password: e.target[2].value });
+
+        if (typeof message == "string")
+            setStatus(message);
+
+        if (!message)
+            navigate(0);
     }
 
     const loginUser = async (e) => {
@@ -24,10 +30,12 @@ export default function AuthMenu() {
         const password = e.target[1].value;
 
         const message = await login({ email, password });
-        setStatus(message);
-        // setTimeout(() => {
-        //     window.location.href = "/";
-        // }, 1000);
+
+        if (typeof message == "string")
+            setStatus(message);
+
+        if (!message)
+            navigate(0);
     }
 
     return (

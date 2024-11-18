@@ -58,7 +58,8 @@ export function useLogin() {
             console.log(`Token set to ${data.token.token}`);
 
             await Preferences.set({ key: "token", value: data.token.token });
-            reloadUser();
+            
+            reloadUser(queryClient);
 
             return data;
         }
@@ -71,17 +72,19 @@ export function useRegister() {
             const data = await fetchServer({
                 path: "/auth/register",
                 method: "POST",
-                body
+                body,
+                full: true
             });
 
+            if (data.type == "ERROR") {
+                return data.message;
+            }
 
             await Preferences.set({ key: "token", value: data.token.token });
 
-            console.log("DATA", data);
-
             console.log(`Token set to ${data.token.token}`);
 
-            reloadUser();
+            reloadUser(queryClient);
 
             return data;
         }
