@@ -33,10 +33,10 @@ export class TaskController {
         const token: Token = await this.authService.getTokenFromRequest(headers);
         const user: User = await this.userService.getUserByToken(token);
 
-        if (!await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
+        if (!user || !await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
 
         const task: Task = {
-            ...body,
+            ...(body as any),
             users: [user]
         };
 

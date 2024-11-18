@@ -4,7 +4,7 @@ import { Controller, Get } from "@outwalk/firefly";
 export class AppController {
 
     @Get()
-    getHelloWorld(): string {
-        return "Hello World!";
+    getHelloWorld(request, response): void {
+        response.redirect("https://www.ottegi.com/sequenced");
     }
 }
