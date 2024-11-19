@@ -29,7 +29,7 @@ export default function Task() {
 
   return (
     <div className="w-full h-full bg-white text-accent-black">
-      <div className="pb-12">
+      <div className="h-full pb-12">
         <div className="flex flex-col items-center gap-2">
           <ActiveCalendar
             appData={appData}

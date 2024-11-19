@@ -108,8 +108,8 @@ export default function TaskContainer({
                           />
                         </div>
                       </Menu.Button>
-                      <div className="group/filter relative inset-0 z-50">
-                        <Menu.Items className="flex flex-col absolute right-4 top-4 gap-2 bg-black border border-accent-white rounded-lg py-4 px-4">
+                      <div className="group/filter relative inset-0 z-20">
+                        <Menu.Items className="flex flex-col absolute right-4 top-4 gap-2 bg-white border border-solid shadow-md rounded-lg py-4 px-4 z-30">
                           <TaskMenuItem
                             active={taskFilter == "all"}
                             handleClick={() => setTaskFilter("all")}
