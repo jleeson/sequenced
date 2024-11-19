@@ -39,7 +39,7 @@ export default function Task() {
           />
           <DayTasks
             setIsInspecting={setIsInspecting}
-            day={appData.activeDate}
+            day={activeDate}
             tasks={tasks}
           />
           <TaskContainer

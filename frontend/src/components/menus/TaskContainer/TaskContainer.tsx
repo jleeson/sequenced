@@ -37,8 +37,14 @@ export default function TaskContainer({
   const { mutate: setSettings } = useUpdateSettings();
   const settings = useSettings();
 
+  let baseTasks: Task[];
 
-  let baseTasks = tasks?.isSuccess ? sortByDate(tasks?.data) : [];
+  if (Array.isArray(tasks))
+    baseTasks = tasks;
+  else
+    baseTasks = tasks?.isSuccess ? sortByDate(tasks?.data) : [];
+
+  console.log("TASKS PASSED IN", baseTasks);
 
   const handleClick = async (open: boolean) => {
     let groupsActive = settings.data?.groupsActive;
