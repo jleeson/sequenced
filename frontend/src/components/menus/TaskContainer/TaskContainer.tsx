@@ -67,7 +67,7 @@ export default function TaskContainer({
   }
 
   return (
-    <div className="group flex flex-col items-center w-[90%] my-2">
+    <div className="group flex flex-col items-center w-[90%] h-full my-2">
       {/* Migrate to dynamic loading content */}
       {settings.isLoading && <span>Loading...</span>}
       {settings.isError && <span>Error: {settings.error.message}</span>}
