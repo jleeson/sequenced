@@ -81,7 +81,7 @@ export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
               type="date"
               value={formatDate(activeDate)}
               onChange={changeActiveMonth}
-              className="bg-transparent text-accent-black invert px-1 m-0 text-center text-xl"
+              className="w-full h-full bg-transparent text-accent-black invert px-1 m-0 text-center text-xl"
             />
           </div>
         </div>
