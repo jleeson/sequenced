@@ -20,13 +20,13 @@ export default function UserLogin() {
                                     <button onClick={async () => {
                                         await signout();
                                         window.location.href = "/";
-                                    }} className="px-4 py-2 bg-accent-blue-500 text-white">Sign Out</button>
+                                    }} className="px-4 py-2 bg-accent-blue text-white">Sign Out</button>
                                 </div>
                             ) :
                             (
                                 <div className="flex flex-col gap-2 justify-center" onClick={() => navigate("/auth")}>
                                     <span>Logged Out.</span>
-                                    <button className="w-16 h-8 bg-accent-blue-500 rounded-md">Sign In</button>
+                                    <button className="w-16 h-8 bg-accent-blue rounded-md">Sign In</button>
                                 </div>
                             )
                     }

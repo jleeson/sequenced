@@ -86,7 +86,7 @@ export default function TaskContainer({
               <Disclosure.Button
                 onClick={async () => await handleClick(open)}
                 as="div"
-                className="w-full flex flex-row items-center border bg-accent-blue-500 text-accent-white border-accent-blue-500 rounded-lg px-2  hover:bg-accent-blue-600 [&:has(.task-container-accordian:hover)]:bg-accent-blue-500"
+                className="w-full flex flex-row items-center border bg-accent-blue text-accent-white border-accent-blue rounded-lg px-2  hover:bg-accent-blue-600 [&:has(.task-container-accordian:hover)]:bg-accent-blue"
               >
                 <div className="w-full flex flex-row justify-between">
                   <div className="flex flex-row items-center py-1">
@@ -110,7 +110,7 @@ export default function TaskContainer({
                         <div className="group/filter task-container-accordian">
                           <AdjustmentsHorizontalIcon
                             width="32"
-                            className="group-hover/filter:fill-accent-blue-500"
+                            className="group-hover/filter:fill-accent-blue"
                           />
                         </div>
                       </Menu.Button>

@@ -31,7 +31,7 @@ export function NavBar() {
               onClick={() => setIsAdding(true)}
               className="flex text-center justify-center items-center w-16 h-16 text-3xl rounded-full text-white"
             >
-              <div className="flex justify-center items-center w-full h-full p-1">
+              <div className="flex justify-center items-center w-full h-full p-1 fill-white">
                 <AddIcon />
               </div>
             </button>

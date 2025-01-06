@@ -75,7 +75,7 @@ export default function MenuFields({ isDeleting, tempData, setTempData, setIsOpe
                     className={`px-2 py-2 ${tempData.date.getTime() != 0 &&
                         "bg-accent-red-500 hover:bg-accent-red-600 text-accent-white"
                         } ${tempData.date.getTime() == 0 &&
-                        "bg-accent-blue-500 hover:bg-accent-blue-600 text-accent-white"
+                        "bg-accent-blue hover:bg-accent-blue-600 text-accent-white"
                         } w-40 text-center rounded-md`}
                 >
                     {tempData.date.getTime() != 0 && "Remove Due Date"}

@@ -33,7 +33,7 @@ export default function TaskItemMenuSelection({
             <div className="w-full h-full flex flex-col justify-evenly items-center px-2 py-2 rounded-md gap-2">
               <TaskItemMenuPiece
                 text="View/Edit"
-                color="bg-accent-blue-500"
+                color="bg-accent-blue"
                 onClick={handleInteractive}
               />
               <TaskItemMenuPiece

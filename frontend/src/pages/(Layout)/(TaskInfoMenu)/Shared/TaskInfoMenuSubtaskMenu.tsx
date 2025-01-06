@@ -57,7 +57,7 @@ export default function TaskInfoMenuSubtaskMenu({
         <h1 className="text-lg">Sub Tasks</h1>
         <button
           onClick={(e) => createNewSubtask()}
-          className="text-lg bg-accent-blue-500 w-8 h-8 rounded-lg"
+          className="text-lg bg-accent-blue w-8 h-8 rounded-lg"
         >
           +
         </button>
