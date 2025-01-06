@@ -49,7 +49,7 @@ export default function App() {
               <Route path="/auth/login" element={<LoginUser />} />
               <Route path="/auth/register" element={<RegisterUser />} />
 
-              <Route index element={<Task />} />
+              <Route index element={<Home />} />
               <Route path="/task" element={<Task />} />
               <Route path="/settings" element={<Settings />}></Route>
               <Route path="*" element={<NoPage />} />

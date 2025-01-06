@@ -27,6 +27,32 @@ export async function getUser() {
     return null;
 }
 
+export async function updateName(first: string, last: string) {
+    const token = await getToken();
+
+    if (!token) return null;
+
+    let user = await fetch(`${SERVER_IP}/user/name`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            first,
+            last
+        })
+    });
+
+    user = await user.json();
+
+    if (user)
+        return user;
+
+
+    return null;
+}
+
 export function useToken() {
     return useQuery({
         queryKey: ["token"],

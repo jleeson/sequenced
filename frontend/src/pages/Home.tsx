@@ -1,5 +1,19 @@
+import { useUser } from "@/hooks/user";
+import NameProvider from "./(Home)/NameProvider";
+
 const Home = () => {
-    return <h1>Home</h1>;
+    const user = useUser().data;
+
+    console.log(user);
+
+    if(!user?.first)
+        return <NameProvider />
+
+    return <div>
+        <div>
+            <span></span>
+        </div>
+    </div>
 };
 
 export default Home;
