@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import ArrowBack from "../(Login)/ArrowBack";
 import { useRegister } from "@/hooks/auth";
 import { useState } from "react";

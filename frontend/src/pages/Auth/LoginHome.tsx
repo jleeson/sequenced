@@ -1,7 +1,7 @@
 import icon from "@/assets/icon.png";
 
 import TaskFeature from "../(Login)/TaskFeature";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginHome() {
     const navigate = useNavigate();

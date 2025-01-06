@@ -1,5 +1,5 @@
 import { updateName } from "@/hooks/user";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export default function NameProvider() {
     const navigate = useNavigate();
