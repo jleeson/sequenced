@@ -62,12 +62,12 @@ export default function TaskItemDate({ task }: { task: Task }) {
           >
             <h1 className="text-small text-right text-accent-white-500">{checkRelative(date)}</h1>
           </div>
-          <img
+          {/* <img
             src={today_icon}
             className="invert w-4 h-4"
             width="16"
             height="16"
-          />
+          /> */}
         </>
       )}
     </div>

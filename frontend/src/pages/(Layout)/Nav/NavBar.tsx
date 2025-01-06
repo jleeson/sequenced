@@ -15,7 +15,7 @@ export function NavBar() {
   const [isAdding, setIsAdding] = useState(false);
 
   return (
-    <div className="flex justify-center items-center w-full absolute bottom-0 nav-pad bg-white">
+    <div className="flex justify-center items-center w-full absolute bottom-0 nav-pad bg-accent-blue fill-white">
       <div className="w-full h-20 flex flex-row justify-evenly items-center rounded-t-md mb-1 md:container">
         <div className="flex flex-row grow justify-evenly items-center">
           <NavItem to="/" title="Home">
@@ -26,12 +26,12 @@ export function NavBar() {
           </NavItem>
         </div>
         <div className="flex justify-center items-center">
-          <div className="flex justify-center items-center w-16 h-16 bg-accent-blue rounded-full hover:bg-accent-blue-800 mb-6">
+          <div className="flex justify-center items-center w-20 h-20 bg-accent-white rounded-full border-2 border-solid border-accent-blue hover:bg-accent-gray-50 mb-6">
             <button
               onClick={() => setIsAdding(true)}
-              className="flex text-center justify-center items-center w-16 h-16 text-3xl rounded-full text-white"
+              className="flex text-center justify-center items-center w-16 h-16 text-3xl rounded-full text-accent-blue"
             >
-              <div className="flex justify-center items-center w-full h-full p-1 fill-white">
+              <div className="flex justify-center items-center w-full h-full p-1 fill-accent-blue">
                 <AddIcon />
               </div>
             </button>
