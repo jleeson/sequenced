@@ -11,6 +11,9 @@ import Task from "@/pages/Task";
 import Settings from "./pages/Settings";
 import Layout from "@/pages/Layout";
 import NoPage from "@/pages/NoPage";
+import Login from "@/pages/Auth/Login";
+import LoginUser from "@/pages/Auth/LoginUser";
+import RegisterUser from "@/pages/Auth/RegisterUser";
 
 // Styles
 import "./index.css";
@@ -19,6 +22,8 @@ import { initializeAdMob } from "@/utils/ads";
 import { initializeNotifications } from "@/utils/notifs";
 
 import { AppContext, useAppReducer } from "@/hooks/app";
+import { useUser } from "./hooks/user";
+
 
 /* define the query client for react-query */
 export const queryClient = new QueryClient({
@@ -40,6 +45,10 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
+              <Route path="/auth" element={<Login />} />
+              <Route path="/auth/login" element={<LoginUser />} />
+              <Route path="/auth/register" element={<RegisterUser />} />
+
               <Route index element={<Task />} />
               <Route path="/task" element={<Task />} />
               <Route path="/settings" element={<Settings />}></Route>

@@ -58,11 +58,9 @@ export class AuthController {
 
     @Post("/register")
     async registerInSystem({ body, cookies }: Request): Promise<RegisterDTO> {
-        const { email, password, confirm_password } = body;
-        if (password != confirm_password)
-            throw new BadRequest("Passwords are not the same");
+        const { first, last, email, password } = body;
 
-        const user = await this.userService.createUser(email, password);
+        const user = await this.userService.createUser(first, last, email, password);
         const token = await this.authService.getTokenByUser(user);
 
         return {

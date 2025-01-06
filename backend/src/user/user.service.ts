@@ -26,11 +26,13 @@ export class UserService {
         return User.findById(id).select("password").lean<User>().exec();
     }
 
-    async createUser(email: string, password: string): Promise<User> {
+    async createUser(first: string, last: string, email: string, password: string): Promise<User> {
         if (await User.exists({ email }).exec())
             throw new BadRequest("Email Already Exists.");
 
         return await User.create({
+            first,
+            last,
             email,
             password,
             tasks: []
