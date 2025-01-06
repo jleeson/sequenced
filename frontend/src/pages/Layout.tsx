@@ -1,9 +1,7 @@
 import { NavBar } from "@/pages/(Layout)/NavBar";
 import { useUser } from "@/hooks/user";
-import { useState } from "react";
 
 import TaskInfoMenu from "@/pages/(Layout)/TaskInfoMenu";
-import AuthContainer from "./(Layout)/Login/AuthContainer";
 import DataContainer from "./(Layout)/DataContainer";
 import { useNavigate } from "react-router";
 

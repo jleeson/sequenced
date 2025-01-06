@@ -1,13 +1,10 @@
-import { useToken, useUser } from "@/hooks/user";
-import { useState } from "react";
-import AuthMenu from "../(Layout)/Login/AuthMenu";
+import { useUser } from "@/hooks/user";
 import { signout } from "@/hooks/auth";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function UserLogin() {
     const user = useUser();
-
-    const [menuActive, setMenuActive] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <div>
@@ -27,14 +24,12 @@ export default function UserLogin() {
                                 </div>
                             ) :
                             (
-                                <div className="flex flex-col gap-2 justify-center" onClick={() => setMenuActive(true)}>
+                                <div className="flex flex-col gap-2 justify-center" onClick={() => navigate("/auth")}>
                                     <span>Logged Out.</span>
                                     <button className="w-16 h-8 bg-accent-blue-500 rounded-md">Sign In</button>
                                 </div>
                             )
                     }
-
-                    {menuActive && <AuthMenu setMenuActive={setMenuActive} />}
                 </div>
             )}
         </div>
