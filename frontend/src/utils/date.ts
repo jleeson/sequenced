@@ -112,8 +112,16 @@ export function generateWeek(startingDate: Date, dayStart: number) {
 export function isOverdue(firstDate: Date, secondDate: Date): boolean {
   const dateOne = new Date(firstDate);
   const dateTwo = new Date(secondDate);
-  
+
   return dateOne < dateTwo;
+}
+
+export function withinWeek(firstDate: Date, secondDate: Date): boolean {
+  return (
+    firstDate.getFullYear() == secondDate.getFullYear() &&
+    firstDate.getMonth() == secondDate.getMonth() &&
+    (firstDate.getDate() + 7) > (secondDate.getDate())
+  )
 }
 
 /* Checks if two dates are equal */
@@ -125,8 +133,11 @@ export function matchDate(dateOne: Date, dateTwo: Date) {
   );
 }
 
-type DaysAsNumbers = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-type Days = "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday";
+export type DaysAsNumbers = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type Days = "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday";
+
+export type MonthsAsNumbers = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+export type Months = "January" | "February" | "March" | "April" | "May" | "June" | "July" | "August" | "September" | "October" | "November" | "December";
 
 /* Gets day of the week in name format */
 export function getNameByDate(date: DaysAsNumbers): Days {
@@ -145,5 +156,34 @@ export function getNameByDate(date: DaysAsNumbers): Days {
       return "Friday";
     case 6:
       return "Saturday";
+  }
+}
+
+export function getNameByMonth(date: MonthsAsNumbers): Months {
+  switch (date) {
+    case 0:
+      return "January";
+    case 1:
+      return "February";
+    case 2:
+      return "March";
+    case 3:
+      return "April"
+    case 4:
+      return "May";
+    case 5:
+      return "June";
+    case 6:
+      return "July";
+    case 7:
+      return "August";
+    case 8:
+      return "September";
+    case 9:
+      return "October";
+    case 10:
+      return "November";
+    case 11:
+      return "December";
   }
 }
