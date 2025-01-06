@@ -2,11 +2,11 @@ import { useUser } from "@/hooks/user";
 import NameProvider from "./(Home)/NameProvider";
 
 const Home = () => {
-    const user = useUser().data;
+    const user = useUser();
 
     console.log(user);
 
-    if(!user?.first)
+    if (user.isSuccess && !user?.data?.first)
         return <NameProvider />
 
     return <div>

@@ -1,4 +1,4 @@
-import { NavBar } from "@/pages/(Layout)/NavBar";
+import { NavBar } from "@/pages/(Layout)/Nav/NavBar";
 import { useUser } from "@/hooks/user";
 
 import TaskInfoMenu from "@/pages/(Layout)/TaskInfoMenu";

@@ -50,7 +50,7 @@ export default function App() {
               <Route path="/auth/register" element={<RegisterUser />} />
 
               <Route index element={<Home />} />
-              <Route path="/task" element={<Task />} />
+              <Route path="/tasks" element={<Task />} />
               <Route path="/settings" element={<Settings />}></Route>
               <Route path="*" element={<NoPage />} />
             </Route>
