@@ -92,3 +92,7 @@ export function isTaskDone(task, activeDate) {
 
   return false;
 }
+
+export function sortByPriority(tasks: Task[]) {
+  return tasks.sort((a: Task, b: Task) => { return (b.priority || 0) > (a.priority || 0) ? 1 : -1; });
+}

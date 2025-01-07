@@ -116,6 +116,15 @@ export default function MenuFields({ isDeleting, tempData, setTempData, setIsOpe
                     { name: "Every Month", value: "monthly" },
                 ]}
             />
+
+            <TaskInfoMenuItem
+                name="Priority"
+                type="number"
+                value={tempData.priority}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setTempData({ ...tempData, priority: e.target.value })
+                }
+            />
         </div>
     )
 }

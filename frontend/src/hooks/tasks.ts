@@ -21,6 +21,7 @@ export interface Task {
   repeater?: string;
   reminder?: string;
   subtasks?: Task[];
+  priority?: number;
 }
 
 export function createInitialTaskData(): Task {
@@ -32,6 +33,7 @@ export function createInitialTaskData(): Task {
     repeater: "",
     reminder: "",
     subtasks: [],
+    priority: 0
   };
 }
 

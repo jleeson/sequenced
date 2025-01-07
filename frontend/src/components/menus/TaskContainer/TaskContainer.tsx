@@ -13,7 +13,7 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { Disclosure, Menu } from "@headlessui/react";
 import TaskMenuItem from "./TaskMenuItem";
 import { matchDate } from "@/utils/date";
-import { isTaskDone, sortByDate } from "@/utils/data";
+import { isTaskDone, sortByDate, sortByPriority } from "@/utils/data";
 import { Task } from "@/hooks/tasks";
 import { useUpdateSettings, useSettings } from "@/hooks/settings";
 import { useApp, useAppReducer } from "@/hooks/app";
@@ -43,6 +43,10 @@ export default function TaskContainer({
     baseTasks = tasks;
   else
     baseTasks = tasks?.isSuccess ? sortByDate(tasks?.data) : [];
+
+  console.log(baseTasks);
+
+  baseTasks = sortByPriority(baseTasks);
 
   console.log("TASKS PASSED IN", baseTasks);
 

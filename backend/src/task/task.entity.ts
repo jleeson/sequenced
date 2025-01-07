@@ -16,5 +16,6 @@ export class Task extends Model {
     @Prop(String) id: string;
     @Prop(Boolean) accordion: boolean;
     @Prop([User]) users: User[];
+    @Prop(Number) priority: number;
 
 }
