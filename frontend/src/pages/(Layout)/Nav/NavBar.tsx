@@ -38,8 +38,8 @@ export function NavBar() {
           </div>
         </div>
         <div className="flex flex-row grow justify-evenly">
-          <NavItem to="/lists" title="Lists">
-            <ListsIcon />
+          <NavItem to="#lists" title="">
+            {/* <ListsIcon /> */}
           </NavItem>
           <NavItem to="/settings" title="Settings">
             <SettingsIcon />
