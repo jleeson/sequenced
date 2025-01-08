@@ -5,13 +5,16 @@ import { useNavigate } from "react-router-dom";
 import TaskItemShell from "./TaskItemShell";
 import TaskItemCheckBox from "./TaskItemCheckbox";
 import TaskItemTitle from "./TaskItemTitle";
-import TaskItemMenu from "./TaskItemMenu/TaskItemMenu";
 import TaskItemDate from "./TaskItemDate";
 import { isTaskDone } from "@/utils/data";
-import { AppOptions, useApp } from "@/hooks/app";
+import { useApp } from "@/hooks/app";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
 export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
+
+  // TODO: Remove Later
+  if (!setIsInspecting) setIsInspecting = () => { };
+
   if (!item) item = {};
 
   const navigate = useNavigate();
