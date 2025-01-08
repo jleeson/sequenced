@@ -7,10 +7,21 @@ import cookieParser from "cookie-parser";
 import MongoStore from "connect-mongo";
 import session from "express-session";
 
+import { rateLimit } from 'express-rate-limit'
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+	standardHeaders: 'draft-8', // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+	// store: ... , // Redis, Memcached, etc. See below.
+})
+
 /* setup the platform and global middleware */
 const platform = new ExpressPlatform();
 platform.use(cors({ origin: ['https://api.sequenced.ottegi.com','https://sequenced.ottegi.com', 'http://localhost:5173', 'http://localhost:8080'], credentials: true }));
 platform.use(cookieParser());
+platform.use(limiter);
 
 /* setup the database and global plugins */
 const database = await new MongooseDatabase().connect();
