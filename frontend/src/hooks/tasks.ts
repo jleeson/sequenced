@@ -9,7 +9,9 @@ import {
 
 import { getSync } from "./settings";
 import { getToken } from "./user";
-import { fetchServer } from "./auth";
+import { fetchServer, useAuth } from "./auth";
+import { SERVER_IP } from "./app";
+import { fetchData } from "@/utils/data";
 
 // TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
 export interface Task {
@@ -88,14 +90,10 @@ export async function loadTasks(): Promise<Task[]> {
   const synced = await getSync();
 
   if (synced) {
-    const tasks = await fetchServer({
-      path: "/task",
-      token: await getToken()
-    });
+    const response = await fetchData(`/task`, {});
+    useAuth(response);
 
-    console.log("TASKS", tasks);
-
-    return tasks;
+    return await response.json();
   } else {
 
     migrateTasks();

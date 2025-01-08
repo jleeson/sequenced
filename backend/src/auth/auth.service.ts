@@ -53,11 +53,4 @@ export class AuthService {
         return bcrypt.compare(password, hash)
     }
 
-    async isAuthorized(token) {
-        if (token)
-            return Token.exists({ token: token.token }).exec();
-
-        return false;
-    }
-
 }

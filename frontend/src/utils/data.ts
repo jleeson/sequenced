@@ -1,5 +1,20 @@
 import { Task } from "@/hooks/tasks";
 import { matchDate } from "./date";
+import { SERVER_IP } from "@/hooks/app";
+
+export async function fetchData(url: string, options: any) {
+  const payload = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    ...options
+  };
+
+  if(options.body) payload.body = JSON.stringify(options.body);
+
+  return fetch(`${SERVER_IP}${url}`, payload);
+}
 
 /**
  * Sorts array by dates in order from soonest to farthest

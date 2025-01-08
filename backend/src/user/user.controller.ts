@@ -1,11 +1,13 @@
 import { Token } from "@/auth/token.entity";
-import { Controller, Get, Inject, Patch, Post } from "@outwalk/firefly";
+import { Controller, Get, Inject, Middleware, Patch, Post } from "@outwalk/firefly";
 import { Request } from "express";
 import { User } from "./user.entity";
 import { UserService } from "./user.service";
 import { AuthService } from "@/auth/auth.service";
 import { Unauthorized } from "@outwalk/firefly/errors";
+import { session } from "@/auth/auth.controller";
 
+@Middleware(session)
 @Controller()
 export class UserController {
 
@@ -15,8 +17,6 @@ export class UserController {
     @Get()
     async getUser({ headers }: Request) {
         const token: Token = await this.authService.getTokenFromRequest(headers);
-
-        if (!await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
 
         return this.userService.getUserByToken(token);
     }
@@ -29,9 +29,6 @@ export class UserController {
     @Patch("/name")
     async updateName({ headers, body }) {
         const token: Token = await this.authService.getTokenFromRequest(headers);
-
-        if (!await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
-
         const user = await this.userService.getUserByToken(token);
 
         const { first, last } = body;

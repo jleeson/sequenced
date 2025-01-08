@@ -4,6 +4,13 @@ import { Preferences } from "@capacitor/preferences";
 import { queryClient } from "..";
 
 import { SERVER_IP } from "./app";
+import { fetchData } from "@/utils/data";
+
+export async function useAuth(res: Response) {
+    if(res.status == 401){
+        if(!window.location.pathname.startsWith("/auth")) window.location.href = "/auth";
+    }
+}
 
 export async function fetchServer({ path, method, options, body, token, full }) {
     let headers = {
@@ -19,6 +26,7 @@ export async function fetchServer({ path, method, options, body, token, full }) 
         method: method ?? "GET",
         body: JSON.stringify(body),
         headers,
+        credentials: 'include',
         ...options
     });
 
@@ -44,31 +52,19 @@ export async function fetchServer({ path, method, options, body, token, full }) 
 export function useLogin() {
     return useMutation({
         mutationFn: async (body: { email: string, password: string }) => {
-            const data = await fetchServer({
-                path: "/auth/login",
+            const response = await fetchData("/auth/login", {
                 method: "POST",
-                body,
-                full: true
+                body
             });
 
-            if (data.type == "ERROR") {
-                return data.message;
-            }
-
-            console.log(`Token set to ${data.token.token}`);
-
-            await Preferences.set({ key: "token", value: data.token.token });
-            
-            reloadUser(queryClient);
-
-            return data;
+            if(response.ok) reloadUser(queryClient);
         }
     })
 }
 
 export function useRegister() {
     return useMutation({
-        mutationFn: async (body: { first: string, last: string, email: string, password: string }) => {
+        mutationFn: async (body: { email: string, password: string, confirm_password: string }) => {
             const data = await fetchServer({
                 path: "/auth/register",
                 method: "POST",

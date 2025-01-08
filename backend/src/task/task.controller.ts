@@ -1,12 +1,14 @@
 import { AuthService } from "@/auth/auth.service";
 import { User } from "@/user/user.entity";
 import { UserService } from "@/user/user.service";
-import { Controller, Delete, Get, Inject, Patch, Post } from "@outwalk/firefly";
+import { Controller, Delete, Get, Inject, Middleware, Patch, Post } from "@outwalk/firefly";
 import { BadRequest, Unauthorized } from "@outwalk/firefly/errors";
 import { TaskService } from "./task.service";
 import { Task } from "./task.entity";
 import { Token } from "@/auth/token.entity";
+import { session } from "@/auth/auth.controller";
 
+@Middleware(session)
 @Controller()
 export class TaskController {
 
@@ -15,25 +17,17 @@ export class TaskController {
     @Inject() taskService: TaskService;
 
     @Get()
-    async getTasks({ headers }: Request) {
-        const token: Token = await this.authService.getTokenFromRequest(headers);
+    async getTasks({ session, headers }: Request) {
+        const user: User = await this.userService.getUser(session.user.id);
 
-        if (!await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
-
-        const user: User = await this.userService.getUserByToken(token);
-
-        if (user)
-            return this.taskService.getTasks(user);
+        if (user) return this.taskService.getTasks(user);
 
         throw new BadRequest("Could not get data.");
     }
 
     @Post()
-    async addTask({ body, headers }: Request) {
-        const token: Token = await this.authService.getTokenFromRequest(headers);
-        const user: User = await this.userService.getUserByToken(token);
-
-        if (!user || !await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
+    async addTask({ session, body, headers }: Request) {
+        const user: User = await this.userService.getUser(session.user.id);
 
         const task: Task = {
             ...(body as any),
@@ -47,8 +41,6 @@ export class TaskController {
     async updateTask({ body, headers }: { body: Task, headers: Headers }) {
         const token: Token = await this.authService.getTokenFromRequest(headers);
 
-        if (!await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
-
         return await this.taskService.updateTask(body);
     }
 
@@ -56,16 +48,12 @@ export class TaskController {
     async deleteTask({ body, headers }: { body: Task, headers: Headers }) {
         const token: Token = await this.authService.getTokenFromRequest(headers);
 
-        if (!await this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
-
         return await this.taskService.deleteTask(body);
     }
 
     @Post("/migrate")
     async handleMigrate({ body, headers }) {
         const token: Token = await this.authService.getTokenFromRequest(headers);
-
-        if (!this.authService.isAuthorized(token)) throw new Unauthorized("Token not authorized.");
 
         const user = await this.userService.getUserByToken(token);
 

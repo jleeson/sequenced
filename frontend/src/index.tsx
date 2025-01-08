@@ -22,8 +22,6 @@ import { initializeAdMob } from "@/utils/ads";
 import { initializeNotifications } from "@/utils/notifs";
 
 import { AppContext, useAppReducer } from "@/hooks/app";
-import { useUser } from "./hooks/user";
-
 
 /* define the query client for react-query */
 export const queryClient = new QueryClient({

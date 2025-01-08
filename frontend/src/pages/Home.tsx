@@ -6,6 +6,7 @@ import DueCapsule from "./(Home)/DueCapsule";
 import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import TaskMenu from "@/components/tasks/TaskMenu";
 import { TaskItem } from "@/components/task/TaskItem";
+import { NavBar } from "./(Layout)/Nav/NavBar";
 
 const Home = () => {
     const user = useUser();
@@ -22,8 +23,8 @@ const Home = () => {
     const overdueTasks = tasks?.data?.filter((task) => isOverdue(new Date(), new Date(task.date)));
     const sorted = Array.from(tasks?.data || []).filter(task => !task.done && new Date(task.date).getFullYear() > 2000).splice(0, 6);
 
-    if (user.isSuccess && !user?.data?.first)
-        return <NameProvider />
+    // if (user.isSuccess && !user?.data?.first)
+    //     return <NameProvider />
 
     return <div className="w-full h-full flex flex-col px-4 py-2 gap-4">
         <div className="flex flex-col gap-1">
