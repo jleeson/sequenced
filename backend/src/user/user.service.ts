@@ -2,7 +2,6 @@ import { Injectable } from "@outwalk/firefly";
 import { User } from "./user.entity";
 import { BadRequest } from "@outwalk/firefly/errors";
 import { Token } from "@/auth/token.entity";
-import { Task } from "@/task/task.entity";
 
 @Injectable()
 export class UserService {
@@ -27,8 +26,7 @@ export class UserService {
     }
 
     async createUser(first: string, last: string, email: string, password: string): Promise<User> {
-        if (await User.exists({ email }).exec())
-            throw new BadRequest("Email Already Exists.");
+        if (await User.exists({ email }).exec()) throw new BadRequest("Email Already Exists.");
 
         return await User.create({
             first,

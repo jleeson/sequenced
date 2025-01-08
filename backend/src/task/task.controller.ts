@@ -26,7 +26,7 @@ export class TaskController {
     }
 
     @Post()
-    async addTask({ session, body, headers }: SessionRequest) {
+    async addTask({ session, body }: SessionRequest) {
         const user: User = await this.userService.getUser(session.user.id);
 
         const task: Task = {
@@ -52,10 +52,8 @@ export class TaskController {
     }
 
     @Post("/migrate")
-    async handleMigrate({ body, headers }: SessionRequest) {
-        const token: Token = await this.authService.getTokenFromRequest(headers);
-
-        const user = await this.userService.getUserByToken(token);
+    async handleMigrate({ session, body }: SessionRequest) {
+        const user: User = await this.userService.getUser(session.user.id);
 
         if (user.synced) {
             const tasks = await this.taskService.getTasks(user);
@@ -70,8 +68,6 @@ export class TaskController {
         if (body) {
 
             const tasks = body;
-
-            const dbTasks = [];
 
             for (let task of tasks) {
                 let dbSubtasks = [];

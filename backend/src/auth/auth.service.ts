@@ -4,7 +4,6 @@ import { Token } from "./token.entity";
 import { User } from "@/user/user.entity";
 import { Inject, Injectable } from "@outwalk/firefly";
 import { UserService } from "@/user/user.service";
-import { Unauthorized } from "@outwalk/firefly/errors";
 
 @Injectable()
 export class AuthService {
@@ -13,18 +12,15 @@ export class AuthService {
 
     async getTokenByUser(user: User): Promise<Token> {
         const token = await Token.findOne({ user });
-
-        if (!token)
-            return Token.create(this.createToken(user, 20));
+        if (!token) return Token.create(this.createToken(user, 20));
 
         return token;
     }
 
     async getTokenFromRequest(headers) {
-        if (!headers.authorization)
-            return null;
-
+        if (!headers.authorization) return null;
         const rawToken = headers.authorization.split("Bearer ")[1];
+        
         return this.getTokenData(rawToken);
     }
 

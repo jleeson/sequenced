@@ -34,8 +34,6 @@ export class AuthController {
 
         if (validation) {
             const user = await this.userService.getUserByEmail(email);
-            const token = await this.authService.getTokenByUser(user);
-
             req.session.user = { id: user.id, first: user.first };
         } else {
             throw new Unauthorized("Incorrect Email/Password Combo.");
@@ -47,8 +45,6 @@ export class AuthController {
         const { first, last, email, password } = req.body;
 
         const user = await this.userService.createUser(first, last, email, password);
-        const token = await this.authService.getTokenByUser(user);
-
         req.session.user = { id: user.id, first: user.first };
     }
 
