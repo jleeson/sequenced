@@ -9,7 +9,7 @@ import session from "express-session";
 
 /* setup the platform and global middleware */
 const platform = new ExpressPlatform();
-platform.use(cors({ origin: ['sequenced.ottegi.com', 'http://localhost:5173', 'http://localhost:8080'], credentials: true }));
+platform.use(cors({ origin: ['https://api.sequenced.ottegi.com','https://sequenced.ottegi.com', 'http://localhost:5173', 'http://localhost:8080'], credentials: true }));
 platform.use(cookieParser());
 
 /* setup the database and global plugins */
