@@ -6,7 +6,7 @@ import { BadRequest, Unauthorized } from "@outwalk/firefly/errors";
 import { TaskService } from "./task.service";
 import { Task } from "./task.entity";
 import { Token } from "@/auth/token.entity";
-import { session } from "@/auth/auth.controller";
+import { SessionRequest, session } from "@/auth/auth.controller";
 
 @Middleware(session)
 @Controller()
@@ -17,7 +17,7 @@ export class TaskController {
     @Inject() taskService: TaskService;
 
     @Get()
-    async getTasks({ session, headers }: Request) {
+    async getTasks({ session, headers }: SessionRequest) {
         const user: User = await this.userService.getUser(session.user.id);
 
         if (user) return this.taskService.getTasks(user);
@@ -26,7 +26,7 @@ export class TaskController {
     }
 
     @Post()
-    async addTask({ session, body, headers }: Request) {
+    async addTask({ session, body, headers }: SessionRequest) {
         const user: User = await this.userService.getUser(session.user.id);
 
         const task: Task = {
@@ -52,7 +52,7 @@ export class TaskController {
     }
 
     @Post("/migrate")
-    async handleMigrate({ body, headers }) {
+    async handleMigrate({ body, headers }: SessionRequest) {
         const token: Token = await this.authService.getTokenFromRequest(headers);
 
         const user = await this.userService.getUserByToken(token);
