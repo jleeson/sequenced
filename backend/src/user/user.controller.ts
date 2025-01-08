@@ -5,7 +5,7 @@ import { User } from "./user.entity";
 import { UserService } from "./user.service";
 import { AuthService } from "@/auth/auth.service";
 import { Unauthorized } from "@outwalk/firefly/errors";
-import { session } from "@/auth/auth.controller";
+import { SessionRequest, session } from "@/auth/auth.controller";
 
 @Middleware(session)
 @Controller()
@@ -15,10 +15,8 @@ export class UserController {
     @Inject() userService: UserService;
 
     @Get()
-    async getUser({ headers }: Request) {
-        const token: Token = await this.authService.getTokenFromRequest(headers);
-
-        return this.userService.getUserByToken(token);
+    async getUser({ session }: SessionRequest) {
+        return this.userService.getUser(session.user.id);
     }
 
     @Post()
