@@ -17,7 +17,7 @@ export class TaskController {
     @Inject() taskService: TaskService;
 
     @Get()
-    async getTasks({ session, headers }: SessionRequest) {
+    async getTasks({ session }: SessionRequest) {
         const user: User = await this.userService.getUser(session.user.id);
 
         if (user) return this.taskService.getTasks(user);

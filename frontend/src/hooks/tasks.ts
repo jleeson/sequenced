@@ -8,9 +8,7 @@ import {
 } from "@tanstack/react-query";
 
 import { getSync } from "./settings";
-import { getToken } from "./user";
-import { fetchServer, useAuth } from "./auth";
-import { SERVER_IP } from "./app";
+import { useAuth } from "./auth";
 import { fetchData } from "@/utils/data";
 
 // TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
@@ -41,23 +39,19 @@ export function createInitialTaskData(): Task {
 
 export async function checkMigration() {
   const synced = await getSync();
-  if (!synced)
-    await migrateTasks();
+  if (!synced) await migrateTasks();
 }
 
 export async function migrateTasks() {
   const { value } = await Preferences.get({ key: "tasks" });
   const tasks = JSON.parse(value ?? "[]");
-  const token = await getToken();
 
-  console.log("Migrating to cloud");
-
-  const migration = await fetchServer({
-    path: "/task/migrate",
+  const response = await fetchData("/task/migrate", {
     method: "POST",
-    body: tasks,
-    token
+    body: tasks
   });
+
+  const migration = await response.json();
 
   if (migration.isSynced) {
     console.log("Loading cloud data");
@@ -71,7 +65,6 @@ export async function migrateTasks() {
     await Preferences.set({ key: "sync", value: "true" });
     return null;
   }
-
 }
 
 export function useMigrate() {
@@ -95,9 +88,7 @@ export async function loadTasks(): Promise<Task[]> {
 
     return await response.json();
   } else {
-
     migrateTasks();
-
   }
 
   return [];
@@ -132,14 +123,9 @@ export function useAddTask(): UseMutationResult<void, Error, Task, unknown> {
   const queryClient = useQueryClient();
 
   const mutationFn = async (task: Task) => {
-    // await Preferences.set({ key: "tasks", value: JSON.stringify(tasks) });
-    const token = await getToken();
-
-    await fetchServer({
-      path: "/task",
+    await fetchData("/task", {
       method: "POST",
-      body: task,
-      token
+      body: task
     });
   };
 
@@ -160,8 +146,7 @@ export function useUpdateTask(): UseMutationResult<
   const queryClient = useQueryClient();
 
   const mutationFn = async ({ id, data }: { id: string; data: Object }) => {
-    await fetchServer({
-      path: "/task",
+    await fetchData("/task", {
       method: "PATCH",
       body: data
     });
@@ -179,11 +164,10 @@ export function useDeleteTask(): UseMutationResult<void, Error, Task, unknown> {
   const queryClient = useQueryClient();
 
   const mutationFn = async (task: Task) => {
-    await fetchServer({
-      path: "/task",
+    await fetchData("/task", {
       method: "DELETE",
       body: task
-    })
+    });
   };
 
   const onSuccess = async () => {

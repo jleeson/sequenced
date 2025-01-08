@@ -3,10 +3,7 @@ import NameProvider from "./(Home)/NameProvider";
 import { DaysAsNumbers, MonthsAsNumbers, getDateDD, getNameByDate, getNameByMonth, isOverdue, matchDate, withinWeek } from "@/utils/date";
 import { useTasks } from "@/hooks/tasks";
 import DueCapsule from "./(Home)/DueCapsule";
-import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
-import TaskMenu from "@/components/tasks/TaskMenu";
 import { TaskItem } from "@/components/task/TaskItem";
-import { NavBar } from "./(Layout)/Nav/NavBar";
 
 const Home = () => {
     const user = useUser();
@@ -49,9 +46,9 @@ const Home = () => {
         </div>
         <div className="w-full flex flex-col gap-2 pb-24">
             <span className="text-xl">Upcoming Tasks</span>
-            {sorted.map(task => {
+            {sorted.map((task, key) => {
                 return (
-                    <TaskItem item={task} taskFilter="all" />
+                    <TaskItem key={key} item={task} taskFilter="all" />
                 )
             })}
         </div>
