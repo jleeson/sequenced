@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query";
 
 import { getSync } from "./settings";
-import { useAuth } from "./auth";
+import { checkAuth } from "./auth";
 import { fetchData } from "@/utils/data";
 
 // TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
@@ -80,11 +80,12 @@ export function filterBroken(tasks: Task[]): Task[] {
 
 /* Loads task array from Preferences database */
 export async function loadTasks(): Promise<Task[]> {
+  // Move auth logic to server, and push synced to be a one-time check on load
   const synced = await getSync();
 
   if (synced) {
     const response = await fetchData(`/task`, {});
-    useAuth(response);
+    checkAuth(response);
 
     return await response.json();
   } else {

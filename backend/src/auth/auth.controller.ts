@@ -16,7 +16,7 @@ export type SessionRequest = Request & {
 }
 
 export function session(req: SessionRequest, res: Response, next) {
-    if (!req.session.user) throw new Unauthorized("Not Logged In");
+    if (!req.session.user) return new Unauthorized("Not Logged In");
     next();
 }
 
@@ -36,7 +36,7 @@ export class AuthController {
             const user = await this.userService.getUserByEmail(email);
             req.session.user = { id: user.id, first: user.first };
         } else {
-            throw new Unauthorized("Incorrect Email/Password Combo.");
+            return new Unauthorized("Incorrect Email/Password Combo.");
         }
     }
 

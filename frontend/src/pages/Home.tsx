@@ -13,6 +13,8 @@ const Home = () => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
 
+    // Apply Server Logic for REST data '/metrics'
+
     const dueToday = tasks?.data?.filter((task) => matchDate(new Date(task.date), new Date()))
     const dueTomorrow = tasks?.data?.filter((task) => matchDate(new Date(task.date), tomorrow));
 

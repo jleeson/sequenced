@@ -4,7 +4,7 @@ import { Preferences } from "@capacitor/preferences";
 import { queryClient } from "..";
 import { fetchData } from "@/utils/data";
 
-export async function useAuth(res: Response) {
+export async function checkAuth(res: Response) {
     if(res.status == 401){
         if(!window.location.pathname.startsWith("/auth")) window.location.href = "/auth";
     }
