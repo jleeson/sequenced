@@ -25,6 +25,31 @@ export class TaskController {
         throw new BadRequest("Could not get data.");
     }
 
+
+    @Get("/today")
+    async getTasksToday({ session }) {
+        const user = await this.userService.getUser(session.user.id);
+        if (user) return this.taskService.getTasksToday(user);
+
+        return [];
+    }
+
+    @Get("/tomorrow")
+    async getTasksTomorrow({ session }) {
+
+        return [];
+    }
+
+    @Get("/week")
+    async getTasksWeek({ session }) {
+        return [];
+    }
+
+    @Get("/overdue")
+    async getTasksOverdue({ session }) {
+        return [];
+    }
+
     @Post()
     async addTask({ session, body }: SessionRequest) {
         const user: User = await this.userService.getUser(session.user.id);
@@ -78,8 +103,8 @@ export class TaskController {
 
                 let done = task.done;
 
-                if(task.done != null)
-                    if(typeof task.done != "boolean")
+                if (task.done != null)
+                    if (typeof task.done != "boolean")
                         done = true;
                     else
                         done = task.done;

@@ -9,7 +9,7 @@ export default function AuthProvider({ children }) {
 
     return (
         auth.isSuccess && (
-            auth.data.message ?
+            (auth.data.statusCode != 401 && auth.data.message) ?
                 (
                     <div className="w-full h-full">
                         {children}

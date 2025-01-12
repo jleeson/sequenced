@@ -50,6 +50,8 @@ export async function migrateTasks() {
     body: tasks
   });
 
+  console.log("Response", response);
+
   const migration = await response.json();
 
   if (migration.isSynced) {
@@ -79,18 +81,10 @@ export function filterBroken(tasks: Task[]): Task[] {
 
 /* Loads task array from Preferences database */
 export async function loadTasks(): Promise<Task[]> {
-  // Move auth logic to server, and push synced to be a one-time check on load
-  const synced = await getSync();
+  const response = await fetchData(`/task`, {});
 
-  if (synced) {
-    const response = await fetchData(`/task`, {});
+  return await response.json();
 
-    return await response.json();
-  } else {
-    migrateTasks();
-  }
-
-  return [];
 }
 
 /* Loads tasks and finds the task with given id */
@@ -100,11 +94,59 @@ export async function loadTaskById(id: string): Promise<Task> {
 }
 
 /* returns query data */
-export function useTasks(): UseQueryResult {
+export function useTasks(): UseQueryResult<Task[]> {
   return useQuery({
     queryKey: ["tasks"],
     queryFn: loadTasks,
-    staleTime: Infinity,
+    staleTime: 1000 * 60 * 60,
+  });
+}
+
+export async function getTasksToday() {
+  return await (await fetchData("/task/today", {})).json();
+}
+
+export function useTasksToday() {
+  return useQuery({
+    queryKey: ["tasks", "today"],
+    queryFn: getTasksToday,
+    staleTime: 1000 * 60 * 60
+  });
+}
+
+export async function getTasksTomorrow() {
+  return await (await fetchData("/task/tomorrow", {})).json();
+}
+
+export function useTasksTomorrow() {
+  return useQuery({
+    queryKey: ["tasks", "tomorrow"],
+    queryFn: getTasksTomorrow,
+    staleTime: 1000 * 60 * 60
+  });
+}
+
+export async function getTasksWeek() {
+  return await (await fetchData("/task/week", {})).json();
+}
+
+export function useTasksWeek() {
+  return useQuery({
+    queryKey: ["tasks", "week"],
+    queryFn: getTasksWeek,
+    staleTime: 1000 * 60 * 60
+  });
+}
+
+export async function getTasksOverdue() {
+  return await (await fetchData("/task/overdue", {})).json();
+}
+
+export function useTasksOverdue() {
+  return useQuery({
+    queryKey: ["tasks", "overdue"],
+    queryFn: getTasksOverdue,
+    staleTime: 1000 * 60 * 60
   });
 }
 

@@ -4,8 +4,7 @@ import { queryClient } from "..";
 import { fetchData } from "@/utils/data";
 
 export async function reloadAuth() {
-    queryClient.invalidateQueries({ queryKey: ['auth'] });
-    queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    await queryClient.invalidateQueries({ queryKey: ['auth'] });
 }
 
 export async function getAuth() {
@@ -31,8 +30,10 @@ export function useLogin() {
             if (!response.ok)
                 return await response.json();
 
-            if (response.ok)
+            if (response.ok){
                 reloadUser(queryClient);
+                reloadAuth();
+            }
         }
     })
 }

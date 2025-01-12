@@ -22,8 +22,9 @@ export default function LoginUser() {
         if (resp)
             setStatus(resp.message);
         else {
-            reloadAuth();
-            navigate("/");
+            await reloadAuth();
+            await navigate("/");
+            await navigate(0);
         }
     }
 

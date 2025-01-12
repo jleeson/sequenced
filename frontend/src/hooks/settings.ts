@@ -1,3 +1,4 @@
+import { fetchData } from "@/utils/data";
 import { Preferences } from "@capacitor/preferences";
 import { useQuery, useMutation, useQueryClient, UseQueryResult, UseMutationResult } from "@tanstack/react-query";
 
@@ -48,8 +49,7 @@ export function useUpdateSettings(): UseMutationResult<void, Error, Partial<Sett
 }
 
 export async function getSync() {
-  const { value } = await Preferences.get({ key: "sync" });
-  return value ?? false;
+  return await (await fetchData("/user/synced", {})).json()
 }
 
 export async function setSync(syncMode: boolean): Promise<void> {

@@ -22,8 +22,9 @@ export default function RegisterUser() {
             setStatus(message);
 
         if (!message){
-            reloadAuth();
-            navigate("/");
+            await reloadAuth();
+            await navigate("/");
+            await navigate(0);
         }
     }
 

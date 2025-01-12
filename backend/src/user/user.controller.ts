@@ -19,6 +19,12 @@ export class UserController {
         return this.userService.getUser(session.user.id);
     }
 
+    @Get("/synced")
+    async getSynced({ session }: SessionRequest) {
+        const user = await this.userService.getUser(session.user.id);
+        return user.synced;
+    }
+
     @Post()
     createUser({ body }) {
         console.log("BODY", body);
