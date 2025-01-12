@@ -1,5 +1,5 @@
 import { UserService } from "@/user/user.service";
-import { Controller, Inject, Post } from "@outwalk/firefly";
+import { Controller, Get, Inject, Post } from "@outwalk/firefly";
 import { Unauthorized } from "@outwalk/firefly/errors";
 import { AuthService } from "./auth.service";
 
@@ -26,8 +26,16 @@ export class AuthController {
     @Inject() authService: AuthService;
     @Inject() userService: UserService;
 
+    @Get("/")
+    async getAuth(req, res) {
+        if (!req.session.user)
+            return new Unauthorized("Not Logged In");
+
+        return { message: "Logged In" };
+    }
+
     @Post("/login")
-    async loginToSystem(req: SessionRequest, res: Response, next): Promise<void> {
+    async loginToSystem(req: SessionRequest, res: Response, next) {
         const { email, password } = req.body;
 
         const validation = await this.authService.validatePassword(email, password);
@@ -50,7 +58,7 @@ export class AuthController {
 
     @Post("/logout")
     async logout(req: SessionRequest) {
-        req.session.destroy(() => {});
+        req.session.destroy(() => { });
     }
 
 }

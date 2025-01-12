@@ -22,6 +22,7 @@ import { initializeAdMob } from "@/utils/ads";
 import { initializeNotifications } from "@/utils/notifs";
 
 import { AppContext, useAppReducer } from "@/hooks/app";
+import AuthProvider from "./pages/Auth/AuthProvider";
 
 /* define the query client for react-query */
 export const queryClient = new QueryClient({
@@ -51,6 +52,7 @@ export default function App() {
               <Route path="/tasks" element={<Task />} />
               <Route path="/settings" element={<Settings />}></Route>
               <Route path="*" element={<NoPage />} />
+
             </Route>
           </Routes>
         </BrowserRouter>

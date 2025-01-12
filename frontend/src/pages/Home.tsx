@@ -4,6 +4,7 @@ import { DaysAsNumbers, MonthsAsNumbers, getDateDD, getNameByDate, getNameByMont
 import { useTasks } from "@/hooks/tasks";
 import DueCapsule from "./(Home)/DueCapsule";
 import { TaskItem } from "@/components/task/TaskItem";
+import AuthProvider from "./Auth/AuthProvider";
 
 const Home = () => {
     const user = useUser();
@@ -25,36 +26,41 @@ const Home = () => {
     // if (user.isSuccess && !user?.data?.first)
     //     return <NameProvider />
 
-    return <div className="w-full h-full flex flex-col px-4 py-2 gap-4">
-        <div className="flex flex-col gap-1">
-            <span className="text-2xl">Hello <span className="text-accent-blue">{user?.data?.first}</span>!</span>
-            <span className="text-xl text-gray-500">{getNameByDate(today.getDay() as DaysAsNumbers)}, {getNameByMonth(today.getMonth() as MonthsAsNumbers)} {getDateDD(today)}</span>
-        </div>
-        <div className="flex flex-col gap-2">
-            <span className="text-xl">Your Agenda</span>
-            <div className="w-full flex flex-col h-64 gap-2">
-                <div className="w-full h-full flex flex-row justify-evenly gap-2">
-                    <DueCapsule count={dueToday?.length} category="Due Today" important />
-                    <div className="w-full h-full flex flex-col justify-evenly gap-2">
-                        <DueCapsule count={dueTomorrow?.length} category="Due Tomorrow" />
-                        <DueCapsule count={dueWeek?.length} category="Due This Week" />
+    return (
+        <AuthProvider>
+            <div className="w-full h-full flex flex-col px-4 py-2 gap-4">
+                <div className="flex flex-col gap-1">
+                    <span className="text-2xl">Hello <span className="text-accent-blue">{user?.data?.first}</span>!</span>
+                    <span className="text-xl text-gray-500">{getNameByDate(today.getDay() as DaysAsNumbers)}, {getNameByMonth(today.getMonth() as MonthsAsNumbers)} {getDateDD(today)}</span>
+                </div>
+                <div className="flex flex-col gap-2">
+                    <span className="text-xl">Your Agenda</span>
+                    <div className="w-full flex flex-col h-64 gap-2">
+                        <div className="w-full h-full flex flex-row justify-evenly gap-2">
+                            <DueCapsule count={dueToday?.length} category="Due Today" important />
+                            <div className="w-full h-full flex flex-col justify-evenly gap-2">
+                                <DueCapsule count={dueTomorrow?.length} category="Due Tomorrow" />
+                                <DueCapsule count={dueWeek?.length} category="Due This Week" />
+                            </div>
+                        </div>
+                        <div className="w-full h-16 flex shadow-md border border-accent-blue/80 rounded-md px-4 py-2 items-center justify-between">
+                            <span className="text-xl text-gray-500">Overdue Tasks</span>
+                            <span className="text-red-500 text-3xl">{overdueTasks?.length}</span>
+                        </div>
                     </div>
                 </div>
-                <div className="w-full h-16 flex shadow-md border border-accent-blue/80 rounded-md px-4 py-2 items-center justify-between">
-                    <span className="text-xl text-gray-500">Overdue Tasks</span>
-                    <span className="text-red-500 text-3xl">{overdueTasks?.length}</span>
+                <div className="w-full flex flex-col gap-2 pb-24">
+                    <span className="text-xl">Upcoming Tasks</span>
+                    {sorted.map((task, key) => {
+                        return (
+                            <TaskItem key={key} item={task} taskFilter="all" />
+                        )
+                    })}
                 </div>
             </div>
-        </div>
-        <div className="w-full flex flex-col gap-2 pb-24">
-            <span className="text-xl">Upcoming Tasks</span>
-            {sorted.map((task, key) => {
-                return (
-                    <TaskItem key={key} item={task} taskFilter="all" />
-                )
-            })}
-        </div>
-    </div>
+        </AuthProvider>
+    )
+
 };
 
 export default Home;

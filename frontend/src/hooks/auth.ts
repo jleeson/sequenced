@@ -1,13 +1,24 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { reloadUser } from "./user";
-import { Preferences } from "@capacitor/preferences";
 import { queryClient } from "..";
 import { fetchData } from "@/utils/data";
 
 export async function checkAuth(res: Response) {
-    if(res.status == 401){
-        if(!window.location.pathname.startsWith("/auth")) window.location.href = "/auth";
+    if (res.status == 401) {
+        if (!window.location.pathname.startsWith("/auth")) window.location.href = "/auth";
     }
+}
+
+export async function getAuth() {
+    return await (await fetchData("/auth", {})).json();
+}
+
+export function useAuth() {
+    return useQuery({
+        queryKey: ['auth'],
+        queryFn: getAuth,
+        staleTime: 1000 * 60 * 60 * 30
+    });
 }
 
 export function useLogin() {
@@ -18,7 +29,7 @@ export function useLogin() {
                 body
             });
 
-            if(response.ok) reloadUser(queryClient);
+            if (response.ok) reloadUser(queryClient);
         }
     })
 }
@@ -26,20 +37,16 @@ export function useLogin() {
 export function useRegister() {
     return useMutation({
         mutationFn: async (body: { email: string, password: string, confirm_password: string }) => {
-            const data = await fetchServer({
-                path: "/auth/register",
+            const response = await fetchData("/", {
                 method: "POST",
-                body,
-                full: true
+                body
             });
+
+            const data = await response.json();
 
             if (data.type == "ERROR") {
                 return data.message;
             }
-
-            await Preferences.set({ key: "token", value: data.token.token });
-
-            console.log(`Token set to ${data.token.token}`);
 
             reloadUser(queryClient);
 
@@ -49,10 +56,8 @@ export function useRegister() {
 }
 
 export async function signout() {
+    queryClient.invalidateQueries({ queryKey: ["auth"] });
     queryClient.invalidateQueries({ queryKey: ["user"] });
-    queryClient.invalidateQueries({ queryKey: ["token"] });
-
-    await Preferences.remove({ key: "token" });
 
     console.log("User Signed Out");
 }
