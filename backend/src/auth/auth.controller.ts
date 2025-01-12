@@ -29,7 +29,7 @@ export class AuthController {
     @Get("/")
     async getAuth(req, res) {
         if (!req.session.user)
-            return new Unauthorized("Not Logged In");
+            throw new Unauthorized("Not Logged In");
 
         return { message: "Logged In" };
     }
@@ -44,7 +44,7 @@ export class AuthController {
             const user = await this.userService.getUserByEmail(email);
             req.session.user = { id: user.id, first: user.first };
         } else {
-            return new Unauthorized("Incorrect Email/Password Combo.");
+            throw new Unauthorized("Incorrect Email/Password Combo.");
         }
     }
 
@@ -59,6 +59,7 @@ export class AuthController {
     @Post("/logout")
     async logout(req: SessionRequest) {
         req.session.destroy(() => { });
+        return {};
     }
 
 }

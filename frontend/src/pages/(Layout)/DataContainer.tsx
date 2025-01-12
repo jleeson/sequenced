@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 export default function DataContainer() {
     return (
-        <div>
+        <div className="w-full h-full">
             <div
                 className="w-full h-full flex flex-col justify-between items-center md:container md:px-16 md:py-2"
                 id="basis"

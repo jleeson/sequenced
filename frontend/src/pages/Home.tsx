@@ -51,11 +51,15 @@ const Home = () => {
                 </div>
                 <div className="w-full flex flex-col gap-2 pb-24">
                     <span className="text-xl">Upcoming Tasks</span>
-                    {sorted.map((task, key) => {
-                        return (
-                            <TaskItem key={key} item={task} taskFilter="all" />
-                        )
-                    })}
+                    <ul className="w-full flex flex-col">
+                        {sorted.map((task, key) => {
+                            return (
+                                <li key={key} className="w-full h-full">
+                                    <TaskItem item={task} taskFilter="all" />
+                                </li>
+                            )
+                        })}
+                    </ul>
                 </div>
             </div>
         </AuthProvider>

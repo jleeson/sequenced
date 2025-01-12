@@ -3,10 +3,8 @@ import { reloadUser } from "./user";
 import { queryClient } from "..";
 import { fetchData } from "@/utils/data";
 
-export async function checkAuth(res: Response) {
-    if (res.status == 401) {
-        if (!window.location.pathname.startsWith("/auth")) window.location.href = "/auth";
-    }
+export async function reloadAuth() {
+    queryClient.invalidateQueries({ queryKey: ['auth'] });
 }
 
 export async function getAuth() {
@@ -29,7 +27,11 @@ export function useLogin() {
                 body
             });
 
-            if (response.ok) reloadUser(queryClient);
+            if (!response.ok)
+                return await response.json();
+
+            if (response.ok)
+                reloadUser(queryClient);
         }
     })
 }

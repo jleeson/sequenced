@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ArrowBack from "../(Login)/ArrowBack";
-import { useLogin } from "@/hooks/auth";
+import { reloadAuth, useLogin } from "@/hooks/auth";
 import { useState } from "react";
 
 export default function LoginUser() {
@@ -17,12 +17,14 @@ export default function LoginUser() {
         const email = e.target[0].value;
         const password = e.target[1].value;
 
-        const message = await login({ email, password });
-        
-        if (typeof message == "string")
-            setStatus(message);
-        else
+        const resp = await login({ email, password });
+
+        if (resp)
+            setStatus(resp.message);
+        else {
+            reloadAuth();
             navigate("/");
+        }
     }
 
     return (

@@ -11,7 +11,7 @@ export default function AuthProvider({ children }) {
         auth.isSuccess && (
             auth.data.message ?
                 (
-                    <div>
+                    <div className="w-full h-full">
                         {children}
                     </div>
                 ) : (

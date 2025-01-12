@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ArrowBack from "../(Login)/ArrowBack";
-import { useRegister } from "@/hooks/auth";
+import { reloadAuth, useRegister } from "@/hooks/auth";
 import { useState } from "react";
 
 export default function RegisterUser() {
@@ -21,8 +21,10 @@ export default function RegisterUser() {
         if (typeof message == "string")
             setStatus(message);
 
-        if (!message)
+        if (!message){
+            reloadAuth();
             navigate("/");
+        }
     }
 
     return (
