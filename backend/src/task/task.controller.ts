@@ -36,17 +36,33 @@ export class TaskController {
 
     @Get("/tomorrow")
     async getTasksTomorrow({ session }) {
+        const user = await this.userService.getUser(session.user.id);
+        if (user) return this.taskService.getTasksTomorrow(user);
 
         return [];
     }
 
     @Get("/week")
     async getTasksWeek({ session }) {
+        const user = await this.userService.getUser(session.user.id);
+        if (user) return this.taskService.getTasksWeek(user);
+
         return [];
     }
 
     @Get("/overdue")
     async getTasksOverdue({ session }) {
+        const user = await this.userService.getUser(session.user.id);
+        if (user) return this.taskService.getTasksOverdue(user);
+
+        return [];
+    }
+
+    @Get("/incomplete")
+    async getTasksIncomplete({ session }) {
+        const user = await this.userService.getUser(session.user.id);
+        if (user) return this.taskService.getTasksIncomplete(user);
+
         return [];
     }
 

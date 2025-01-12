@@ -1,6 +1,6 @@
 import { useUser } from "@/hooks/user";
 import { DaysAsNumbers, MonthsAsNumbers, getDateDD, getNameByDate, getNameByMonth } from "@/utils/date";
-import { useTasks, useTasksOverdue, useTasksToday, useTasksTomorrow, useTasksWeek } from "@/hooks/tasks";
+import { useTasks, useTasksIncomplete, useTasksOverdue, useTasksToday, useTasksTomorrow, useTasksWeek } from "@/hooks/tasks";
 import { TaskItem } from "@/components/task/TaskItem";
 
 import NameProvider from "./(Home)/NameProvider";
@@ -21,6 +21,7 @@ const Home = () => {
     const dueTomorrow = useTasksTomorrow();
     const dueWeek = useTasksWeek();
     const overdueTasks = useTasksOverdue();
+    const incomplete = useTasksIncomplete();
 
     return (
         <AuthProvider>
@@ -43,12 +44,12 @@ const Home = () => {
                             <div className="w-full h-full flex flex-col justify-evenly gap-2">
                                 {
                                     dueTomorrow.isSuccess && (
-                                        <DueCapsule count={dueTomorrow.data.length} category="Due Today" important />
+                                        <DueCapsule count={dueTomorrow.data.length} category="Due Tomorrow" important />
                                     )
                                 }
                                 {
                                     dueWeek.isSuccess && (
-                                        <DueCapsule count={dueWeek.data.length} category="Due Today" important />
+                                        <DueCapsule count={dueWeek.data.length} category="Due This Week" important />
                                     )
                                 }
                             </div>
@@ -58,7 +59,7 @@ const Home = () => {
                                 overdueTasks.isSuccess && (
                                     <>
                                         <span className="text-xl text-gray-500">Overdue Tasks</span>
-                                        <span className="text-red-500 text-3xl">{overdueTasks.data}</span>
+                                        <span className="text-red-500 text-3xl">{overdueTasks.data.length}</span>
                                     </>
                                 )
                             }
@@ -68,7 +69,7 @@ const Home = () => {
                 <div className="w-full flex flex-col gap-2 pb-24">
                     <span className="text-xl">Upcoming Tasks</span>
                     <ul className="w-full flex flex-col">
-                        {tasks.isSuccess && tasks.data.map((task, key) => {
+                        {incomplete.isSuccess && incomplete.data.map((task, key) => {
                             return (
                                 <li key={key} className="w-full h-full">
                                     <TaskItem item={task} taskFilter="all" />

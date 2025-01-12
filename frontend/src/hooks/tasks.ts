@@ -84,7 +84,6 @@ export async function loadTasks(): Promise<Task[]> {
   const response = await fetchData(`/task`, {});
 
   return await response.json();
-
 }
 
 /* Loads tasks and finds the task with given id */
@@ -146,6 +145,18 @@ export function useTasksOverdue() {
   return useQuery({
     queryKey: ["tasks", "overdue"],
     queryFn: getTasksOverdue,
+    staleTime: 1000 * 60 * 60
+  });
+}
+
+export async function getTasksIncomplete() {
+  return await (await fetchData("/task/incomplete", {})).json();
+}
+
+export function useTasksIncomplete() {
+  return useQuery({
+    queryKey: ["tasks", "incomplete"],
+    queryFn: getTasksIncomplete,
     staleTime: 1000 * 60 * 60
   });
 }
