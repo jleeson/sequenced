@@ -16,7 +16,7 @@ export type SessionRequest = Request & {
 }
 
 export function session(req: SessionRequest, res: Response, next) {
-    if (!req.session.user) return new Unauthorized("Not Logged In");
+    if (!req.session.user) throw new Unauthorized("Not Logged In");
     next();
 }
 

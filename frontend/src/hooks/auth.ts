@@ -5,6 +5,7 @@ import { fetchData } from "@/utils/data";
 
 export async function reloadAuth() {
     queryClient.invalidateQueries({ queryKey: ['auth'] });
+    queryClient.invalidateQueries({ queryKey: ['tasks'] });
 }
 
 export async function getAuth() {

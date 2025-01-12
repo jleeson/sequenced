@@ -22,7 +22,7 @@ export class TaskController {
 
         if (user) return this.taskService.getTasks(user);
 
-        return new BadRequest("Could not get data.");
+        throw new BadRequest("Could not get data.");
     }
 
     @Post()
@@ -99,6 +99,6 @@ export class TaskController {
             return { sync: true };
         }
 
-        return new BadRequest();
+        throw new BadRequest();
     }
 }
