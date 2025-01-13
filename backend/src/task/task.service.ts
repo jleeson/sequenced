@@ -31,7 +31,7 @@ export class TaskService {
     }
 
     async getTasks(user: User) {
-        return Task.find({ users: user.id }).populate("subtasks").lean<Task>().exec() || [];
+        return Task.find({ users: user.id }).populate("subtasks").lean<Task>().exec();
     }
 
     async getTasksToday(user: User) {
@@ -44,7 +44,7 @@ export class TaskService {
 
         return Task.find({
             users: user.id, date: { $regex: todayFormat }, done: false
-        }).populate("subtasks").lean<Task>().exec() || [];
+        }).populate("subtasks").lean<Task>().exec();
     }
 
     async getTasksTomorrow(user: User) {
@@ -59,7 +59,7 @@ export class TaskService {
 
         return Task.find({
             users: user.id, date: { $regex: tomorrowFormat }, done: false
-        }).populate("subtasks").lean<Task>().exec() || [];
+        }).populate("subtasks").lean<Task>().exec();
     }
 
     async getTasksWeek(user: User) {
@@ -83,13 +83,11 @@ export class TaskService {
         const format = new RegExp(dates);
         return Task.find({
             users: user.id, date: { $regex: format }, done: false
-        }).populate("subtasks").lean<Task>().exec() || [];
+        }).populate("subtasks").lean<Task>().exec();
     }
 
     async getTasksOverdue(user: User) {
         return (await this.getTasksIncomplete(user)).filter((task) => (new Date(task.date) < new Date()) && (new Date(task.date) > new Date(0)));
-
-        return []
     }
 
     async getTasksIncomplete(user: User) {
@@ -99,7 +97,6 @@ export class TaskService {
     }
 
     async deleteTask(task: Task) {
-        console.log("task", task);
         return Task.findByIdAndDelete(task.id).exec();
     }
 }
