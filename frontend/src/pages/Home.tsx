@@ -37,19 +37,19 @@ const Home = () => {
                             <div className="w-full h-full">
                                 {
                                     dueToday.isSuccess && (
-                                        <DueCapsule count={dueToday.data.length} category="Due Today" important />
+                                        <DueCapsule count={dueToday.data.count} category="Due Today" important />
                                     )
                                 }
                             </div>
                             <div className="w-full h-full flex flex-col justify-evenly gap-2">
                                 {
                                     dueTomorrow.isSuccess && (
-                                        <DueCapsule count={dueTomorrow.data.length} category="Due Tomorrow" important />
+                                        <DueCapsule count={dueTomorrow.data.count} category="Due Tomorrow" important />
                                     )
                                 }
                                 {
                                     dueWeek.isSuccess && (
-                                        <DueCapsule count={dueWeek.data.length} category="Due This Week" important />
+                                        <DueCapsule count={dueWeek.data.count} category="Due This Week" important />
                                     )
                                 }
                             </div>
@@ -59,7 +59,7 @@ const Home = () => {
                                 overdueTasks.isSuccess && (
                                     <>
                                         <span className="text-xl text-gray-500">Overdue Tasks</span>
-                                        <span className="text-red-500 text-3xl">{overdueTasks.data.length}</span>
+                                        <span className="text-red-500 text-3xl">{overdueTasks.data.count}</span>
                                     </>
                                 )
                             }

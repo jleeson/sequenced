@@ -34,13 +34,37 @@ export class TaskService {
         return Task.find({ users: user.id }).populate("subtasks").lean<Task>().exec();
     }
 
-    async getTasksToday(user: User) {
-        const today = new Date();
-        const year = `${today.getFullYear()}`;
-        const month = (today.getMonth() + 1) < 10 ? `0${today.getMonth() + 1}` : today.getMonth() + 1;
-        const date = (today.getDate() < 10) ? `0${today.getDate()}` : today.getDate();
+    async getTaskDateFormat(date: Date) {
+        const year = `${date.getFullYear()}`;
+        const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+        const day = (date.getDate() < 10) ? `0${date.getDate()}` : date.getDate();
 
-        const todayFormat = new RegExp(`${year}-${month}-${date}`);
+        return new RegExp(`${year}-${month}-${day}`);
+    }
+
+    async getTaskDateWeekFormat(date: Date) {
+        let dates = `^(?:`;
+
+        for (let i = 0; i < 7; i++) {
+            const year = `${date.getFullYear()}`;
+            const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+            const day = (date.getDate() < 10) ? `0${date.getDate()}` : date.getDate();
+
+            dates += `${year}-${month}-${day}`;
+            if (i != 6)
+                dates += "|"
+
+            date.setDate(date.getDate() + 1);
+        }
+
+        dates += ")"
+
+        return new RegExp(dates);
+    }
+
+    async getTasksToday(user: User) {
+
+        const todayFormat = this.getTaskDateFormat(new Date());
 
         return Task.find({
             users: user.id, date: { $regex: todayFormat }, done: false
@@ -51,11 +75,7 @@ export class TaskService {
         const today = new Date();
         today.setDate(today.getDate() + 1);
 
-        const year = `${today.getFullYear()}`;
-        const month = (today.getMonth() + 1) < 10 ? `0${today.getMonth() + 1}` : today.getMonth() + 1;
-        const date = (today.getDate() < 10) ? `0${today.getDate()}` : today.getDate();
-
-        const tomorrowFormat = new RegExp(`${year}-${month}-${date}`);
+        const tomorrowFormat = this.getTaskDateFormat(today);
 
         return Task.find({
             users: user.id, date: { $regex: tomorrowFormat }, done: false
@@ -64,23 +84,8 @@ export class TaskService {
 
     async getTasksWeek(user: User) {
         const today = new Date();
-        let dates = `^(?:`;
-
-        for (let i = 0; i < 7; i++) {
-            const year = `${today.getFullYear()}`;
-            const month = (today.getMonth() + 1) < 10 ? `0${today.getMonth() + 1}` : today.getMonth() + 1;
-            const date = (today.getDate() < 10) ? `0${today.getDate()}` : today.getDate();
-
-            dates += `${year}-${month}-${date}`;
-            if (i != 6)
-                dates += "|"
-
-            today.setDate(today.getDate() + 1);
-        }
-
-        dates += ")"
-
-        const format = new RegExp(dates);
+        const format = await this.getTaskDateWeekFormat(today);
+        
         return Task.find({
             users: user.id, date: { $regex: format }, done: false
         }).populate("subtasks").lean<Task>().exec();

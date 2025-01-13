@@ -102,7 +102,7 @@ export function useTasks(): UseQueryResult<Task[]> {
 }
 
 export async function getTasksToday() {
-  return await (await fetchData("/task/today", {})).json();
+  return await (await fetchData("/metrics/tasks/today", {})).json();
 }
 
 export function useTasksToday() {
@@ -114,7 +114,7 @@ export function useTasksToday() {
 }
 
 export async function getTasksTomorrow() {
-  return await (await fetchData("/task/tomorrow", {})).json();
+  return await (await fetchData("/metrics/tasks/tomorrow", {})).json();
 }
 
 export function useTasksTomorrow() {
@@ -126,7 +126,7 @@ export function useTasksTomorrow() {
 }
 
 export async function getTasksWeek() {
-  return await (await fetchData("/task/week", {})).json();
+  return await (await fetchData("/metrics/tasks/week", {})).json();
 }
 
 export function useTasksWeek() {
@@ -138,7 +138,7 @@ export function useTasksWeek() {
 }
 
 export async function getTasksOverdue() {
-  return await (await fetchData("/task/overdue", {})).json();
+  return await (await fetchData("/metrics/tasks/overdue", {})).json();
 }
 
 export function useTasksOverdue() {
