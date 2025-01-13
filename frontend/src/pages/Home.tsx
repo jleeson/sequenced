@@ -66,7 +66,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex flex-col gap-2 pb-24">
+                <div className="w-full flex flex-col gap-2 pb-32">
                     <span className="text-xl">Upcoming Tasks</span>
                     <ul className="w-full flex flex-col">
                         {incomplete.isSuccess && incomplete.data.map((task, key) => {
