@@ -32,7 +32,7 @@ const Home = () => {
                 </div>
                 <div className="flex flex-col gap-2">
                     <span className="text-xl">Your Agenda</span>
-                    <div className="w-full flex flex-col h-64 gap-2">
+                    <div className="w-full flex flex-col gap-2">
                         <div className="w-full h-full flex flex-row justify-evenly gap-2">
                             <div className="w-full h-full">
                                 {
