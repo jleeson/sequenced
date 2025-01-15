@@ -139,7 +139,7 @@ export default function TaskInfoMenu({
   };
 
   const resetForm = () => {
-    setTempData(null);
+    setTempData(createInitialTaskData());
     setIsOpen(false);
   };
 
