@@ -16,12 +16,11 @@ export default function RegisterUser() {
         const email = e.target[2].value;
         const password = e.target[3].value;
 
-        const message = await register({ first, last, email, password });
+        const response = await register({ first, last, email, password });
 
-        if (typeof message == "string")
-            setStatus(message);
-
-        if (!message){
+        if (response.statusCode == 500) {
+            setStatus(response.message);
+        } else {
             await reloadAuth();
             await navigate("/");
             await navigate(0);

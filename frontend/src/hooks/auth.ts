@@ -41,10 +41,12 @@ export function useLogin() {
 export function useRegister() {
     return useMutation({
         mutationFn: async (body: { email: string, password: string, confirm_password: string }) => {
-            const response = await fetchData("/", {
+            const response = await fetchData("/auth/register", {
                 method: "POST",
                 body
             });
+
+            console.log(response);
 
             const data = await response.json();
 

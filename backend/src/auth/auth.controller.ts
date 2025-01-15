@@ -49,11 +49,16 @@ export class AuthController {
     }
 
     @Post("/register")
-    async registerInSystem(req: SessionRequest): Promise<void> {
+    async registerInSystem(req: SessionRequest) {
         const { first, last, email, password } = req.body;
+
+        if (await this.userService.getUserByEmail(email))
+            return { statusCode: 500, message: "Email Already Exists" };
 
         const user = await this.userService.createUser(first, last, email, password);
         req.session.user = { id: user.id, first: user.first };
+
+        return { message: "Signed Up." };
     }
 
     @Post("/logout")
