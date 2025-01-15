@@ -10,8 +10,8 @@ export default function LoginHome() {
         <div className="w-screen h-screen flex justify-center items-center absolute top-0 left-0 bg-gray-50">
             <div className="w-full h-full flex flex-col justify-center px-6 gap-6">
                 <div className="flex flex-row items-center gap-6">
-                    <div className="w-20 aspect-square shadow-md border rounded-lg">
-                        <img src={icon} />
+                    <div className="w-20 aspect-square shadow-xl border rounded-xl">
+                        <img src={icon} className="w-full rounded-xl"/>
                     </div>
                     <div>
                         <h1 className="text-3xl">Sequenced</h1>
