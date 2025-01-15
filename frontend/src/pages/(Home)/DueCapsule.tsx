@@ -4,7 +4,7 @@ export default function DueCapsule({ count, category, important }) {
             <div className="flex justify-center items-center w-full h-full">
                 <span className={`${important ? "text-5xl" : "text-3xl"} text-accent-blue`}>{count}</span>
             </div>
-            <span className="text-base text-gray-500">{count != 1 ? "Tasks" : "Task"} {category}</span>
+            <span className="text-base text-center text-gray-500">{count != 1 ? "Tasks" : "Task"} {category}</span>
         </div>
     )
 }
