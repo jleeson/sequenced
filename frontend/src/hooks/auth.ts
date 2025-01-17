@@ -46,8 +46,6 @@ export function useRegister() {
                 body
             });
 
-            console.log(response);
-
             const data = await response.json();
 
             if (data.type == "ERROR") {

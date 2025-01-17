@@ -44,11 +44,7 @@ export default function TaskContainer({
   else
     baseTasks = tasks?.isSuccess ? sortByDate(tasks?.data) : [];
 
-  console.log(baseTasks);
-
   baseTasks = sortByPriority(baseTasks);
-
-  console.log("TASKS PASSED IN", baseTasks);
 
   const handleClick = async (open: boolean) => {
     let groupsActive = settings.data?.groupsActive;

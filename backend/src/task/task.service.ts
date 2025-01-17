@@ -85,7 +85,7 @@ export class TaskService {
     async getTasksWeek(user: User) {
         const today = new Date();
         const format = await this.getTaskDateWeekFormat(today);
-        
+
         return Task.find({
             users: user.id, date: { $regex: format }, done: false
         }).populate("subtasks").lean<Task>().exec();
@@ -98,7 +98,7 @@ export class TaskService {
     async getTasksIncomplete(user: User) {
         return Task.find({
             users: user.id, done: false
-        }).populate("subtasks").lean<Task>().exec();
+        }).sort({ priority: -1 }).populate("subtasks").lean<Task>().exec();
     }
 
     async deleteTask(task: Task) {

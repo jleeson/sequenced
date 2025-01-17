@@ -20,7 +20,6 @@ export default function Task() {
   useEffect(() => {
     (async () => {
       const pending = await getPending();
-      console.log("Pending", pending);
     })();
   }, []);
 
