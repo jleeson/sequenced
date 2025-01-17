@@ -222,9 +222,9 @@ export default function TaskInfoMenu({
         className="relative z-50 flex items-center justify-center"
       >
         <div
-          className={`flex flex-row items-end justify-center fixed bottom-0 inset-0 w-full h-full pt-36`}
+          className={`flex flex-row items-end justify-center fixed bottom-0 inset-0 w-full h-full pt-16`}
         >
-          <DialogPanel className="flex flex-col w-full h-full overflow-y-scroll bg-white text-accent-black border border-solid px-2 py-1 rounded-t-xl pb-8 items-center">
+          <DialogPanel className="flex flex-col w-full h-full overflow-y-scroll bg-white text-accent-black border border-gray-500 border-solid shadow-md px-2 py-1 rounded-t-xl pb-8 items-center">
             <div className="flex flex-col w-3/4 gap-6">
               <MenuHeader
                 type={type}
