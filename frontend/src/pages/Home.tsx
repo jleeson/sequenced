@@ -26,6 +26,10 @@ const Home = () => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
 
+
+    if (auth.isLoading)
+        return <>Loading...</>
+
     return (
         <AuthProvider>
             <div className="w-full h-full flex flex-col px-4 py-2 gap-4">
