@@ -1,7 +1,9 @@
-import { Controller, Get, Inject } from "@outwalk/firefly";
+import { Controller, Get, Inject, Middleware } from "@outwalk/firefly";
 import { MetricsService } from "./metrics.service";
 import { UserService } from "@/user/user.service";
+import { session } from "@/auth/auth.controller";
 
+@Middleware(session)
 @Controller()
 export class MetricsController {
 
