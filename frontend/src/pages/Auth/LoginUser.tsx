@@ -2,10 +2,12 @@ import { useNavigate } from "react-router-dom";
 import ArrowBack from "../(Login)/ArrowBack";
 import { reloadAuth, useLogin } from "@/hooks/auth";
 import { useState } from "react";
+import { useApp } from "@/hooks/app";
 
 export default function LoginUser() {
 
     const { mutateAsync: login } = useLogin();
+    const [app, setApp] = useApp();
 
     const navigate = useNavigate();
 
@@ -22,6 +24,10 @@ export default function LoginUser() {
         if (resp)
             setStatus(resp.message);
         else {
+            setApp({
+                ...app,
+                authorized: true
+            });
             await reloadAuth();
             await navigate("/");
             await navigate(0);

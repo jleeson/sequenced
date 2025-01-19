@@ -2,10 +2,15 @@ import { useNavigate } from "react-router-dom";
 import ArrowBack from "../(Login)/ArrowBack";
 import { reloadAuth, useRegister } from "@/hooks/auth";
 import { useState } from "react";
+import { useApp } from "@/hooks/app";
 
 export default function RegisterUser() {
     const navigate = useNavigate();
+
     const { mutateAsync: register } = useRegister();
+    const [app, setApp] = useApp();
+
+
     const [status, setStatus] = useState("");
 
     const registerUser = async (e) => {
@@ -21,6 +26,11 @@ export default function RegisterUser() {
         if (response.statusCode == 500) {
             setStatus(response.message);
         } else {
+            setApp({
+                ...app,
+                authorized: true
+            });
+
             await reloadAuth();
             await navigate("/");
             await navigate(0);

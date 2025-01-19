@@ -12,6 +12,9 @@ export interface AppOptions {
   tempActiveDate?: Date;
   activeTask?: Task;
   activeParent?: Task;
+
+
+  authorized: false;
 }
 
 const initialData: AppOptions = {
@@ -19,6 +22,9 @@ const initialData: AppOptions = {
   tempActiveDate: undefined,
   activeTask: undefined,
   activeParent: undefined,
+
+  
+  authorized: false
 };
 
 const reducer = (data: Record<string, any>, payload: Record<string, any>) => ({

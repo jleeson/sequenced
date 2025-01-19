@@ -1,5 +1,5 @@
-import { NavBar } from "@/pages/(Layout)/Nav/NavBar";
 import DataContainer from "./(Layout)/DataContainer";
+import { NavBar } from "./(Layout)/Nav/NavBar";
 
 const Layout = () => {
   return (

@@ -1,4 +1,3 @@
-import checkmark from "@/assets/checkmark.svg";
 import CheckmarkIcon from "./CheckmarkIcon";
 
 export default function TaskFeature({ children }) {

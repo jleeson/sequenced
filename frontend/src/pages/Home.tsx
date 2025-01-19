@@ -1,27 +1,30 @@
 import { useUser } from "@/hooks/user";
 import { DaysAsNumbers, MonthsAsNumbers, getDateDD, getNameByDate, getNameByMonth } from "@/utils/date";
-import { useTasks, useTasksIncomplete, useTasksOverdue, useTasksToday, useTasksTomorrow, useTasksWeek } from "@/hooks/tasks";
+import { useTasksIncomplete, useTasksOverdue, useTasksToday, useTasksTomorrow, useTasksWeek } from "@/hooks/tasks";
 import { TaskItem } from "@/components/task/TaskItem";
 
-import NameProvider from "./(Home)/NameProvider";
 import DueCapsule from "./(Home)/DueCapsule";
 import AuthProvider from "./Auth/AuthProvider";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "@/hooks/auth";
 
 const Home = () => {
+    const auth = useAuth();
+
     const user = useUser();
-    const today = new Date();
-    const tasks = useTasks();
-
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    // Apply Server Logic for REST data '/metrics'
 
     const dueToday = useTasksToday();
     const dueTomorrow = useTasksTomorrow();
     const dueWeek = useTasksWeek();
     const overdueTasks = useTasksOverdue();
     const incomplete = useTasksIncomplete();
+
+    if (auth.isSuccess && auth.data.message != "Logged In")
+        return <Navigate to="/auth" />
+
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
     return (
         <AuthProvider>
