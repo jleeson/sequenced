@@ -49,7 +49,7 @@ export default function TaskInfoMenu({
 
   const initialData: Task = {
     ...createInitialTaskData(),
-    date: new Date(appData.tempActiveDate ?? appData.activeDate),
+    date: new Date(appData.activeDate),
   };
 
   const [tempData, setTempData] = useReducer(reducer, initialData);
@@ -61,18 +61,23 @@ export default function TaskInfoMenu({
     ) {
       setTempData({
         ...appData.activeTask,
-        date: new Date(appData?.activeTask?.date),
+        date: new Date(appData.activeDate),
       });
 
       console.log("SET TEMP DATA", {
         ...appData.activeTask,
         id: undefined,
-        date: new Date(appData?.activeTask?.date),
+        date: new Date(appData.activeDate),
       });
     }
   }
 
   const changeAppDate = (date: Date) => {
+    setTempData({
+      ...tempData,
+      date
+    });
+
     setAppData({
       ...appData,
       activeDate: date,
@@ -178,9 +183,6 @@ export default function TaskInfoMenu({
 
     const taskData = oldTask.data;
 
-    console.log("Task Data", taskData);
-    console.log("Temp Data", tempData);
-
     updateTask({
       id: tempData.id,
       data: {
@@ -201,6 +203,7 @@ export default function TaskInfoMenu({
     }
 
     if (!tempData.id) tempData.id = createID(20);
+    tempData.date = appData.activeDate;
 
     addTask(tempData);
     createNotification(tempData);
@@ -216,7 +219,7 @@ export default function TaskInfoMenu({
       enter="transition duration-500"
     >
       <Dialog
-        onClose={() => closeMenu()}
+        onClose={() => setIsOpen(false)}
         initialFocus={ref}
         ref={ref}
         className="relative z-50 flex items-center justify-center"

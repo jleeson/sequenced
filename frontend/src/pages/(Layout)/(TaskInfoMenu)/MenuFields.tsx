@@ -52,6 +52,12 @@ export default function MenuFields({ isDeleting, tempData, setTempData, setIsOpe
                     value={formatDateTime(appData.activeDate)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         changeAppDate(new Date(e.target.value));
+
+                        setAppData({
+                            ...appData,
+                            activeDate: new Date(e.target.value)
+                        });
+
                         setTempData({
                             ...tempData,
                             date: new Date(e.target.value),

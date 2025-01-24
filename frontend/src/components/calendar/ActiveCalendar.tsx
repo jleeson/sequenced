@@ -5,8 +5,11 @@ import CalendarItem from "./CalendarItem";
 
 import CalendarIcon from "@/assets/calendar.svg";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
+import { useApp } from "@/hooks/app";
 
-export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
+export default function ActiveCalendar() {
+  const [appData, setAppData] = useApp();
+
   const [calendarSize, setCalendarSize] = useState(7);
   const [activeWeek, setActiveWeek] = useState(0);
   const [swipeCounter, setSwipeCounter] = useState<number>(0);
@@ -14,20 +17,7 @@ export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
   let touchstartX = 0;
   let touchendX = 0;
 
-  const activeDate = appData.activeDate;
-
-  const dates = generateWeek(activeDate || new Date(), 0);
-
-  const changeDate = (date: Date) => {
-    let tempData = {
-      ...appData,
-    };
-
-    tempData.activeDate = date;
-
-    setActiveDate(date);
-    setAppData(tempData);
-  };
+  const dates = generateWeek(appData.activeDate || new Date(), 0);
 
   function changeActiveMonth(e: React.ChangeEvent<HTMLInputElement>) {
     let activeData = e.target.value.split("-");
@@ -45,7 +35,6 @@ export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
     tempData.activeDate.setMonth(tempMonth);
     tempData.activeDate.setDate(tempDay);
 
-    setActiveDate(tempData.activeDate);
     setAppData(tempData);
   }
 
@@ -64,12 +53,15 @@ export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
     touchendX = e.changedTouches[0].screenX;
     const direction = checkDirection();
 
-    const tempDate = activeDate;
+    const tempDate = appData.activeDate;
 
     if (direction == 1) tempDate.setDate(tempDate.getDate() + 7);
     else if (direction == -1) tempDate.setDate(tempDate.getDate() - 7);
 
-    changeDate(tempDate);
+    setAppData({
+      appData,
+      activeDate: tempDate
+    });
   };
 
   return (
@@ -79,7 +71,7 @@ export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
           <div className="flex justify-center w-full py-1 border bg-accent-blue shadow-lg rounded-lg hover:bg-accent-blue-600">
             <input
               type="date"
-              value={formatDate(activeDate)}
+              value={formatDate(appData.activeDate)}
               onChange={changeActiveMonth}
               className="w-full h-full bg-transparent text-accent-black invert px-1 m-0 text-center text-xl"
             />
@@ -91,9 +83,8 @@ export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
           <ChevronLeftIcon
             className="hidden lg:flex w-10 h-10 fill-accent-black-100 hover:fill-accent-black-300"
             onClick={(e) => {
-              const tempDate = activeDate;
+              const tempDate = appData.activeDate;
               tempDate.setDate(tempDate.getDate() - 7);
-              changeDate(tempDate);
             }}
           />
           <div
@@ -102,20 +93,18 @@ export default function ActiveCalendar({ appData, setAppData, setActiveDate }) {
             onTouchEnd={touchend}
           >
             {dates.map((date, key) => (
-              <CalendarItem
-                key={key}
-                date={date}
-                activeDate={activeDate}
-                changeDate={changeDate}
-              />
+              <CalendarItem date={date} key={key} />
             ))}
           </div>
           <ChevronRightIcon
             className="hidden lg:flex w-10 h-10 fill-accent-black-100 hover:fill-accent-black-300"
             onClick={(e) => {
-              const tempDate = activeDate;
+              const tempDate = appData.activeDate;
               tempDate.setDate(tempDate.getDate() + 7);
-              changeDate(tempDate);
+              setAppData({
+                appData,
+                activeDate: tempDate
+              });
             }}
           />
         </div>

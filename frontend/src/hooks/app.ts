@@ -13,7 +13,7 @@ export interface AppOptions {
   activeTask?: Task;
   activeParent?: Task;
 
-
+  
   authorized: false;
 }
 
