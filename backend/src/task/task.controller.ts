@@ -25,6 +25,13 @@ export class TaskController {
         throw new BadRequest("Could not get data.");
     }
 
+    @Get("/:task/users")
+    async getUsers({ session, params }: SessionRequest) {
+        const { task } = params;
+
+        return this.taskService.getUsers(task);
+    }
+
 
     @Get("/today")
     async getTasksToday({ session }) {
@@ -141,5 +148,38 @@ export class TaskController {
         }
 
         throw new BadRequest();
+    }
+
+    @Post("/invite")
+    async inviteUser({ session, body }: SessionRequest) {
+        const { task: clientTask, email }: { task: Task, email: string } = body;
+        const task = await this.taskService.getTask(clientTask.id);
+
+        const invitee = await this.userService.getUserByEmail(email);
+
+        if (!invitee)
+            throw new BadRequest("User Not In System.");
+
+        await this.taskService.updateTask({
+            ...task,
+            users: [
+                ...task.users,
+                invitee
+            ]
+        });
+
+        return 200;
+    }
+
+    @Delete("/:taskId/users/:email/remove")
+    async removeUser({ session, params }: SessionRequest) {
+        const { taskId, email } = params;
+
+        const user = await this.userService.getUserByEmail(email);
+
+        if (user.id == session.user.id)
+            throw new BadRequest("Cannot delete yourself.");
+
+        return await this.taskService.removeUser(taskId, user);
     }
 }

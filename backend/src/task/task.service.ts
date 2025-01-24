@@ -104,4 +104,17 @@ export class TaskService {
     async deleteTask(task: Task) {
         return Task.findByIdAndDelete(task.id).exec();
     }
+
+    async getUsers(id: string) {
+        return Task.findById(id).select("users").populate("users").exec();
+    }
+
+    async removeUser(taskId, user) {
+        const task = await Task.findById(taskId).lean<Task>().select("users").populate("users").exec();
+        task.users.splice(task.users.indexOf(user), 1);
+
+        return await Task.findByIdAndUpdate(taskId, {
+            $set: task
+        }).exec();
+    }
 }

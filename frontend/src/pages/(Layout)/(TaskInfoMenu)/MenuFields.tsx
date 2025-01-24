@@ -3,8 +3,9 @@ import TaskInfoMenuItem from "./Shared/TaskInfoMenuItem";
 import TaskInfoMenuSubtaskMenu from "./Shared/TaskInfoMenuSubtaskMenu";
 import { useApp } from "@/hooks/app";
 import TaskInfoMenuSelect from "./Shared/TaskInfoMenuSelect";
+import TaskInfoMenuUser from "./Shared/TaskInfoUser/TaskInfoMenuUser";
 
-export default function MenuFields({ isDeleting, tempData, setTempData, setIsOpen, changeAppDate, changeTempAppDate, appData, setAppData }) {
+export default function MenuFields({ type, isDeleting, tempData, setTempData, setIsOpen, changeAppDate, changeTempAppDate, appData, setAppData }) {
     return (
         <div className={`flex flex-col gap-3 ${isDeleting && "blur-sm"}`}>
             <TaskInfoMenuItem
@@ -88,6 +89,8 @@ export default function MenuFields({ isDeleting, tempData, setTempData, setIsOpe
                     {tempData.date.getTime() == 0 && "Add Due Date"}
                 </button>
             </div>
+
+            {type == "edit" && <TaskInfoMenuUser data={tempData} />}
 
             <TaskInfoMenuSelect
                 name="Remind Me"

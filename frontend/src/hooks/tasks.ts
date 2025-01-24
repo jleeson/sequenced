@@ -228,3 +228,32 @@ export function useDeleteTask(): UseMutationResult<void, Error, Task, unknown> {
 
   return useMutation({ mutationFn, onSuccess });
 }
+
+export async function getTaskUsers(id: string) {
+  const resp = await fetchData(`/task/${id}/users`, {});
+
+  if (resp.ok)
+    return await resp.json();
+
+  console.log("Error", await resp.text());
+}
+
+export function useTaskUsers(taskId: string) {
+  return useQuery({
+    queryKey: ["tasks", taskId, "users"],
+    queryFn: () => getTaskUsers(taskId),
+    staleTime: 1000 * 60 * 60
+  });
+}
+
+export async function removeUser({ taskId, userEmail }: { taskId: string, userEmail: string }) {
+  return await fetchData(`/task/${taskId}/users/${userEmail}/remove`, {
+    method: "DELETE"
+  });
+}
+
+export function useRemoveUser() {
+  return useMutation({
+    mutationFn: removeUser
+  });
+}

@@ -234,6 +234,7 @@ export default function TaskInfoMenu({
                 isDeleting={isDeleting}
               />
               <MenuFields
+                type={type}
                 isDeleting={isDeleting}
 
                 tempData={tempData}
