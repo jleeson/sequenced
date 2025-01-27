@@ -71,13 +71,12 @@ export default function MenuFields({ type, isDeleting, tempData, setTempData, se
             <div className={`my-2`}>
                 <button
                     onClick={() => {
-                        if (tempData.date.getTime() != 0) {
-                            changeTempAppDate(new Date(0));
-                            setTempData({ ...tempData, date: new Date(0) });
-                        } else {
-                            changeAppDate(new Date());
-                            setTempData({ ...tempData, date: new Date() });
-                        }
+                        const noDate = new Date(0);
+
+                        setTempData({
+                            ...tempData,
+                            date: noDate
+                        });
                     }}
                     className={`px-2 py-2 ${tempData.date.getTime() != 0 &&
                         "bg-accent-red-500 hover:bg-accent-red-600 text-accent-white"
