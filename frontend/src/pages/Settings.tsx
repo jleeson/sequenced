@@ -9,6 +9,7 @@ import { PendingLocalNotificationSchema } from "@capacitor/local-notifications";
 import { useEffect, useState } from "react";
 import DailyNotifications from "./(Settings)/DailyNotifications";
 import UserLogin from "./(Settings)/UserLogin";
+import { Logger } from "@/utils/logger";
 
 export default function SettingsPage() {
   const [tempSettings, setTempSettings] = useState<Settings>({});
@@ -53,8 +54,7 @@ export default function SettingsPage() {
     await cancelNotification(await FindDailyTask());
     const newReminder = await setDailyReminders(hour, minute);
 
-    console.log(`Set Daily Reminders!`);
-    console.log(newReminder);
+    Logger.log(`Set Daily Reminders!`);
   };
 
   const HandleDailyChange = async (newValue: boolean) => {
@@ -80,8 +80,7 @@ export default function SettingsPage() {
 
       const newReminder = await setDailyReminders(hour, minute);
 
-      console.log(`Set Daily Reminders!`);
-      console.log(newReminder);
+      Logger.log(`Set Daily Reminders!`);
     }
   };
 

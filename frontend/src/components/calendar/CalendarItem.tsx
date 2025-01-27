@@ -4,8 +4,6 @@ export default function CalendarItem({ date }) {
   const [appData, setAppData] = useApp();
 
   const changeDate = (date, e) => {
-    console.log("Date", date, "E", e);
-
     let tempData = {
       ...appData,
       activeDate: date

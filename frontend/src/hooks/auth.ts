@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { reloadUser } from "./user";
 import { queryClient } from "..";
 import { fetchData } from "@/utils/data";
+import { Logger } from "@/utils/logger";
 
 export async function reloadAuth() {
     await queryClient.invalidateQueries({ queryKey: ['auth'] });
@@ -63,5 +64,5 @@ export async function signout() {
     queryClient.invalidateQueries({ queryKey: ["auth"] });
     queryClient.invalidateQueries({ queryKey: ["user"] });
 
-    console.log("User Signed Out");
+    Logger.log("User Signed Out.");
 }

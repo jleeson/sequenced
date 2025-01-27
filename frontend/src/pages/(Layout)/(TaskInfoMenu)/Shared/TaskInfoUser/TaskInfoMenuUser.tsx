@@ -4,6 +4,7 @@ import TaskInfoMenuUserInvite from "./TaskInfoMenuUserInvite";
 import { useRemoveUser, useTaskUsers } from "@/hooks/tasks";
 import { queryClient } from "@/index";
 import { useUser } from "@/hooks/user";
+import { Logger } from "@/utils/logger";
 
 export default function TaskInfoMenuUser({ data }) {
     const host = useUser();
@@ -15,13 +16,11 @@ export default function TaskInfoMenuUser({ data }) {
 
     const users = useTaskUsers(data.id);
 
-    console.log(users.data);
-
     if (users.isLoading)
         return "Loading...";
 
     if (users.isError)
-        console.log("Error", users.error);
+        Logger.logError(users.error.message);
 
     if (users.isSuccess)
         return (

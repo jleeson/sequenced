@@ -7,6 +7,7 @@ import {
   ScheduleResult,
 } from "@capacitor/local-notifications";
 import { getSettings, setSettings } from "@/hooks/settings";
+import { Logger } from "./logger";
 
 /* Checks if a user has been reminded */
 export async function hasRemindedToday(): Promise<boolean> {
@@ -124,7 +125,7 @@ export async function scheduleNotification(
 
     return notif;
   } else {
-    console.log(`Unable to send notification: Missing Permissions`);
+    Logger.logWarning(`Unable to send notification: Missing Permissions`);
   }
 
   return undefined;

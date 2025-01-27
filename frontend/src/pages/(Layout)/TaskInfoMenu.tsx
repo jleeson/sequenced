@@ -23,6 +23,7 @@ import MenuHeader from "./(TaskInfoMenu)/MenuHeader";
 import MenuFields from "./(TaskInfoMenu)/MenuFields";
 import MenuEdit from "./(TaskInfoMenu)/MenuEdit";
 import MenuFooter from "./(TaskInfoMenu)/MenuFooter";
+import { Logger } from "@/utils/logger";
 
 interface TaskInfoMenuSettings {
   type?: string;
@@ -64,7 +65,7 @@ export default function TaskInfoMenu({
         date: new Date(appData.activeDate),
       });
 
-      console.log("SET TEMP DATA", {
+      Logger.log("SET TEMP DATA", {
         ...appData.activeTask,
         id: undefined,
         date: new Date(appData.activeDate),
@@ -140,7 +141,7 @@ export default function TaskInfoMenu({
       },
     });
 
-    console.log("NOTIFI", notif);
+    Logger.log("NOTIFI", notif);
   };
 
   const resetForm = () => {
@@ -154,21 +155,21 @@ export default function TaskInfoMenu({
     if (appData.activeParent) {
       const subTaskData = tempData;
 
-      console.log("Sub Task Data", subTaskData);
+      Logger.log("Sub Task Data", subTaskData);
 
       const parentData = appData.activeParent;
 
-      console.log("Parent Data", parentData);
+      Logger.log("Parent Data", parentData);
 
       const newSubs = appData.activeParent.subtasks;
 
-      console.log("Old Subtasks", newSubs);
+      Logger.log("Old Subtasks", newSubs);
 
       for (let i = 0; i < newSubs.length; i++) {
         if (newSubs[i].id == subTaskData.id) newSubs[i] = subTaskData;
       }
 
-      console.log("New Subtasks", newSubs);
+      Logger.log("New Subtasks", newSubs);
 
       updateTask({
         id: parentData.id,
@@ -190,7 +191,7 @@ export default function TaskInfoMenu({
       },
     });
 
-    console.log("Data To Add", {
+    Logger.log("Data To Add", {
       tempData,
     });
   };
@@ -203,7 +204,16 @@ export default function TaskInfoMenu({
     }
 
     if (!tempData.id) tempData.id = createID(20);
-    tempData.date = appData.activeDate;
+
+    if (appData.storedDate){
+      setAppData({
+        ...appData,
+        activeDate: appData.storedDate,
+        storedDate: null
+      });
+
+      console.log("SET");
+    }
 
     addTask(tempData);
     createNotification(tempData);

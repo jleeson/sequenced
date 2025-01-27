@@ -73,6 +73,12 @@ export default function MenuFields({ type, isDeleting, tempData, setTempData, se
                     onClick={() => {
                         const noDate = new Date(0);
 
+                        setAppData({
+                            ...appData,
+                            storedDate: appData.activeDate,
+                            activeDate: noDate
+                        });
+                        
                         setTempData({
                             ...tempData,
                             date: noDate

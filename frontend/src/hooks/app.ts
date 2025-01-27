@@ -1,10 +1,12 @@
 import { createContext, useContext, useReducer } from "react";
 import { Task } from "./tasks";
+import { Logger } from "@/utils/logger";
 
 export const AppContext = createContext(null);
 
 export const SERVER_IP = process.env.NODE_ENV == "development" ? `http://localhost:8080` : `https://api.sequenced.ottegi.com`;
-console.log("Running in ", process.env.NODE_ENV, " mode");
+
+Logger.log(`Running in ${process.env.NODE_ENV} mode.`);
 
 // TODO: remove tempActiveDate.
 export interface AppOptions {

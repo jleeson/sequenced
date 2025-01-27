@@ -8,6 +8,7 @@ import TaskContainer from "@/components/menus/TaskContainer/TaskContainer";
 import { getPending } from "@/utils/notifs";
 import { SERVER_IP, useApp } from "@/hooks/app";
 import TaskInfoMenu from "@/pages/(Layout)/TaskInfoMenu";
+import { Logger } from "@/utils/logger";
 
 export default function Task() {
   const [appData, setAppData] = useApp();
@@ -24,7 +25,7 @@ export default function Task() {
   }, []);
 
   if (tasks.isError)
-    console.log(`[ERROR] ${tasks.error}`);
+    Logger.logError(tasks.error.message);
 
   return (
     <div className="w-full h-full bg-white text-accent-black">

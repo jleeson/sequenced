@@ -9,6 +9,7 @@ import {
 } from "@capacitor-community/admob";
 
 import { Capacitor } from "@capacitor/core";
+import { Logger } from "./logger";
 
 const adID = {
   ios: import.meta.env.VITE_IOS_AD_ID,
@@ -33,7 +34,7 @@ export async function initializeAdMob() {
   }
 
   AdMob.addListener(BannerAdPluginEvents.Opened, (info: AdMobBannerSize) => {
-    console.log("AD INFO OPEN", info);
+    Logger.log("AD INFO OPEN", info);
   });
 
   AdMob.addListener(
@@ -56,8 +57,8 @@ export async function initializeAdMob() {
           "--safe-area-inset-bottom"
         );
 
-        console.log("SAT", safeAreaTop);
-        console.log("SAB", safeAreaBottom);
+        Logger.log("SAT", safeAreaTop);
+        Logger.log("SAB", safeAreaBottom);
 
         shell.style.marginTop = `${margin}px`;
         shell.style.setProperty("--banner-ad-height", shell.style.marginTop);

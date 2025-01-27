@@ -1,6 +1,7 @@
 import { Task, createInitialTaskData } from "@/hooks/tasks";
 import TaskInfoMenuSubtask from "./TaskInfoMenuSubtask";
 import { createID } from "@/utils/id";
+import { Logger } from "@/utils/logger";
 
 export interface TaskInfoMenuSubtaskMenuParams {
   subtasks: Task[];
@@ -15,11 +16,11 @@ export default function TaskInfoMenuSubtaskMenu({
   setIsOpen
 }: TaskInfoMenuSubtaskMenuParams) {
   const createNewSubtask = () => {
-    console.log("Initial subtasks", tempData.subtasks);
+    Logger.log("Initial subtasks", tempData.subtasks);
 
     const tempSubtasks = [...(tempData.subtasks || [])];
 
-    console.log("Temp Old Subtasks", tempSubtasks);
+    Logger.log("Temp Old Subtasks", tempSubtasks);
 
     const newTask: Task = {
       ...createInitialTaskData(),
@@ -28,9 +29,9 @@ export default function TaskInfoMenuSubtaskMenu({
 
     tempSubtasks.push(newTask);
 
-    console.log("New Task", newTask);
+    Logger.log("New Task", newTask);
 
-    console.log("Temp New Subtasks", tempSubtasks);
+    Logger.log("Temp New Subtasks", tempSubtasks);
 
     setTempData({
       subtasks: tempSubtasks,

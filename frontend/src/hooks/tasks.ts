@@ -9,6 +9,7 @@ import {
 
 import { getSync } from "./settings";
 import { fetchData } from "@/utils/data";
+import { Logger } from "@/utils/logger";
 
 // TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
 export interface Task {
@@ -50,19 +51,17 @@ export async function migrateTasks() {
     body: tasks
   });
 
-  console.log("Response", response);
-
   const migration = await response.json();
 
   if (migration.isSynced) {
-    console.log("Loading cloud data");
+    Logger.log("Louding cloud data...");
     await Preferences.set({ key: "sync", value: "true" });
     await Preferences.set({ key: "tasks", value: JSON.stringify(migration.tasks) });
     return null;
   }
 
   if (migration.sync) {
-    console.log("Synced with Cloud");
+    Logger.log("Synced with the cloud.");
     await Preferences.set({ key: "sync", value: "true" });
     return null;
   }
@@ -235,7 +234,7 @@ export async function getTaskUsers(id: string) {
   if (resp.ok)
     return await resp.json();
 
-  console.log("Error", await resp.text());
+  Logger.logError(await resp.text());
 }
 
 export function useTaskUsers(taskId: string) {
