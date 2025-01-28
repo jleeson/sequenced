@@ -55,6 +55,9 @@ export default function TaskInfoMenu({
 
   const [tempData, setTempData] = useReducer(reducer, initialData);
 
+  console.log("TD", tempData);
+  console.log("AT", appData.activeTask);
+
   if (type == "edit") {
     if (
       appData.activeTask?.id != undefined &&
@@ -62,14 +65,10 @@ export default function TaskInfoMenu({
     ) {
       setTempData({
         ...appData.activeTask,
-        date: new Date(appData.activeDate),
+        date: new Date(appData.activeTask?.date),
       });
 
-      Logger.log("SET TEMP DATA", {
-        ...appData.activeTask,
-        id: undefined,
-        date: new Date(appData.activeDate),
-      });
+      Logger.log("SET TEMP DATA", appData.activeTask);
     }
   }
 
@@ -145,7 +144,8 @@ export default function TaskInfoMenu({
   };
 
   const resetForm = () => {
-    setTempData(createInitialTaskData());
+    setTempData({ ...createInitialTaskData(), id: undefined });
+    setAppData({ ...appData, activeTask: undefined });
     setIsOpen(false);
   };
 
@@ -192,7 +192,7 @@ export default function TaskInfoMenu({
     });
 
     Logger.log("Data To Add", {
-      tempData,
+      tempData
     });
   };
 
@@ -205,7 +205,7 @@ export default function TaskInfoMenu({
 
     if (!tempData.id) tempData.id = createID(20);
 
-    if (appData.storedDate){
+    if (appData.storedDate) {
       setAppData({
         ...appData,
         activeDate: appData.storedDate,
@@ -229,7 +229,7 @@ export default function TaskInfoMenu({
       enter="transition duration-500"
     >
       <Dialog
-        onClose={() => setIsOpen(false)}
+        onClose={() => resetForm()}
         initialFocus={ref}
         ref={ref}
         className="relative z-50 flex items-center justify-center"

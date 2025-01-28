@@ -50,7 +50,7 @@ export default function MenuFields({ type, isDeleting, tempData, setTempData, se
                 <TaskInfoMenuItem
                     name="Due Date"
                     type="datetime-local"
-                    value={formatDateTime(appData.activeDate)}
+                    value={formatDateTime(tempData.date)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         changeAppDate(new Date(e.target.value));
 
