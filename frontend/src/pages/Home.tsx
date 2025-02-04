@@ -35,7 +35,7 @@ const Home = () => {
             <div className="w-full h-full flex flex-col px-4 py-2 gap-4">
                 <div className="flex flex-col gap-1">
                     {
-                        user.data.first ? (
+                        user.isSuccess && user.data.first ? (
                             <span className="text-2xl">Hello <span className="text-accent-blue">{user.data.first}</span>!</span>
                         ) : (
                             <span className="text-2xl">Hello!</span>
