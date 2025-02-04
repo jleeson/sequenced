@@ -57,10 +57,10 @@ export default function RegisterUser() {
                         <input required className="w-full border-b bg-transparent py-2 px-1 text-lg" placeholder="Email Address" />
                         <input required className="w-full border-b bg-transparent py-2 px-1 text-lg" placeholder="Password" />
                     </div>
-                    <div className="w-full flex items-center text-left gap-2 rounded-md">
-                        <input required type="checkbox" className="w-6 h-6 aspect-square border border-accent-blue" />
-                        <span>By continuing, you agree to our <span className="text-accent-blue underline">Terms of Service</span> and <span className="text-accent-blue underline">Privacy Policy</span>.</span>
-                    </div>
+                    <label htmlFor="terms-policy" className="w-full flex items-center text-left gap-2 rounded-md">
+                        <input id="terms-policy" required type="checkbox" className="w-6 h-6 aspect-square border border-accent-blue" />
+                        <span>By continuing, you agree to our <a href="https://www.ottegi.com/privacy" target="_blank" className="text-accent-blue underline">Privacy Policy</a>.</span>
+                    </label>
                     {status.length > 0 && <span className="text-red-500">{status}</span>}
                     <button type="submit" className="w-full shadow-md border py-2 bg-accent-blue text-accent-white rounded-md my-4 text-xl uppercase">Get Started</button>
                 </form>
