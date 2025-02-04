@@ -55,9 +55,6 @@ export default function TaskInfoMenu({
 
   const [tempData, setTempData] = useReducer(reducer, initialData);
 
-  console.log("TD", tempData);
-  console.log("AT", appData.activeTask);
-
   if (type == "edit") {
     if (
       appData.activeTask?.id != undefined &&
@@ -211,8 +208,6 @@ export default function TaskInfoMenu({
         activeDate: appData.storedDate,
         storedDate: null
       });
-
-      console.log("SET");
     }
 
     addTask(tempData);
