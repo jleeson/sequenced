@@ -26,12 +26,59 @@ interface ContainerSettings {
 }
 
 export default function TaskContainer({
+  skeleton,
   identifier,
   title,
   tasks,
   activeFilter,
   setIsInspecting,
 }: ContainerSettings) {
+  if (skeleton) {
+    return (
+      <div className="group flex flex-col items-center w-[90%] h-full my-2">
+        <div className="w-full flex flex-row items-center border bg-accent-blue text-accent-white border-accent-blue rounded-lg px-2  hover:bg-accent-blue-600 [&:has(.task-container-accordian:hover)]:bg-accent-blue">
+          <div className="w-full flex flex-row justify-between">
+            <div className="flex flex-row items-center py-1">
+              <ChevronRightIcon
+                className=""
+                width="32"
+              />
+              <div className="flex flex-row gap-2">
+                <h1 className="text-xl">{title}</h1>
+                <h1 className="text-xl text-accent-white">(0/0)</h1>
+              </div>
+            </div>
+            <div className="flex flex-row items-center">
+              <Menu>
+                <Menu.Button>
+                  <div className="group/filter task-container-accordian">
+                    <AdjustmentsHorizontalIcon
+                      width="32"
+                      className="group-hover/filter:fill-accent-blue"
+                    />
+                  </div>
+                </Menu.Button>
+                <div className="group/filter relative inset-0 z-20">
+                  <Menu.Items className="flex flex-col absolute right-4 top-4 gap-2 bg-white border border-solid shadow-md rounded-lg py-4 px-4 z-30">
+                    <TaskMenuItem skeleton="true">
+                      <span>All</span>
+                    </TaskMenuItem>
+                    <TaskMenuItem skeleton="true">
+                      <span>Incomplete</span>
+                    </TaskMenuItem>
+                  </Menu.Items>
+                </div>
+              </Menu>
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-full">
+          <TaskMenu skeleton="true" />
+        </div>
+      </div>
+    )
+  }
+
   const [appData, setAppData] = useApp();
   const [taskFilter, setTaskFilter] = useState("incomplete");
   const { mutate: setSettings } = useUpdateSettings();

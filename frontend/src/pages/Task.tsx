@@ -17,15 +17,25 @@ export default function Task() {
 
   const tasks = useTasks();
 
-  // TODO: Turn into React Query
-  useEffect(() => {
-    (async () => {
-      const pending = await getPending();
-    })();
-  }, []);
-
   if (tasks.isError)
     Logger.logError(tasks.error.message);
+
+  if (tasks.isLoading) {
+    return (
+      <div className="w-full h-full bg-white text-accent-black">
+        <div className="h-full pb-12">
+          <div className="flex flex-col items-center gap-2">
+            <ActiveCalendar skeleton="true" />
+            <DayTasks skeleton="true" />
+            <TaskContainer title="All Tasks" skeleton="true" />
+          </div>
+          <div>
+            {/* <TaskInfoMenu skeleton="true" /> */}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="w-full h-full bg-white text-accent-black">

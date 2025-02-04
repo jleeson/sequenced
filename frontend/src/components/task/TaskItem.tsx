@@ -10,7 +10,37 @@ import { isTaskDone } from "@/utils/data";
 import { useApp } from "@/hooks/app";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
-export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
+interface TaskItemParams {
+  skeleton: boolean;
+}
+
+export function TaskItem({ skeleton, item, setIsInspecting, type, parent, taskFilter }: TaskItemParams) {
+
+  if (skeleton) {
+    return (
+      <div className="w-full flex flex-col gap-2">
+        <TaskItemShell skeleton>
+          <div className="w-full h-full flex flex-row items-center">
+            <TaskItemCheckBox skeleton="true" />
+            <div className="w-full">
+              <div className="w-full flex flex-row items-center justify-between">
+                <TaskItemTitle text="Loading..." />
+              </div>
+              <div className="w-fit flex flex-row flex-end items-center justify-start px-3">
+                <div className="w-full h-full flex items-center justify-evenly">
+                  <TaskItemDate task={item} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </TaskItemShell>
+        <div className="w-full flex justify-end">
+          <div className="w-full pl-10 flex flex-col justify-end gap-1"></div>
+        </div>
+      </div>
+    )
+  }
+
 
   // TODO: Remove Later
   if (!setIsInspecting) setIsInspecting = () => { };
@@ -29,6 +59,7 @@ export function TaskItem({ item, setIsInspecting, type, parent, taskFilter }) {
   const [isManaging, setIsManaging] = useState(false);
 
   const [isAccordion, setAccordion] = useState(item.accordion || false);
+
 
   const handleMarkComplete = (e) => {
     e.stopPropagation();

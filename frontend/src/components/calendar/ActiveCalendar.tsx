@@ -7,7 +7,36 @@ import CalendarIcon from "@/assets/calendar.svg";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 import { useApp } from "@/hooks/app";
 
-export default function ActiveCalendar() {
+export default function ActiveCalendar({ skeleton }) {
+  if (skeleton) {
+    return (
+      <div className="w-full h-full px-2">
+        <div className="w-full flex justify-center my-3">
+          <div className="flex flex-row w-[90%] justify-center">
+            <div className="flex justify-center w-full py-1 border bg-accent-blue shadow-lg rounded-lg hover:bg-accent-blue-600">
+              <input
+                value={formatDate(new Date())}
+                type="date"
+                className="w-full h-full bg-transparent text-accent-black invert px-1 m-0 text-center text-xl"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-full flex flex-row items-center justify-center">
+          <div className="flex flex-row w-full h-full justify-evenly items-center">
+            <ChevronLeftIcon className="hidden lg:flex w-10 h-10 fill-accent-black-100 hover:fill-accent-black-300" />
+            <div className="w-full md:w-[90%] flex flex-row justify-between px-4">
+              {generateWeek(new Date(), 0).map((date, key) => (
+                <CalendarItem date={date} key={key} />
+              ))}
+            </div>
+            <ChevronRightIcon className="hidden lg:flex w-10 h-10 fill-accent-black-100 hover:fill-accent-black-300" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const [appData, setAppData] = useApp();
 
   const [calendarSize, setCalendarSize] = useState(7);

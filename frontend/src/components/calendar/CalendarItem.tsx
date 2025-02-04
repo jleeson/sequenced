@@ -1,6 +1,14 @@
 import { useApp } from "@/hooks/app";
 
-export default function CalendarItem({ date }) {
+export default function CalendarItem({ skeleton, date }) {
+  if (skeleton) {
+    return (
+      <div className="hover:bg-accent-white p-3 rounded-full w-10 h-10 flex justify-center text-center items-center">
+        <span className="text-lg">Today</span>
+      </div>
+    )
+  }
+
   const [appData, setAppData] = useApp();
 
   const changeDate = (date, e) => {

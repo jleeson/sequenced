@@ -3,7 +3,18 @@ import TaskContainer from "../menus/TaskContainer/TaskContainer";
 import { isDateWithinProximity, sortByDate } from "@/utils/data";
 import { useApp } from "@/hooks/app";
 
-export default function DayTasks({ tasks, setIsInspecting }) {
+export default function DayTasks({ skeleton, tasks, setIsInspecting }) {
+  if (skeleton) {
+    return (
+      <TaskContainer
+        skeleton="true"
+        identifier="daily"
+        activeFilter="generalTasks"
+        title="Today's Tasks"
+      />
+    );
+  }
+
   const [appData, setAppData] = useApp();
 
   const getDayTasks = () => {
