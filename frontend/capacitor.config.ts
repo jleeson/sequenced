@@ -20,6 +20,9 @@ const configGlobal: CapacitorElectronConfig = {
       iconColor: "#307acf",
       sound: "beep.wav",
     },
+    CapacitorHttp: {
+      enabled: true,
+    },
   },
 };
 
