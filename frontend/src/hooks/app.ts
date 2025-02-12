@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
-import { Task } from "./tasks";
 import { Logger } from "@/utils/logger";
+
+import { Task } from "@backend/task/task.entity";
 
 export const AppContext = createContext(null);
 
@@ -14,7 +15,6 @@ export interface AppOptions {
   tempActiveDate?: Date;
   activeTask?: Task;
   activeParent?: Task;
-
   
   authorized: false;
 }

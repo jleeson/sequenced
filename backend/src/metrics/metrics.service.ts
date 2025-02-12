@@ -4,16 +4,20 @@ import { Task } from "@/task/task.entity";
 import { User } from "@/user/user.entity";
 import { TaskService } from "@/task/task.service";
 
+export interface CountData {
+    count: number;
+}
+
 @Injectable()
 export class MetricsService {
 
     @Inject() taskService: TaskService;
 
-    async getTaskCount(user: User) {
+    async getTaskCount(user: User): Promise<CountData> {
         return { count: await Task.countDocuments({ users: user.id }).exec() };
     }
 
-    async getTaskTodayCount(user: User) {
+    async getTaskTodayCount(user: User): Promise<CountData> {
         const todayFormat = await this.taskService.getTaskDateFormat(new Date());
 
         return {
@@ -23,7 +27,7 @@ export class MetricsService {
         };
     }
 
-    async getTaskTomorrowCount(user: User) {
+    async getTaskTomorrowCount(user: User): Promise<CountData> {
         const today = new Date();
         today.setDate(today.getDate() + 1);
 
@@ -36,7 +40,7 @@ export class MetricsService {
         };
     }
 
-    async getTaskWeekCount(user: User) {
+    async getTaskWeekCount(user: User): Promise<CountData> {
         const today = new Date();
         const format = await this.taskService.getTaskDateWeekFormat(today);
 
@@ -47,7 +51,7 @@ export class MetricsService {
         };
     }
 
-    async getTaskOverdueCount(user: User) {
+    async getTaskOverdueCount(user: User): Promise<CountData> {
         return {
             count: (
                 await this.taskService.getTasksIncomplete(user)

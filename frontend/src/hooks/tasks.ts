@@ -7,22 +7,12 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 
+import { Logger } from "@/utils/logger";
+import { Task } from "@backend/task/task.entity";
+import { CountData } from "@backend/metrics/metrics.service";
+
 import { getSync } from "./settings";
 import { fetchData } from "@/utils/data";
-import { Logger } from "@/utils/logger";
-
-// TODO - a task likely should always have these properties when you create it, optional on id is especially bad.
-export interface Task {
-  title?: string;
-  description?: string;
-  date?: Date;
-  id?: string;
-  done?: boolean;
-  repeater?: string;
-  reminder?: string;
-  subtasks?: Task[];
-  priority?: number;
-}
 
 export function createInitialTaskData(): Task {
   return {
@@ -37,12 +27,12 @@ export function createInitialTaskData(): Task {
   };
 }
 
-export async function checkMigration() {
+export async function checkMigration(): Promise<void> {
   const synced = await getSync();
   if (!synced) await migrateTasks();
 }
 
-export async function migrateTasks() {
+export async function migrateTasks(): Promise<void> {
   const { value } = await Preferences.get({ key: "tasks" });
   const tasks = JSON.parse(value ?? "[]");
 
@@ -57,13 +47,11 @@ export async function migrateTasks() {
     Logger.log("Louding cloud data...");
     await Preferences.set({ key: "sync", value: "true" });
     await Preferences.set({ key: "tasks", value: JSON.stringify(migration.tasks) });
-    return null;
   }
 
   if (migration.sync) {
     Logger.log("Synced with the cloud.");
     await Preferences.set({ key: "sync", value: "true" });
-    return null;
   }
 }
 
@@ -86,9 +74,9 @@ export async function loadTasks(): Promise<Task[]> {
 }
 
 /* Loads tasks and finds the task with given id */
-export async function loadTaskById(id: string): Promise<Task> {
+export async function loadTaskById(id: string): Promise<Task | undefined> {
   const tasks = await loadTasks();
-  return tasks.find((task) => task.id == id) || {};
+  return tasks.find((task) => task.id == id);
 }
 
 /* returns query data */
@@ -100,11 +88,11 @@ export function useTasks(): UseQueryResult<Task[]> {
   });
 }
 
-export async function getTasksToday() {
+export async function getTasksToday(): Promise<CountData> {
   return await (await fetchData("/metrics/tasks/today", {})).json();
 }
 
-export function useTasksToday() {
+export function useTasksToday(): UseQueryResult<Task[]> {
   return useQuery({
     queryKey: ["tasks", "today"],
     queryFn: getTasksToday,
@@ -112,11 +100,11 @@ export function useTasksToday() {
   });
 }
 
-export async function getTasksTomorrow() {
+export async function getTasksTomorrow(): Promise<CountData> {
   return await (await fetchData("/metrics/tasks/tomorrow", {})).json();
 }
 
-export function useTasksTomorrow() {
+export function useTasksTomorrow(): UseQueryResult<CountData> {
   return useQuery({
     queryKey: ["tasks", "tomorrow"],
     queryFn: getTasksTomorrow,
@@ -124,11 +112,11 @@ export function useTasksTomorrow() {
   });
 }
 
-export async function getTasksWeek() {
+export async function getTasksWeek(): Promise<CountData> {
   return await (await fetchData("/metrics/tasks/week", {})).json();
 }
 
-export function useTasksWeek() {
+export function useTasksWeek(): UseQueryResult<CountData> {
   return useQuery({
     queryKey: ["tasks", "week"],
     queryFn: getTasksWeek,
@@ -136,11 +124,11 @@ export function useTasksWeek() {
   });
 }
 
-export async function getTasksOverdue() {
+export async function getTasksOverdue(): Promise<CountData> {
   return await (await fetchData("/metrics/tasks/overdue", {})).json();
 }
 
-export function useTasksOverdue() {
+export function useTasksOverdue(): UseQueryResult<CountData> {
   return useQuery({
     queryKey: ["tasks", "overdue"],
     queryFn: getTasksOverdue,
@@ -148,11 +136,11 @@ export function useTasksOverdue() {
   });
 }
 
-export async function getTasksIncomplete() {
+export async function getTasksIncomplete(): Promise<CountData> {
   return await (await fetchData("/task/incomplete", {})).json();
 }
 
-export function useTasksIncomplete() {
+export function useTasksIncomplete(): UseQueryResult<CountData> {
   return useQuery({
     queryKey: ["tasks", "incomplete"],
     queryFn: getTasksIncomplete,

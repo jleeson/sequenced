@@ -1,12 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, UseQueryResult, useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/utils/data";
+import { User } from "@backend/user/user.entity";
 
-async function getUser(){
+async function getUser(): Promise<User> {
     const response = await fetchData("/user", {});
     return await response.json();
-} 
+}
 
-export async function updateName(first: string, last: string) {
+export async function updateName(first: string, last: string): Promise<void> {
     await fetchData("/user/name", {
         method: "PATCH",
         body: {
@@ -15,7 +16,7 @@ export async function updateName(first: string, last: string) {
     })
 }
 
-export function useUser() {
+export function useUser(): UseQueryResult<User> {
     return useQuery({
         queryKey: ["user"],
         queryFn: getUser,
@@ -23,10 +24,10 @@ export function useUser() {
     });
 }
 
-export function reloadUser(queryClient) {
-    queryClient.invalidateQueries({ queryKey: ["user"] });
+export function reloadUser(queryClient: QueryClient): Promise<void> {
+    return queryClient.invalidateQueries({ queryKey: ["user"] });
 }
 
-export function reloadToken(queryClient) {
-    queryClient.invalidateQueries({ queryKey: ["token"] });
+export function reloadToken(queryClient: QueryClient): Promise<void> {
+    return queryClient.invalidateQueries({ queryKey: ["token"] });
 }
