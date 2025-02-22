@@ -15,6 +15,7 @@ export default function ActiveCalendar({ skeleton }) {
           <div className="flex flex-row w-[90%] justify-center">
             <div className="flex justify-center w-full py-1 border bg-accent-blue shadow-lg rounded-lg hover:bg-accent-blue-600">
               <input
+                onChange={() => {}}
                 value={formatDate(new Date())}
                 type="date"
                 className="w-full h-full bg-transparent text-accent-black invert px-1 m-0 text-center text-xl"

@@ -7,12 +7,15 @@ import { Request } from "express";
 
 export type SessionRequest = Request & {
     session: {
-        user: {
-            id: string;
-            first: string
-        },
+        user: SessionUser,
         destroy?: CallableFunction
     }
+}
+
+export interface SessionUser {
+    id: string;
+    first: string;
+    isControlled?: boolean;
 }
 
 export function session(req: SessionRequest, res: Response, next) {
@@ -59,6 +62,21 @@ export class AuthController {
         req.session.user = { id: user.id, first: user.first };
 
         return { message: "Signed Up." };
+    }
+
+    @Post("/loginAsUser")
+    async loginAsUser(req: SessionRequest) {
+        const { id } = req.body;
+
+        const user = await this.userService.getUser(req.session.user.id);
+        const controlledUser = await this.userService.getUser(id);
+
+        if (user.developer) {
+            req.session.user = { id: controlledUser.id, first: user.first, isControlled: true };
+            return "OK";
+        }
+
+        throw new Unauthorized("Not a Developer");
     }
 
     @Post("/logout")

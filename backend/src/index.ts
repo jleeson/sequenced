@@ -11,7 +11,7 @@ import { rateLimit } from 'express-rate-limit'
 
 /* setup the platform and global middleware */
 const platform = new ExpressPlatform();
-platform.use(cors({ origin: ['https://api.sequenced.ottegi.com','https://sequenced.ottegi.com', 'http://localhost:5173', 'http://localhost:8080', ['http://192.168.1.20:5173']], credentials: true }));
+platform.use(cors({ origin: ['https://api.sequenced.ottegi.com','https://sequenced.ottegi.com', 'http://localhost:5173', 'http://localhost:8080', 'http://localhost:4173'], credentials: true }));
 platform.use(cookieParser());
 platform.use(rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes

@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import DailyNotifications from "./(Settings)/DailyNotifications";
 import UserLogin from "./(Settings)/UserLogin";
 import { Logger } from "@/utils/logger";
+import DeveloperSettings from "./(Settings)/DeveloperSettings";
+import ControllerUser from "./(Settings)/ControlledUser";
 
 export default function SettingsPage() {
   const [tempSettings, setTempSettings] = useState<Settings>({});
@@ -117,6 +119,9 @@ export default function SettingsPage() {
               /> */}
             </div>
           )}
+          <DeveloperSettings>
+            <ControllerUser />
+          </DeveloperSettings>
         </div>
       </div>
     </div>
