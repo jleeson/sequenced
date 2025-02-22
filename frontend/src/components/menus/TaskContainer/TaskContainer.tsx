@@ -33,6 +33,11 @@ export default function TaskContainer({
   activeFilter,
   setIsInspecting,
 }: ContainerSettings) {
+  const [appData, setAppData] = useApp();
+  const [taskFilter, setTaskFilter] = useState("incomplete");
+  const { mutate: setSettings } = useUpdateSettings();
+  const settings = useSettings();
+
   if (skeleton) {
     return (
       <div className="group flex flex-col items-center w-[90%] h-full my-2">
@@ -78,11 +83,6 @@ export default function TaskContainer({
       </div>
     )
   }
-
-  const [appData, setAppData] = useApp();
-  const [taskFilter, setTaskFilter] = useState("incomplete");
-  const { mutate: setSettings } = useUpdateSettings();
-  const settings = useSettings();
 
   let baseTasks: Task[];
 

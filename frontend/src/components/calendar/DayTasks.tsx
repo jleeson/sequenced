@@ -4,6 +4,8 @@ import { isDateWithinProximity, sortByDate } from "@/utils/data";
 import { useApp } from "@/hooks/app";
 
 export default function DayTasks({ skeleton, tasks, setIsInspecting }) {
+  const [appData, setAppData] = useApp();
+
   if (skeleton) {
     return (
       <TaskContainer
@@ -15,8 +17,6 @@ export default function DayTasks({ skeleton, tasks, setIsInspecting }) {
     );
   }
 
-  const [appData, setAppData] = useApp();
-
   const getDayTasks = () => {
     if (!tasks.isSuccess)
       return [];
@@ -27,7 +27,7 @@ export default function DayTasks({ skeleton, tasks, setIsInspecting }) {
 
     for (let task of tasks) {
       if (task.repeater) {
-        let isProxim = isDateWithinProximity(task.repeater, task, day);
+        let isProxim = isDateWithinProximity(task.repeater, task, appData.activeDate);
         if (isProxim) {
           dayTasks.push(task);
         }

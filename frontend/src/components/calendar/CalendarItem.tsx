@@ -1,6 +1,9 @@
 import { useApp } from "@/hooks/app";
 
 export default function CalendarItem({ skeleton, date }: {skeleton?: boolean, date: Date}) {
+
+  const [appData, setAppData] = useApp();
+
   if (skeleton) {
     return (
       <div className="hover:bg-accent-white p-3 rounded-full w-10 h-10 flex justify-center text-center items-center">
@@ -8,8 +11,6 @@ export default function CalendarItem({ skeleton, date }: {skeleton?: boolean, da
       </div>
     )
   }
-
-  const [appData, setAppData] = useApp();
 
   const changeDate = (date, e) => {
     let tempData = {

@@ -8,6 +8,12 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 import { useApp } from "@/hooks/app";
 
 export default function ActiveCalendar({ skeleton }) {
+  const [appData, setAppData] = useApp();
+
+  const [calendarSize, setCalendarSize] = useState(7);
+  const [activeWeek, setActiveWeek] = useState(0);
+  const [swipeCounter, setSwipeCounter] = useState<number>(0);
+
   if (skeleton) {
     return (
       <div className="w-full h-full px-2">
@@ -15,7 +21,7 @@ export default function ActiveCalendar({ skeleton }) {
           <div className="flex flex-row w-[90%] justify-center">
             <div className="flex justify-center w-full py-1 border bg-accent-blue shadow-lg rounded-lg hover:bg-accent-blue-600">
               <input
-                onChange={() => {}}
+                onChange={() => { }}
                 value={formatDate(new Date())}
                 type="date"
                 className="w-full h-full bg-transparent text-accent-black invert px-1 m-0 text-center text-xl"
@@ -37,12 +43,6 @@ export default function ActiveCalendar({ skeleton }) {
       </div>
     )
   }
-
-  const [appData, setAppData] = useApp();
-
-  const [calendarSize, setCalendarSize] = useState(7);
-  const [activeWeek, setActiveWeek] = useState(0);
-  const [swipeCounter, setSwipeCounter] = useState<number>(0);
 
   let touchstartX = 0;
   let touchendX = 0;
