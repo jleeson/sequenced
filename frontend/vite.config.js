@@ -13,18 +13,18 @@ const manifestForPlugIn = {
     short_name: "Sequenced",
     description: "Sequenced ADHD Todo App",
     icons: [
-    {
-      src: '/assets/icons/icon-256.webp',
-      sizes: '512x512',
-      type: 'image/webp',
-      purpose: 'favicon'
-    },
-    {
-      src: '/assets/icons/icon-256.webp',
-      sizes: '180x180',
-      type: 'image/webp',
-      purpose: 'apple touch icon',
-    },
+      {
+        src: '/assets/icons/icon-256.webp',
+        sizes: '512x512',
+        type: 'image/webp',
+        purpose: 'favicon'
+      },
+      {
+        src: '/assets/icons/icon-256.webp',
+        sizes: '180x180',
+        type: 'image/webp',
+        purpose: 'apple touch icon',
+      },
     ],
     theme_color: '#307acf',
     background_color: '#FFFFFF',
@@ -38,8 +38,9 @@ const manifestForPlugIn = {
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    port: process.env.VITE_PORT
+    port: process.env.VITE_PORT,
+    allowedHosts: true
   },
   resolve: { alias: { "@": path.resolve(__dirname, "./src") } },
-  plugins: [react(), VitePWA(manifestForPlugIn)],
-})
+  plugins: [react(), VitePWA(manifestForPlugIn)]
+});
