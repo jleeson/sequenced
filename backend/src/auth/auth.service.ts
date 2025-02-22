@@ -39,14 +39,14 @@ export class AuthService {
             token,
             createdAt: createdAt.getTime(),
             expiresAt: expiresAt.getTime()
-        }
+        };
     }
 
     async validatePassword(email: string, password: string) {
         const user = await this.userService.getUserByEmail(email);
         const hash = (await this.userService.getUserHash(user._id)).password;
 
-        return bcrypt.compare(password, hash)
+        return bcrypt.compare(password, hash);
     }
 
 }

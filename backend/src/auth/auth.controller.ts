@@ -18,7 +18,7 @@ export interface SessionUser {
     isControlled?: boolean;
 }
 
-export function session(req: SessionRequest, res: Response, next) {
+export function session(req: SessionRequest, _res: Response, next) {
     if (!req.session.user) throw new Unauthorized("Not Logged In");
     next();
 }
@@ -30,7 +30,7 @@ export class AuthController {
     @Inject() userService: UserService;
 
     @Get("/")
-    async getAuth(req, res) {
+    async getAuth(req: SessionRequest) {
         if (!req.session.user)
             throw new Unauthorized("Not Logged In");
 
@@ -38,7 +38,7 @@ export class AuthController {
     }
 
     @Post("/login")
-    async loginToSystem(req: SessionRequest, res: Response, next) {
+    async loginToSystem(req: SessionRequest) {
         const { email, password } = req.body;
 
         const validation = await this.authService.validatePassword(email, password);

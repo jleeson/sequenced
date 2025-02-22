@@ -1,10 +1,7 @@
 import { Token } from "@/auth/token.entity";
 import { Controller, Get, Inject, Middleware, Patch, Post } from "@outwalk/firefly";
-import { Request } from "express";
-import { User } from "./user.entity";
 import { UserService } from "./user.service";
 import { AuthService } from "@/auth/auth.service";
-import { Unauthorized } from "@outwalk/firefly/errors";
 import { SessionRequest, session } from "@/auth/auth.controller";
 import { Logger } from "@/_utils/Logger";
 

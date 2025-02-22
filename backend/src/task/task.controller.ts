@@ -2,10 +2,9 @@ import { AuthService } from "@/auth/auth.service";
 import { User } from "@/user/user.entity";
 import { UserService } from "@/user/user.service";
 import { Controller, Delete, Get, Inject, Middleware, Patch, Post } from "@outwalk/firefly";
-import { BadRequest, Unauthorized } from "@outwalk/firefly/errors";
+import { BadRequest } from "@outwalk/firefly/errors";
 import { TaskService } from "./task.service";
 import { Task } from "./task.entity";
-import { Token } from "@/auth/token.entity";
 import { SessionRequest, session } from "@/auth/auth.controller";
 
 @Middleware(session)
@@ -26,7 +25,7 @@ export class TaskController {
     }
 
     @Get("/:task/users")
-    async getUsers({ session, params }: SessionRequest) {
+    async getUsers({ params }: SessionRequest) {
         const { task } = params;
 
         return this.taskService.getUsers(task);
@@ -86,16 +85,12 @@ export class TaskController {
     }
 
     @Patch()
-    async updateTask({ body, headers }: { body: Task, headers: Headers }) {
-        const token: Token = await this.authService.getTokenFromRequest(headers);
-
+    async updateTask({ body }: { body: Task, headers: Headers }) {
         return await this.taskService.updateTask(body);
     }
 
     @Delete()
-    async deleteTask({ body, headers }: { body: Task, headers: Headers }) {
-        const token: Token = await this.authService.getTokenFromRequest(headers);
-
+    async deleteTask({ body }: { body: Task, headers: Headers }) {
         return await this.taskService.deleteTask(body);
     }
 
@@ -110,7 +105,7 @@ export class TaskController {
                 isSynced: true,
                 sync: true,
                 tasks
-            }
+            };
         }
 
         if (body) {
@@ -151,7 +146,7 @@ export class TaskController {
     }
 
     @Post("/invite")
-    async inviteUser({ session, body }: SessionRequest) {
+    async inviteUser({ body }: SessionRequest) {
         const { task: clientTask, email }: { task: Task, email: string } = body;
         const task = await this.taskService.getTask(clientTask.id);
 

@@ -52,12 +52,12 @@ export class TaskService {
 
             dates += `${year}-${month}-${day}`;
             if (i != 6)
-                dates += "|"
+                dates += "|";
 
             date.setDate(date.getDate() + 1);
         }
 
-        dates += ")"
+        dates += ")";
 
         return new RegExp(dates);
     }

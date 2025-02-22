@@ -7,18 +7,18 @@ import cookieParser from "cookie-parser";
 import MongoStore from "connect-mongo";
 import session from "express-session";
 
-import { rateLimit } from 'express-rate-limit'
+import { rateLimit } from "express-rate-limit";
 
 /* setup the platform and global middleware */
 const platform = new ExpressPlatform();
-platform.use(cors({ origin: ['https://api.sequenced.ottegi.com','https://sequenced.ottegi.com', 'http://localhost:5173', 'http://localhost:8080', 'http://localhost:4173'], credentials: true }));
+platform.use(cors({ origin: ["https://api.sequenced.ottegi.com","https://sequenced.ottegi.com", "http://localhost:5173", "http://localhost:8080", "http://localhost:4173"], credentials: true }));
 platform.use(cookieParser());
 platform.use(rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	limit: 10000, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-	standardHeaders: 'draft-8', // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
-	// store: ... , // Redis, Memcached, etc. See below.
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 10000, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+    standardHeaders: "draft-8", // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+    // store: ... , // Redis, Memcached, etc. See below.
 }));
 
 /* setup the database and global plugins */
