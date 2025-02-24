@@ -1,43 +1,36 @@
 import { Controller, Get, Inject, Middleware } from "@outwalk/firefly";
 import { MetricsService } from "./metrics.service";
-import { UserService } from "@/user/user.service";
-import { session } from "@/auth/auth.controller";
+import { session } from "@/_middleware/session";
 
-@Middleware(session)
 @Controller()
+@Middleware(session)
 export class MetricsController {
 
-    @Inject() metricsService: MetricsService;
-
-    @Inject() userService: UserService;
+    @Inject()
+    metricsService: MetricsService;
 
     @Get("/tasks")
-    async getTasksCount({ session }) {
-        const user = await this.userService.getUser(session.user.id);
-        return this.metricsService.getTaskCount(user);
+    async getTasksCount({ session }): Promise<{ count: number }> {
+        return this.metricsService.getTaskCount(session.user.id);
     }
 
     @Get("/tasks/today")
-    async getTasksToday({ session }){
-        const user = await this.userService.getUser(session.user.id);
-        return this.metricsService.getTaskTodayCount(user);
+    async getTasksToday({ session }): Promise<{ count: number }> {
+        return this.metricsService.getTaskTodayCount(session.user.id);
     }
 
     @Get("/tasks/tomorrow")
-    async getTasksTomorrow({ session }){
-        const user = await this.userService.getUser(session.user.id);
-        return this.metricsService.getTaskTomorrowCount(user);
+    async getTasksTomorrow({ session }): Promise<{ count: number }> {
+        return this.metricsService.getTaskTomorrowCount(session.user.id);
     }
 
     @Get("/tasks/week")
-    async getTasksWeek({ session }){
-        const user = await this.userService.getUser(session.user.id);
-        return this.metricsService.getTaskWeekCount(user);
+    async getTasksWeek({ session }): Promise<{ count: number }> {
+        return this.metricsService.getTaskWeekCount(session.user.id);
     }
 
     @Get("/tasks/overdue")
-    async getTasksOverdue({ session }){
-        const user = await this.userService.getUser(session.user.id);
-        return this.metricsService.getTaskOverdueCount(user);
+    async getTasksOverdue({ session }): Promise<{ count: number }> {
+        return this.metricsService.getTaskOverdueCount(session.user.id);
     }
 }

@@ -1,63 +1,45 @@
-import { Inject, Injectable } from "@outwalk/firefly";
-
-import { Task } from "@/task/task.entity";
-import { User } from "@/user/user.entity";
+import { Injectable, Inject } from "@outwalk/firefly";
 import { TaskService } from "@/task/task.service";
-
-export interface CountData {
-    count: number;
-}
+import { Task } from "@/task/task.entity";
 
 @Injectable()
 export class MetricsService {
 
-    @Inject() taskService: TaskService;
+    @Inject()
+    taskService: TaskService;
 
-    async getTaskCount(user: User): Promise<CountData> {
-        return { count: await Task.countDocuments({ users: user.id }).exec() };
+    async getTaskCount(userId: string): Promise<{ count: number }> {
+        return { count: await Task.countDocuments({ users: userId }).exec() };
     }
 
-    async getTaskTodayCount(user: User): Promise<CountData> {
+    async getTaskTodayCount(userId: string): Promise<{ count: number }> {
         const todayFormat = await this.taskService.getTaskDateFormat(new Date());
+        const count = await Task.countDocuments({ users: userId, date: { $regex: todayFormat }, done: false }).exec();
 
-        return {
-            count: await Task.countDocuments({
-                users: user.id, date: { $regex: todayFormat }, done: false
-            }).exec()
-        };
+        return { count };
     }
 
-    async getTaskTomorrowCount(user: User): Promise<CountData> {
+    async getTaskTomorrowCount(userId: string): Promise<{ count: number }> {
         const today = new Date();
         today.setDate(today.getDate() + 1);
 
         const tomorrowFormat = await this.taskService.getTaskDateFormat(today);
+        const count = await Task.countDocuments({ users: userId, date: { $regex: tomorrowFormat }, done: false }).exec();
 
-        return {
-            count: await Task.countDocuments({
-                users: user.id, date: { $regex: tomorrowFormat }, done: false
-            }).exec()
-        };
+        return { count };
     }
 
-    async getTaskWeekCount(user: User): Promise<CountData> {
-        const today = new Date();
-        const format = await this.taskService.getTaskDateWeekFormat(today);
+    async getTaskWeekCount(userId: string): Promise<{ count: number }> {
+        const format = await this.taskService.getTaskDateWeekFormat(new Date());
+        const count = await Task.countDocuments({ users: userId, date: { $regex: format }, done: false }).exec();
 
-        return {
-            count: await Task.countDocuments({
-                users: user.id, date: { $regex: format }, done: false
-            }).exec()
-        };
+        return { count };
     }
 
-    async getTaskOverdueCount(user: User): Promise<CountData> {
-        return {
-            count: (
-                await this.taskService.getTasksIncomplete(user)
-            ).filter(
-                (task) => (new Date(task.date) < new Date()) && (new Date(task.date) > new Date(0))
-            ).length
-        };
+    async getTaskOverdueCount(userId: string): Promise<{ count: number }> {
+        const format = { $lt: new Date(), $gt: new Date(0) };
+        const count = await Task.countDocuments({ users: userId, date: format, done: false }).exec();
+
+        return { count };
     }
 }
