@@ -1,10 +1,15 @@
 import { Injectable } from "@outwalk/firefly";
-import { User } from "./user.entity";
 import { BadRequest } from "@outwalk/firefly/errors";
-import { Token } from "@/auth/token.entity";
+import { User } from "./user.entity";
+import bcrypt from "bcrypt";
 
 @Injectable()
 export class UserService {
+
+    async validatePassword(id: string, password: string): Promise<boolean> {
+        const user = await User.findById(id).select("password").lean<User>().exec();
+        return bcrypt.compare(password, user.password);
+    }
 
     async getUser(id: string): Promise<User> {
         if (!id) return null;
@@ -14,15 +19,6 @@ export class UserService {
     async getUserByEmail(email: string): Promise<User> {
         if (!email) return null;
         return User.findOne({ email }).lean<User>().exec();
-    }
-
-    async getUserByToken(token: Token): Promise<User> {
-        if (!token) return null;
-        return token.user;
-    }
-
-    async getUserHash(id: string) {
-        return User.findById(id).select("password").lean<User>().exec();
     }
 
     async createUser(first: string, last: string, email: string, password: string): Promise<User> {
