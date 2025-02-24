@@ -1,11 +1,11 @@
 {
-  "name": "@sequenced_app/backend",
+  "name": "@sequenced_app/api",
   "main": "dist/index.js",
   "type": "module",
   "private": true,
   "engines": {
-    "node": "^22",
-    "npm": "^9"
+    "node": ">=20",
+    "npm": ">=9"
   },
   "scripts": {
     "build": "tsc && firefly build",
@@ -21,6 +21,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.1",
+    "express-rate-limit": "^7.5.0",
     "express-session": "^1.18.1",
     "mongoose": "^8.7.3",
     "mongoose-lean-id": "^1.0.0",
