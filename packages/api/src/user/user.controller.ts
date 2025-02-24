@@ -2,15 +2,22 @@ import { Token } from "@/auth/token.entity";
 import { Controller, Get, Inject, Middleware, Patch, Post } from "@outwalk/firefly";
 import { UserService } from "./user.service";
 import { AuthService } from "@/auth/auth.service";
+import { Logger } from "@/_services/logger.service";
 import { SessionRequest, session } from "@/auth/auth.controller";
-import { Logger } from "@/_utils/Logger";
+
 
 @Middleware(session)
 @Controller()
 export class UserController {
 
-    @Inject() authService: AuthService;
-    @Inject() userService: UserService;
+    @Inject()
+    authService: AuthService;
+
+    @Inject()
+    userService: UserService;
+
+    @Inject()
+    logger: Logger;
 
     @Get()
     async getUser({ session }: SessionRequest) {
@@ -25,7 +32,7 @@ export class UserController {
 
     @Post()
     createUser({ body }) {
-        Logger.log("Body", body);
+        this.logger.log("Body", body);
     }
 
     @Patch("/name")
