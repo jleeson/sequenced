@@ -1,37 +1,20 @@
 import { Injectable } from "@outwalk/firefly";
 import { Task } from "./task.entity";
-import { SubTask } from "./subtask.entity";
 import { User } from "@/user/user.entity";
 
 @Injectable()
 export class TaskService {
 
-    async addTask(task: Task) {
-        return Task.insertMany(task);
+    async addTask(data: Partial<Task>): Promise<Task> {
+        return Task.create(data);
     }
 
-    async addTasks(tasks: Task[]) {
-        return Task.insertMany(tasks);
+    async updateTask(id: string, data: Partial<Task>): Promise<Task> {
+        return Task.findByIdAndUpdate(id, data).lean<Task>().exec();
     }
 
-    async addSubtask(task: SubTask) {
-        return SubTask.insertMany(task);
-    }
-
-    async addSubtasks(tasks: SubTask[]) {
-        return SubTask.insertMany(tasks);
-    }
-
-    async updateTask(task: Task) {
-        return Task.findByIdAndUpdate(task.id, { $set: task }).exec();
-    }
-
-    async getTask(id: string) {
-        return Task.findById(id).populate("subtasks").lean<Task>().exec();
-    }
-
-    async getTasks(user: User) {
-        return Task.find({ users: user.id }).populate("subtasks").lean<Task>().exec();
+    async getTasksByUserId(userId: string): Promise<Task[]> {
+        return Task.find({ users: userId }).populate("subtasks").lean<Task[]>().exec();
     }
 
     async getTaskDateFormat(date: Date) {
@@ -51,8 +34,7 @@ export class TaskService {
             const day = (date.getDate() < 10) ? `0${date.getDate()}` : date.getDate();
 
             dates += `${year}-${month}-${day}`;
-            if (i != 6)
-                dates += "|";
+            if (i != 6) dates += "|";
 
             date.setDate(date.getDate() + 1);
         }
@@ -62,59 +44,59 @@ export class TaskService {
         return new RegExp(dates);
     }
 
-    async getTasksToday(user: User) {
-
+    async getTasksToday(userId: string): Promise<Task[]> {
         const todayFormat = this.getTaskDateFormat(new Date());
 
-        return Task.find({
-            users: user.id, date: { $regex: todayFormat }, done: false
-        }).populate("subtasks").lean<Task>().exec();
+        return Task.find({ users: userId, date: { $regex: todayFormat }, done: false })
+            .populate("subtasks")
+            .lean<Task[]>()
+            .exec();
     }
 
-    async getTasksTomorrow(user: User) {
+    async getTasksTomorrow(userId: string): Promise<Task[]> {
         const today = new Date();
         today.setDate(today.getDate() + 1);
 
         const tomorrowFormat = this.getTaskDateFormat(today);
 
-        return Task.find({
-            users: user.id, date: { $regex: tomorrowFormat }, done: false
-        }).populate("subtasks").lean<Task>().exec();
+        return Task.find({ users: userId, date: { $regex: tomorrowFormat }, done: false })
+            .populate("subtasks")
+            .lean<Task[]>()
+            .exec();
     }
 
-    async getTasksWeek(user: User) {
+    async getTasksWeek(userId: string): Promise<Task[]> {
         const today = new Date();
         const format = await this.getTaskDateWeekFormat(today);
 
-        return Task.find({
-            users: user.id, date: { $regex: format }, done: false
-        }).populate("subtasks").lean<Task>().exec();
+        return Task.find({ users: userId, date: { $regex: format }, done: false })
+            .populate("subtasks")
+            .lean<Task[]>()
+            .exec();
     }
 
-    async getTasksOverdue(user: User) {
-        return (await this.getTasksIncomplete(user)).filter((task) => (new Date(task.date) < new Date()) && (new Date(task.date) > new Date(0)));
+    async getTasksOverdue(userId: string): Promise<Task[]> {
+        const format = { $lt: new Date(), $gt: new Date(0) };
+
+        return Task.find({ users: userId, date: format, done: false })
+            .populate("subtasks")
+            .lean<Task[]>()
+            .exec();
     }
 
-    async getTasksIncomplete(user: User) {
-        return Task.find({
-            users: user.id, done: false
-        }).sort({ priority: -1 }).populate("subtasks").lean<Task>().exec();
+    async getTasksIncomplete(userId: string): Promise<Task[]> {
+        return Task.find({ users: userId, done: false })
+            .populate("subtasks")
+            .sort({ priority: -1 })
+            .lean<Task[]>()
+            .exec();
     }
 
-    async deleteTask(task: Task) {
-        return Task.findByIdAndDelete(task.id).exec();
+    async deleteTask(id: string): Promise<Task> {
+        return Task.findByIdAndDelete(id).lean<Task>().exec();
     }
 
-    async getUsers(id: string) {
-        return Task.findById(id).select("users").populate("users").exec();
-    }
-
-    async removeUser(taskId, user) {
-        const task = await Task.findById(taskId).lean<Task>().select("users").populate("users").exec();
-        task.users.splice(task.users.indexOf(user), 1);
-
-        return await Task.findByIdAndUpdate(taskId, {
-            $set: task
-        }).exec();
+    async getUsersByTaskId(id: string): Promise<User[]> {
+        return (await Task.findById(id).select("users").populate("users").exec()).users;
     }
 }

@@ -17,8 +17,5 @@ export class User extends Model {
     password: string;
 
     @Prop({ type: Boolean, default: false })
-    synced: boolean;
-
-    @Prop({ type: Boolean, default: false })
     developer: boolean;    
 }

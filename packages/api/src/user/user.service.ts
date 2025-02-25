@@ -1,5 +1,5 @@
 import { Injectable } from "@outwalk/firefly";
-import { BadRequest } from "@outwalk/firefly/errors";
+import { BadRequest, NotFound } from "@outwalk/firefly/errors";
 import { User } from "./user.entity";
 import bcrypt from "bcrypt";
 
@@ -15,11 +15,17 @@ export class UserService {
     }
 
     async getUserById(id: string): Promise<User> {
-        return User.findById(id).lean<User>().exec();
+        const user = await User.findById(id).lean<User>().exec();
+        if (!user) throw new NotFound("The user could not be found.", { id });
+
+        return user;
     }
 
     async getUserByEmail(email: string): Promise<User> {
-        return User.findOne({ email }).lean<User>().exec();
+        const user = await User.findOne({ email }).lean<User>().exec();
+        if (!user) throw new NotFound("The user could not be found.", { email });
+
+        return user;
     }
 
     async updateUser(id: string, data: Partial<User>): Promise<User> {
