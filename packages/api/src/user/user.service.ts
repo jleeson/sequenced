@@ -6,34 +6,28 @@ import bcrypt from "bcrypt";
 @Injectable()
 export class UserService {
 
-    async validatePassword(id: string, password: string): Promise<boolean> {
-        const user = await User.findById(id).select("password").lean<User>().exec();
-        return bcrypt.compare(password, user.password);
+    async createUser(data: Partial<User>): Promise<User> {
+        if (await User.exists({ email: data.email }).exec()) {
+            throw new BadRequest("Email Already Exists.");
+        }
+
+        return User.create(data);
     }
 
-    async getUser(id: string): Promise<User> {
-        if (!id) return null;
+    async getUserById(id: string): Promise<User> {
         return User.findById(id).lean<User>().exec();
     }
 
     async getUserByEmail(email: string): Promise<User> {
-        if (!email) return null;
         return User.findOne({ email }).lean<User>().exec();
     }
 
-    async createUser(first: string, last: string, email: string, password: string): Promise<User> {
-        if (await User.exists({ email }).exec()) throw new BadRequest("Email Already Exists.");
-
-        return await User.create({
-            first,
-            last,
-            email,
-            password,
-            tasks: []
-        });
+    async updateUser(id: string, data: Partial<User>): Promise<User> {
+        return User.findByIdAndUpdate(id, data).lean<User>().exec();
     }
 
-    async updateUser(user: User, data: any) {
-        return User.findByIdAndUpdate(user.id, { $set: data }).exec();
+    async validatePassword(id: string, password: string): Promise<boolean> {
+        const user = await User.findById(id).select("password").lean<User>().exec();
+        return bcrypt.compare(password, user.password);
     }
 }

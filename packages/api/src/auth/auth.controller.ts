@@ -21,7 +21,7 @@ export class AuthController {
         const { email, password } = req.body;
 
         const user = await this.userService.getUserByEmail(email);
-        
+
         if (!(await this.userService.validatePassword(user.id, password))) {
             throw new Unauthorized("Incorrect Email/Password Combo.");
         }
@@ -38,7 +38,7 @@ export class AuthController {
             throw new BadRequest("Email Already Exists");
         }
 
-        const user = await this.userService.createUser(first, last, email, password);
+        const user = await this.userService.createUser({ first, last, email, password });
         req.session.user = { id: user.id, first: user.first };
 
         return user;
@@ -48,10 +48,10 @@ export class AuthController {
     async loginAsUser(req: Request): Promise<User> {
         const { id } = req.body;
 
-        const user = await this.userService.getUser(req.session.user.id);
+        const user = await this.userService.getUserById(req.session.user.id);
         if (!user.developer) throw new Unauthorized("Not a Developer");
 
-        const controlled = await this.userService.getUser(id);
+        const controlled = await this.userService.getUserById(id);
         req.session.user = { id: controlled.id, first: user.first, isControlled: true };
         return controlled;
     }

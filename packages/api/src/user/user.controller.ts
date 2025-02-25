@@ -1,47 +1,28 @@
-import { Token } from "@/auth/token.entity";
-import { Controller, Get, Inject, Middleware, Patch, Post } from "@outwalk/firefly";
+import { Controller, Get, Inject, Middleware, Patch } from "@outwalk/firefly";
 import { UserService } from "./user.service";
-import { AuthService } from "@/auth/auth.service";
-import { Logger } from "@/_services/logger.service";
-import { SessionRequest, session } from "@/auth/auth.controller";
+import { session } from "@/_middleware/session";
+import { Request } from "express";
+import { User } from "./user.entity";
 
-
-@Middleware(session)
 @Controller()
+@Middleware(session)
 export class UserController {
-
-    @Inject()
-    authService: AuthService;
 
     @Inject()
     userService: UserService;
 
-    @Inject()
-    logger: Logger;
-
     @Get()
-    async getUser({ session }: SessionRequest) {
-        return this.userService.getUser(session.user.id);
+    async getUser({ session }: Request): Promise<User> {
+        return this.userService.getUserById(session.user.id);
+    }
+
+    @Patch()
+    async updateName({ session, body }: Request): Promise<User> {
+        return this.userService.updateUser(session.user.id, body);
     }
 
     @Get("/synced")
-    async getSynced({ session }: SessionRequest) {
-        const user = await this.userService.getUser(session.user.id);
-        return user.synced;
-    }
-
-    @Post()
-    createUser({ body }) {
-        this.logger.log("Body", body);
-    }
-
-    @Patch("/name")
-    async updateName({ headers, body }) {
-        const token: Token = await this.authService.getTokenFromRequest(headers);
-        const user = await this.userService.getUserByToken(token);
-
-        const { first, last } = body;
-
-        return await this.userService.updateUser(user, { first, last });
+    async getSynced({ session }: Request): Promise<boolean> {
+        return (await this.userService.getUserById(session.user.id)).synced;
     }
 }
