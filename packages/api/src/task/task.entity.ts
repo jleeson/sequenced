@@ -5,37 +5,38 @@ import { User } from "@/user/user.entity";
 @Entity()
 export class Task extends Model {
 
-    @Prop(String)
+    @Prop({ type: String, required: true })
     title: string;
 
-    @Prop(String)
+    @Prop({ type: String, default: "" })
     description: string;
 
-    @Prop(String)
+    /** this should be changed to a Date object, but current filtering logic is using regex on a string */
+    @Prop({ type: String, default: () => new Date().toString() })
     date: string;
 
-    @Prop(Boolean)
+    @Prop({ type: Boolean, default: false })
     done: boolean;
 
-    @Prop(String)
+    @Prop({ type: String, default: "" })
     repeater: string;
 
-    @Prop(String)
+    @Prop({ type: String, default: "" })
     reminder: string;
 
-    @Prop([SubTask])
-    subtasks: SubTask[];
-
-    @Prop(String)
+    @Prop({ type: String, default: "" })
     type: string;
 
-    @Prop(Boolean)
+    /** (git blame Hiro) - figure out what this actually does */
+    @Prop({ type: Boolean, default: false })
     accordion: boolean;
 
-    @Prop([User])
-    users: User[];
-
-    @Prop(Number)
+    @Prop({ type: Number, default: 0 })
     priority: number;
 
+    @Prop({ type: [SubTask], default: [] })
+    subtasks: SubTask[];
+
+    @Prop({ type: [User], default: [] })
+    users: User[];
 }
